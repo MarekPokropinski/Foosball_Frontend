@@ -21,9 +21,9 @@ export const connect = (endpoint, onOpen, onMessage) => {
     }
 }
 
-export const socketEvent = (event) => {
+export const socketEvent = (data) => {
     return {
         type: SOCKET_EVENT,
-        payload: event
+        payload: data
     }
 }

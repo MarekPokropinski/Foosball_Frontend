@@ -9,7 +9,10 @@ const PENDING = '_PENDING';
 
 const initValue = {
     socket: null,
-    eventQueue: []
+    gameState: {
+        redScore: 0,
+        blueScore: 0
+    }
 }
 
 export default (state = initValue, action) => {
@@ -23,7 +26,7 @@ export default (state = initValue, action) => {
         case userActions.SOCKET_EVENT:
             return {
                 ...state,
-                eventQueue: [...state.eventQueue, action]
+                gameState: action.payload
             }
         default:
             return {

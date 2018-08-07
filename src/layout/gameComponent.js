@@ -15,7 +15,7 @@ class GameComponent extends React.Component {
         this.props.actions.connect('ws://' + ip + ':8080/matchInfo', (e) => {
 
         }, (e) => {
-            this.actions.socketEvent(e);
+            this.actions.socketEvent(e.data);
         })
     }
 
@@ -27,7 +27,7 @@ class GameComponent extends React.Component {
         return (
             <div style={{textAlign: 'center'}} >
                 10:00<br />
-                0:0<br />
+                {this.props.user.gameState.redScore} : {this.props.user.gameState.blueScore}<br />
                 <Button  variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit game </Button>
 
             </div>
