@@ -5,7 +5,19 @@ import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
 import Button from '@material-ui/core/Button';
 
+const ip = '127.0.0.1';
+
+
+
 class GameComponent extends React.Component {
+
+    connect() {
+        this.props.actions.connect('ws://' + ip + ':8080/matchInfo', (e) => {
+
+        }, (e) => {
+            this.actions.socketEvent(e);
+        })
+    }
 
     handleExitButton() {
         this.props.history.replace('/')

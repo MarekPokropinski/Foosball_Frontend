@@ -1,5 +1,8 @@
 
-//*
+export const CONNECT_WS = 'connect_ws';
+export const SOCKET_EVENT = 'socket_event';
+
+/*
 export const testAction = () => {
     return {
         type: 'test_action',
@@ -7,3 +10,20 @@ export const testAction = () => {
     }
 }
 //*/
+
+export const connect = (endpoint, onOpen, onMessage) => {
+    let socket = new WebSocket(endpoint);
+    socket.onOpen = onOpen;
+    socket.onMessage = onMessage;
+    return {
+        type: CONNECT_WS,
+        payload: socket
+    }
+}
+
+export const socketEvent = (event) => {
+    return {
+        type: SOCKET_EVENT,
+        payload: event
+    }
+}
