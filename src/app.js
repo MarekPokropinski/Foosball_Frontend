@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from './actions/userActions.js';
 
+import Button from '@material-ui/core/Button';
+
 
 class App extends React.Component {
 
@@ -17,10 +19,10 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Button value='normal' variant='contained' color='primary' onClick={() => { this.handleNormalUser() }} />
+                <Button variant='contained' color='primary' onClick={() => { this.handleNormalUser() }} >normal</Button>
                 <br />
                 <br />
-                <Button value='ranked' variant='contained' color='primary' onClick={() => { this.handleRankedUsers() }} />
+                <Button value='ranked' variant='contained' color='primary' onClick={() => { this.handleRankedUsers() }} >ranked</Button>
             </div>
         );
     }
