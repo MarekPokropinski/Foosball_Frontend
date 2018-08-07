@@ -44,6 +44,7 @@ class GameComponent extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators(userActions, dispatch)
+    }
 }
 
 const mapStateToProps = (state) => {
