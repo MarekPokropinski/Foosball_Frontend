@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 class App extends React.Component {
 
     handleNormalUser() {
-        this.props.history.replace('/mode')
+        this.props.history.replace('/begin')
     }
 
     handleRankedUsers() {
