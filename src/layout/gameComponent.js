@@ -5,12 +5,15 @@ import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
 import Button from '@material-ui/core/Button';
 
-const ip = '127.0.0.1';
+const ip = '192.168.253.159';
 
 
 
 class GameComponent extends React.Component {
 
+    componentDidMount() {
+        this.connect();
+    }
     connect() {
         this.props.actions.connect('ws://' + ip + ':8080/matchInfo', (e) => {
 
@@ -48,4 +51,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapDispatchToProps, mapStateToProps)(GameComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(GameComponent);

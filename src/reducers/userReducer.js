@@ -29,8 +29,6 @@ export default (state = initValue, action) => {
                 gameState: action.payload
             }
         default:
-            return {
-                ...state,
-            }
+            return state
     }
 }
