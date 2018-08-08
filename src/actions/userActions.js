@@ -34,6 +34,6 @@ export const socketEvent = (data) => {
 export const startGame = (ip) => {
     return {
         type: START_GAME,
-        payload: axios.put(`http://${ip}:8080/game/start?mode=NORMAL`)
+        payload: axios.get(`http://${ip}:8080/normalGame/start`)
     }
 }

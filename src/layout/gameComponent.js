@@ -18,7 +18,6 @@ class GameComponent extends React.Component {
     }
     connect() {
         this.props.actions.connect('ws://' + ip + ':8080/matchInfo', (e) => {
-            console.log('Connected');
             this.props.actions.startGame(ip)
         }, (e) => {
             this.props.actions.socketEvent(e.data);
