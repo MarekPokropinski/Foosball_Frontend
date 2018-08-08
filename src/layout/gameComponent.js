@@ -22,11 +22,6 @@ class GameComponent extends React.Component {
         this.connect();
     }
 
-    myClearInterval() {
-        let i = this.state.timer;
-        clearInterval(i)
-        this.setState({timer: i})
-    }
 
     componentWillUnmount() {
         clearInterval(this.state.timer)

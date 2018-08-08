@@ -50,6 +50,6 @@ export const timeStamp = (time) => {
 export const getStats = (ip) => {
     return {
         type: GET_STATS,
-        payload: axios.get(`http://${ip}:8080/normalGame/stats`)
+        payload: axios.get(`http://${ip}:8080/normalGame/finish`)
     }
 }
