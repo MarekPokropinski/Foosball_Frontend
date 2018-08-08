@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
 import Button from '@material-ui/core/Button';
 
+import './gameStyle.css'
 
 //const ip = '192.168.253.159';
 const ip = 'localhost'
@@ -62,12 +63,12 @@ class GameComponent extends React.Component {
         time = Math.floor(time / 60);
         
         if( time > 0 ) {
-            r = time % 60 + '::' + r; 
+            r = time % 60 + ':' + r; 
             time = Math.floor(time / 60);
         }
 
         if( time > 0 ) {
-            r = time + '::' + r; 
+            r = time + ':' + r; 
         }
 
         return r;
@@ -75,11 +76,20 @@ class GameComponent extends React.Component {
 
     render() {
         return (
-            <div style={{textAlign: 'center'}} >
-                {this.getConvertedTime()}
-                <br />
-                {this.props.user.gameState.redScore} : {this.props.user.gameState.blueScore}<br /><br />
-                <Button  variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit game </Button>
+            <div >
+                <div className='timer'>
+                    {this.getConvertedTime()}
+                </div>
+
+                <div className='nicks'>
+                    <p>jarek</p>
+                    <p>rakuna</p>
+                </div>
+                
+                <div className='score'>
+                    <p>{this.props.user.gameState.redScore} : {this.props.user.gameState.blueScore}</p>
+                </div>
+                <Button className='finishButton' variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit game </Button>
 
             </div>
         );

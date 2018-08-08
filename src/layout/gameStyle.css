@@ -1,0 +1,45 @@
+.score {
+    text-align: center;
+    color: #707070;
+    font-size: 177px;
+    font-family: "Segoe UI";
+    
+    position: absolute;
+    top: 0px;
+    left: 349px;
+}
+
+.finishButton {
+
+    position: absolute;
+    top: 520px;
+    left: 50%;
+    transform: translate(-50%, 0); 
+}
+
+.timer {
+    color: #707070;
+    font-size: 30px;
+    font-family: "Segoe UI";
+
+    position: absolute;
+    top: 27px;
+    left: 50%;
+    transform: translate(-50%, 0); 
+}
+
+.nicks {
+    text-align: center;
+    color: #707070;
+    font-size: 30px;
+    font-family: "Segoe UI";
+
+    display: flex;
+    justify-content: space-between;
+    width: 680px;
+
+    position: absolute;
+    top: 122px;
+    left: 50%;
+    transform: translate(-50%, 0); 
+}

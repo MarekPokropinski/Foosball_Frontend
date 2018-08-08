@@ -26,12 +26,12 @@ class SummaryComponent extends React.Component {
         time = Math.floor(time / 60);
         
         if( time > 0 ) {
-            r = time % 60 + '::' + r; 
+            r = time % 60 + ':' + r; 
             time = Math.floor(time / 60);
         }
 
         if( time > 0 ) {
-            r = time + '::' + r; 
+            r = time + ':' + r; 
         }
 
         return r;
