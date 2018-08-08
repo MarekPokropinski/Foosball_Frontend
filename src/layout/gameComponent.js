@@ -76,7 +76,7 @@ class GameComponent extends React.Component {
 
     render() {
         return (
-            <div >
+            <div className='container'>
                 <div className='timer'>
                     {this.getConvertedTime()}
                 </div>
@@ -89,7 +89,7 @@ class GameComponent extends React.Component {
                 <div className='score'>
                     <p>{this.props.user.gameState.redScore} : {this.props.user.gameState.blueScore}</p>
                 </div>
-                <Button className='finishButton' variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit game </Button>
+                <Button className='finishButton' variant="outlined" onClick={() => this.handleExitButton()}> Exit game </Button>
 
             </div>
         );

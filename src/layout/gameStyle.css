@@ -1,3 +1,6 @@
+body {
+    
+}
 .score {
     text-align: center;
     color: #707070;
@@ -6,7 +9,8 @@
     
     position: absolute;
     top: 0px;
-    left: 349px;
+    left: 50%;
+    transform: translate(-50%, 0); 
 }
 
 .finishButton {
