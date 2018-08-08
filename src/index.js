@@ -15,6 +15,7 @@ import GameBegin from './layout/gameBegin';
 import GameMode from './layout/gameMode';
 import Game1v1 from './layout/game1v1Mode'
 import Game2v2 from './layout/game2v2Mode'
+import SummaryComponent from './layout/summaryComponent';
 
 const store = createStore(
     reducers,
@@ -25,6 +26,7 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <Switch>
+                <Route path="/summary" component={SummaryComponent}/>
                 <Route path="/game" component={GameComponent}/>
                 <Route path="/begin" component={GameBegin}/>
                 <Route path="/1v1" component={Game1v1}/>

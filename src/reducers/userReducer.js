@@ -11,7 +11,16 @@ const initValue = {
     socket: null,
     gameState: {
         redScore: -1,
-        blueScore: -1
+        blueScore: -1,
+        gameTime: 0,
+        finished: true
+    },
+    summary : {
+        redScore: -1,
+        blueScore: -1,
+        gameTime: 0,
+        longestSeries: 0,
+        longestSeriesOwner: 'Red and Blue'
     }
 }
 
