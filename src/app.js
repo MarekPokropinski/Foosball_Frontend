@@ -1,11 +1,11 @@
 import React from 'react';
+import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from './actions/userActions.js';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
-import  *  as theme from './styles/theme'
+import ButtonAppBar from './layout/navBar';
 const Container = styled.div`
  text-align: center;
  display:flex;
@@ -15,8 +15,8 @@ const Container = styled.div`
  backround-color: black;
 `;
 
-const muiTheme = theme.getTheme();
 
+const rootElement = document.querySelector('#root');
 class App extends React.Component {
 
     handleNormalUser() {
@@ -35,13 +35,14 @@ class App extends React.Component {
             backroundColor: "black",
         }
         return (
+            
             <Container>
-                <MuiThemeProvider muiTheme={muiTheme}>
-                    <div style={styleContainer}>
-                        <Button style={style} variant='contained' color='primary' onClick={() => { this.handleNormalUser() }} >normal</Button>
-                        <Button value='ranked' variant='contained' color='primary' onClick={() => { this.handleRankedUsers() }} >ranked</Button>
-                    </div>
-                </MuiThemeProvider>
+                {//render(<ButtonAppBar />, rootElement)
+                }
+                <div style={styleContainer}>
+                    <Button style={style} variant='contained' color='primary' onClick={() => { this.handleNormalUser() }} >normal</Button>
+                    <Button value='ranked' variant='contained' color='primary' onClick={() => { this.handleRankedUsers() }} >ranked</Button>
+                </div>
             </Container>
         );
     }

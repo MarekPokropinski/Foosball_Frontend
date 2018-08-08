@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import { Provider } from 'react-redux'; 
+import { render } from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Provider} from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import ReduxThunk from 'redux-thunk';
@@ -10,6 +11,7 @@ import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 import App from './app';
 import GameComponent from './layout/gameComponent'
+import ButtonAppBar from './layout/navBar';
 
 import GameBegin from './layout/gameBegin';
 import GameMode from './layout/gameMode';
@@ -18,21 +20,27 @@ import Game2v2 from './layout/game2v2Mode'
 
 const store = createStore(
     reducers,
-    applyMiddleware(ReduxThunk, logger , promiseMiddleware())
+    applyMiddleware(ReduxThunk, logger, promiseMiddleware())
 );
-
+//render(<ButtonAppBar />, document.getElementById('root'))
 ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter>
-            <Switch>
-                <Route path="/game" component={GameComponent}/>
-                <Route path="/begin" component={GameBegin}/>
-                <Route path="/1v1" component={Game1v1}/>
-                <Route path="/2v2" component={Game2v2}/>
-                <Route path="/mode" component={GameMode}/>
-                <Route path="/" component={App}/>
-            </Switch>
-        </BrowserRouter>
-    </Provider>
+    <div>
+         <ButtonAppBar />
+        <Provider store={store}>
+                   
+
+
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/game" component={GameComponent} />
+                    <Route path="/begin" component={GameBegin} />
+                    <Route path="/1v1" component={Game1v1} />
+                    <Route path="/2v2" component={Game2v2} />
+                    <Route path="/mode" component={GameMode} />
+                    <Route path="/" component={App} />
+                </Switch>
+            </BrowserRouter>
+        </Provider>
+    </div>
     , document.getElementById('root'));
 registerServiceWorker();
