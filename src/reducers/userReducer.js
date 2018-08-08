@@ -19,8 +19,8 @@ const initValue = {
         redScore: -1,
         blueScore: -1,
         gameTime: 0,
-        longestSeries: 0,
-        longestSeriesOwner: 'Red and Blue'
+        redLongestSeries: 0,
+        blueLongestSeries: 0
     }
 }
 
@@ -41,6 +41,16 @@ export default (state = initValue, action) => {
             return {
                 ...state,
                 gameState: action.payload.data
+            }
+        case `${userActions.TIME_STAMP}`:
+            return {
+                ...state,
+                gameState: {...state.gameState, gameTime: state.gameState.gameTime + action.payload}
+            }
+        case `${userActions.GET_STATS}${FULFILLED}`:
+            return {
+                ...state,
+                summary: action.payload.data
             }
         default:
             return state

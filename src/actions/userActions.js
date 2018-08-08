@@ -3,6 +3,8 @@ import axios from 'axios';
 export const CONNECT_WS = 'connect_ws';
 export const SOCKET_EVENT = 'socket_event';
 export const START_GAME = 'start_game';
+export const TIME_STAMP = 'time_stamp';
+export const GET_STATS = 'get_stats';
 
 
 /*
@@ -35,5 +37,19 @@ export const startGame = (ip) => {
     return {
         type: START_GAME,
         payload: axios.get(`http://${ip}:8080/normalGame/start`)
+    }
+}
+
+export const timeStamp = (time) => {
+    return {
+        type: TIME_STAMP,
+        payload: time
+    }
+}
+
+export const getStats = (ip) => {
+    return {
+        type: GET_STATS,
+        payload: axios.get(`http://${ip}:8080/normalGame/stats`)
     }
 }
