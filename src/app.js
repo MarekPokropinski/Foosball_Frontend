@@ -13,7 +13,6 @@ const Container = styled.div`
 
 
 class App extends React.Component {
-
     handleNormalUser() {
         this.props.history.replace('/begin')
     }

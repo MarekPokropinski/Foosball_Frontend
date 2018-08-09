@@ -12,6 +12,7 @@ import App from './app';
 import GameComponent from './layout/gameComponent'
 import ButtonAppBar from './layout/navBar';
 import GameBegin from './layout/gameBegin';
+import Lobby from './layout/lobby';
 import GameMode from './layout/gameMode';
 import Game1v1 from './layout/game1v1Mode'
 import Game2v2 from './layout/game2v2Mode'
@@ -27,7 +28,7 @@ const store = createStore(
     applyMiddleware(ReduxThunk, logger, promiseMiddleware())
 );
 ReactDOM.render(
-    <div >
+    <div>
         <MuiThemeProvider theme={theme} >
             <ButtonAppBar />
             <div className="mainContainer">
@@ -37,9 +38,7 @@ ReactDOM.render(
                             <Route path="/summary" component={SummaryComponent}/>
                             <Route path="/game" component={GameComponent} />
                             <Route path="/begin" component={GameBegin} />
-                            <Route path="/1v1" component={Game1v1} />
-                            <Route path="/2v2" component={Game2v2} />
-                            <Route path="/mode" component={GameMode} />
+                            <Route path="/mode" component={Lobby}/>
                             <Route path="/" component={App} />
                         </Switch>
                     </BrowserRouter>

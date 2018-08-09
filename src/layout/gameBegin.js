@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class GameBegin extends Component {
     
@@ -12,10 +13,12 @@ class GameBegin extends Component {
 
 
     render() {
-        return (<div>
-            <h1>Let The game begin!</h1>
-            <p>game start after 5 sec</p>
-        </div>)
+        return (
+            <div style={{marginTop:'20%',textAlign:'center'}}>
+                <h1>Let The game begin!</h1>
+                <CircularProgress  size={50} color="secondary"/>
+            </div>
+        )
     }
 }
 
