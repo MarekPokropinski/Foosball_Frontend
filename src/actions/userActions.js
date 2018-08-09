@@ -5,6 +5,7 @@ export const SOCKET_EVENT = 'socket_event';
 export const START_GAME = 'start_game';
 export const TIME_STAMP = 'time_stamp';
 export const GET_STATS = 'get_stats';
+export const INC_SCORE = 'inc_score';
 
 
 /*
@@ -51,5 +52,13 @@ export const getStats = (ip) => {
     return {
         type: GET_STATS,
         payload: axios.get(`http://${ip}:8080/normalGame/finish`)
+    }
+}
+
+export const incrementScore = (color, ip) => {
+    console.log({team: color})
+    return {
+        type: INC_SCORE,
+        payload: axios.post(`http://${ip}:8080/normalGame/goal`, `"${color}"`,  {headers: {'Content-Type': 'application/json'}})
     }
 }
