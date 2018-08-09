@@ -15,12 +15,15 @@ const initValue = {
         gameTime: 0,
         finished: true
     },
-    summary : {
+    summary: {
         redScore: -1,
         blueScore: -1,
         gameTime: 0,
         redLongestSeries: 0,
         blueLongestSeries: 0
+    },
+    gameType: {
+        type: 'normal'
     }
 }
 

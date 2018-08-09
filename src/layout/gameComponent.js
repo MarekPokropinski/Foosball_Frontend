@@ -69,7 +69,27 @@ class GameComponent extends React.Component {
         return r;
     }
 
+    handleRedIncrement() {
+        this.props.actions.incrementScore('RED', ip)
+    }
+
+    handleBlueIncrement() {
+        this.props.actions.incrementScore('BLUE', ip)
+    }
+
+    showNicks() {
+        return this.props.user.gameState.nicks.map((val, index) => {
+            return (
+                <p key={index}>{val}</p>
+            );
+        });
+    }
+
     render() {
+        let nicks = "";
+        if(this.props.user.gameType.type !== 'normal')
+            nicks = this.showNicks();
+
         return (
             <div className='container'>
                 <div className='timer'>
@@ -77,12 +97,13 @@ class GameComponent extends React.Component {
                 </div>
 
                 <div className='nicks'>
-                    <p>jarek</p>
-                    <p>rakuna</p>
+                    {nicks}
                 </div>
                 
                 <div className='score'>
-                    <p>{this.props.user.gameState.redScore} : {this.props.user.gameState.blueScore}</p>
+                    <p onClick={() => {this.handleRedIncrement()}}>{this.props.user.gameState.redScore}</p>
+                    <p>&nbsp;:&nbsp;</p>
+                    <p onClick={() => {this.handleBlueIncrement()}}>{this.props.user.gameState.blueScore}</p>   
                 </div>
                 <Button className='finishButton' variant="outlined" onClick={() => this.handleExitButton()}> Exit game </Button>
 
@@ -90,6 +111,8 @@ class GameComponent extends React.Component {
         );
     }
 }
+//<p>{this.props.user.gameState.redScore} : {this.props.user.gameState.blueScore}</p>
+//this.props.actions.incrementScore('&quot;RED&quot;', ip)
 
 const mapDispatchToProps = (dispatch) => {
     return {
