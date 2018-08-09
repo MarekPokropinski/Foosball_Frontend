@@ -77,7 +77,19 @@ class GameComponent extends React.Component {
         this.props.actions.incrementScore('BLUE', ip)
     }
 
+    showNicks() {
+        return this.props.user.gameState.nicks.map((val, index) => {
+            return (
+                <p key={index}>{val}</p>
+            );
+        });
+    }
+
     render() {
+        let nicks = "";
+        if(this.props.user.gameType.type !== 'normal')
+            nicks = this.showNicks();
+
         return (
             <div className='container'>
                 <div className='timer'>
@@ -85,8 +97,7 @@ class GameComponent extends React.Component {
                 </div>
 
                 <div className='nicks'>
-                    <p>jarek</p>
-                    <p>rakuna</p>
+                    {nicks}
                 </div>
                 
                 <div className='score'>
