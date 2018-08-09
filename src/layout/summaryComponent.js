@@ -20,16 +20,18 @@ class SummaryComponent extends React.Component {
 
     getConvertedTime() {
         let r = '';
-        let time = this.props.user.summary.gameTime / 1000;
-        r += time % 60;
-        time /= 60;
+        let time = Math.floor(this.props.user.summary.gameTime / 1000);
+        let seconds = time % 60;
+        r = (seconds < 10)? '0' + seconds : seconds;
+        time = Math.floor(time / 60);
+        
         if( time > 0 ) {
-            r = time % 60 + '::' + r; 
-            time /= 60;
+            r = time % 60 + ':' + r; 
+            time = Math.floor(time / 60);
         }
 
         if( time > 0 ) {
-            r = time + '::' + r; 
+            r = time + ':' + r; 
         }
 
         return r;
