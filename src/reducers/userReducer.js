@@ -9,6 +9,8 @@ const PENDING = '_PENDING';
 
 const initValue = {
     socket: null,
+    socketListeners: [],
+    timer: null,
     gameState: {
         redScore: -1,
         blueScore: -1,
@@ -54,6 +56,36 @@ export default (state = initValue, action) => {
             return {
                 ...state,
                 summary: action.payload.data
+            }
+        case userActions.LISTEN_SOCKET:
+            let newListeners = state.socket.listeners.slice();
+            newListeners.push(action.payload);
+            state.socket.listeners = newListeners;
+            return {
+                ...state
+            }
+        case userActions.STOP_LISTEN_SOCKET:
+            let id = state.socket.listeners.indexOf(action.payload);
+            let newArr = state.socket.listeners.slice();
+            if (id > -1) {
+                newArr.splice(id, 1);
+              }
+              state.socket.listeners = newArr;
+            return {
+                ...state
+            }
+        case userActions.START_TIMER:
+            if(state.timer)
+                clearInterval(state.timer)
+            return {
+                ...state,
+                timer: action.payload
+            }
+        case userActions.STOP_TIMER:
+            if(state.timer)
+                clearInterval(state.timer)
+            return {
+                ...state
             }
         default:
             return state

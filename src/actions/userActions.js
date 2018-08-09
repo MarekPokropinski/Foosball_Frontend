@@ -6,7 +6,10 @@ export const START_GAME = 'start_game';
 export const TIME_STAMP = 'time_stamp';
 export const GET_STATS = 'get_stats';
 export const INC_SCORE = 'inc_score';
-
+export const LISTEN_SOCKET = 'listen_socket';
+export const STOP_LISTEN_SOCKET = 'stop_listen_socket';
+export const START_TIMER = 'start_timer';
+export const STOP_TIMER = 'stop_timer';
 
 /*
 export const testAction = () => {
@@ -20,7 +23,8 @@ export const testAction = () => {
 export const connect = (endpoint, onOpen, onMessage) => {
     let socket = new WebSocket(endpoint);
     socket.onopen = onOpen;
-    socket.onmessage = onMessage;
+    socket.listeners = [];
+    socket.onmessage = (e) => {onMessage(e);  socket.listeners.map((v) => v.onMessage(e))};
     return {
         type: CONNECT_WS,
         payload: socket
@@ -56,9 +60,36 @@ export const getStats = (ip) => {
 }
 
 export const incrementScore = (color, ip) => {
-    console.log({team: color})
     return {
         type: INC_SCORE,
         payload: axios.post(`http://${ip}:8080/normalGame/goal`, `"${color}"`,  {headers: {'Content-Type': 'application/json'}})
+    }
+}
+
+export const listenToSocket = (listener) => {
+    return {
+        type: LISTEN_SOCKET,
+        payload: listener
+    }
+}
+
+export const stopListeningToSocket = (listener) => {
+    return {
+        type: STOP_LISTEN_SOCKET,
+        payload: listener
+    }
+}
+
+export const startTimer = (interval, method) => {
+    return {
+        type: START_TIMER,
+        payload: setInterval(() => method(), interval)
+    }
+}
+
+export const stopTimer = () => {
+    return {
+        type: STOP_TIMER,
+        payload: null
     }
 }

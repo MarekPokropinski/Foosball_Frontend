@@ -14,35 +14,46 @@ const ip = 'localhost'
 
 class GameComponent extends React.Component {
 
-    state = {
-        timer: null
+    constructor(props) {
+        super(props);
     }
+    
 
     componentDidMount() {
-        this.connect();
+
+        if(!this.props.user.socket)
+            this.connect();
+        else
+            this.props.actions.startGame(ip); 
+        
+
+        this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
+        //this.setState({timer: setInterval(, 1000)}) 
+        this.props.actions.listenToSocket(this)
+        
+    }
+
+    onMessage(e) {
+        console.log('on message')
+        console.log(this.props.user.gameState.finished)
+        if(this.props.user.gameState.finished) {
+            this.handleGameFinish()
+        }
     }
 
 
-    componentWillUnmount() {
-        clearInterval(this.state.timer)
-    }
 
     handleGameFinish() {
-        this.props.actions.getStats(ip); //gets stats from server and finishes game
-        this.props.history.replace('/summary');
+        this.props.actions.stopTimer()
+        this.props.actions.stopListeningToSocket(this)
+        this.props.actions.getStats(ip).then(() => this.props.history.replace('/summary')); //gets stats from server and finishes game
     }
     connect() {
         this.props.actions.connect('ws://' + ip + ':8080/matchInfo', (e) => {
-            this.props.actions.startGame(ip);
-            this.setState({timer: setInterval(() => this.props.actions.timeStamp(1000), 1000)}) 
+            this.props.actions.startGame(ip); 
         }, (e) => {
-            this.props.actions.socketEvent(e.data);
-            clearInterval(this.state.timer)
-            this.setState({timer: setInterval(() => this.props.actions.timeStamp(1000), 1000)})
-
-            if(this.props.user.gameState.finished) {
-                this.handleGameFinish();
-            }
+            console.log(this.props.user.socket);
+            this.props.actions.socketEvent(e.data);            
         })
     }
 
@@ -86,6 +97,7 @@ class GameComponent extends React.Component {
     }
 
     render() {
+
         let nicks = "";
         if(this.props.user.gameType.type !== 'normal')
             nicks = this.showNicks();
@@ -111,8 +123,6 @@ class GameComponent extends React.Component {
         );
     }
 }
-//<p>{this.props.user.gameState.redScore} : {this.props.user.gameState.blueScore}</p>
-//this.props.actions.incrementScore('&quot;RED&quot;', ip)
 
 const mapDispatchToProps = (dispatch) => {
     return {
