@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render } from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -17,17 +16,10 @@ import GameMode from './layout/gameMode';
 import Game1v1 from './layout/game1v1Mode'
 import Game2v2 from './layout/game2v2Mode'
 import theme from './styles/theme'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import styled from 'styled-components';
+import { MuiThemeProvider} from 'material-ui/styles';
 import './styles/index.css';
+import './images/ncdc2.jpg'
 
-const divStyle = {
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black'
-}
 
 const store = createStore(
     reducers,

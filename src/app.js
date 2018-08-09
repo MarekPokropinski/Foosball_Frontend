@@ -3,17 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from './actions/userActions.js';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
-import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
-import  *  as theme from './styles/theme'
+import CustomButton from './layout/button'
 const Container = styled.div`
  text-align: center;
  display:flex;
  justify-content: center;
  align-items: center;
 `;
-
-const muiTheme = theme;
 
 class App extends React.Component {
 
@@ -34,12 +30,11 @@ class App extends React.Component {
         }
         return (
             <Container>
-                <MuiThemeProvider muiTheme={muiTheme}>
                     <div style={styleContainer}>
-                        <Button style={style} variant='contained' color='secondary' onClick={() => { this.handleNormalUser() }} >normal</Button>
-                        <Button value='ranked' variant='contained' color='secondary' onClick={() => { this.handleRankedUsers() }} >ranked</Button>
+                        <CustomButton variant='contained' value='normal' color='secondary' onClick={() => this.handleNormalUser()} >normal</CustomButton>
+                        <br/>
+                        <CustomButton value='ranked' variant='contained' color='secondary' onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
                     </div>
-                </MuiThemeProvider>
             </Container>
         );
     }
