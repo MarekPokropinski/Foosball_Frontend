@@ -13,9 +13,6 @@ import GameComponent from './layout/gameComponent'
 import ButtonAppBar from './layout/navBar';
 import GameBegin from './layout/gameBegin';
 import Lobby from './layout/lobby';
-import GameMode from './layout/gameMode';
-import Game1v1 from './layout/game1v1Mode'
-import Game2v2 from './layout/game2v2Mode'
 import SummaryComponent from './layout/summaryComponent';
 import theme from './styles/theme'
 import { MuiThemeProvider} from 'material-ui/styles';
