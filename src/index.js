@@ -14,21 +14,25 @@ import ButtonAppBar from './layout/navBar';
 import GameBegin from './layout/gameBegin';
 import Lobby from './layout/lobby';
 import SummaryComponent from './layout/summaryComponent';
-import theme from './styles/theme'
+import theme from './styles/theme';
 import { MuiThemeProvider} from 'material-ui/styles';
+//import Image from 'material-ui-image'
 import './styles/index.css';
-import './images/ncdc2.jpg'
+import './images/ncdc2.jpg';
 
+//        <img className="backgroundImage" src={require('./images/bg2.pngs')} />
 
 const store = createStore(
     reducers,
     applyMiddleware(ReduxThunk, logger, promiseMiddleware())
 );
 ReactDOM.render(
-    <div>
-        <MuiThemeProvider theme={theme} >
+    <div className="mainContainer">
+        
+        <MuiThemeProvider theme={theme} >        
+
             <ButtonAppBar />
-            <div className="mainContainer">
+            <div className="content">
                 <Provider store={store}>
                     <BrowserRouter>
                         <Switch>
@@ -41,7 +45,9 @@ ReactDOM.render(
                     </BrowserRouter>
                 </Provider>
             </div>
+            
         </MuiThemeProvider>
+
     </div>
     , document.getElementById('root'));
 registerServiceWorker();
