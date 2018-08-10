@@ -10,15 +10,9 @@ export const LISTEN_SOCKET = 'listen_socket';
 export const STOP_LISTEN_SOCKET = 'stop_listen_socket';
 export const START_TIMER = 'start_timer';
 export const STOP_TIMER = 'stop_timer';
+export const GAME_TYPE = 'game_type';
+export const START_RANKED = 'start_ranked'
 
-/*
-export const testAction = () => {
-    return {
-        type: 'test_action',
-        payload: "Hello world!"
-    }
-}
-//*/
 
 export const connect = (endpoint, onOpen, onMessage) => {
     let socket = new WebSocket(endpoint);
@@ -42,6 +36,13 @@ export const startGame = (ip) => {
     return {
         type: START_GAME,
         payload: axios.get(`http://${ip}:8080/normalGame/start`)
+    }
+}
+
+export const startRankedGame = (ip) => {
+    return {
+        type: START_RANKED,
+        payload: axios.post(`http://${ip}:8080/rankedGame/start`, `[1, 2]`, {headers: {'Content-Type': 'application/json'}})
     }
 }
 
@@ -91,5 +92,12 @@ export const stopTimer = () => {
     return {
         type: STOP_TIMER,
         payload: null
+    }
+}
+
+export const setGameType = (type) => {
+    return {
+        type: GAME_TYPE,
+        payload: type
     }
 }

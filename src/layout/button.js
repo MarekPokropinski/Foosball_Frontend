@@ -13,7 +13,6 @@ const styles = {
         height: 68,
         width: 250,
         fontSize: 30,
-        padding: '20%',
         textShadow: '3px 1px 7px rgba(138, 145, 150, 1)',
         padding: '0 30px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
