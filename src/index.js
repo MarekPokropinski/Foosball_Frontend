@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
@@ -30,7 +30,7 @@ ReactDOM.render(
             <ButtonAppBar />
             <div className="mainContainer">
                 <Provider store={store}>
-                    <BrowserRouter>
+                    <HashRouter basename="/foosball">
                         <Switch>
                             <Route path="/summary" component={SummaryComponent}/>
                             <Route path="/game" component={GameComponent} />
@@ -38,7 +38,7 @@ ReactDOM.render(
                             <Route path="/mode" component={Lobby}/>
                             <Route path="/" component={App} />
                         </Switch>
-                    </BrowserRouter>
+                    </HashRouter>
                 </Provider>
             </div>
         </MuiThemeProvider>
