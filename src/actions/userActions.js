@@ -13,7 +13,6 @@ export const STOP_TIMER = 'stop_timer';
 export const GAME_TYPE = 'game_type';
 export const START_RANKED = 'start_ranked'
 
-
 export const connect = (endpoint, onOpen, onMessage) => {
     let socket = new WebSocket(endpoint);
     socket.onopen = onOpen;
@@ -32,17 +31,17 @@ export const socketEvent = (data) => {
     }
 }
 
-export const startGame = (ip) => {
+export const startGame = () => {
     return {
         type: START_GAME,
-        payload: axios.get(`http://${ip}:8080/normalGame/start`)
+        payload: axios.get(`${process.env.REACT_APP_HOST}/normalGame/start`)
     }
 }
 
-export const startRankedGame = (ip) => {
+export const startRankedGame = () => {
     return {
         type: START_RANKED,
-        payload: axios.post(`http://${ip}:8080/rankedGame/start`, `[1, 2]`, {headers: {'Content-Type': 'application/json'}})
+        payload: axios.post(`${process.env.REACT_APP_HOST}/rankedGame/start`, `[1, 2]`, {headers: {'Content-Type': 'application/json'}})
     }
 }
 
@@ -53,17 +52,17 @@ export const timeStamp = (time) => {
     }
 }
 
-export const getStats = (ip) => {
+export const getStats = () => {
     return {
         type: GET_STATS,
-        payload: axios.get(`http://${ip}:8080/normalGame/finish`)
+        payload: axios.get(`${process.env.REACT_APP_HOST}/normalGame/finish`)
     }
 }
 
 export const incrementScore = (color, id, ip) => {
     return {
         type: INC_SCORE,
-        payload: axios.get(`http://${ip}:8080/normalGame/goal?team=${color}&gameId=${id}`)
+        payload: axios.get(`${process.env.REACT_APP_HOST}/normalGame/goal?team=${color}&gameId=${id}`)
     }
 }
 
