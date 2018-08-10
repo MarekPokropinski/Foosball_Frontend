@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Image from 'material-ui-image'
 
 const styles = {
   root: {
@@ -20,6 +21,12 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  image: {
+    width: '15%',
+    height:'90%',
+    float: 'right',
+    borderRadius: 5,
+  }
 };
 
 function ButtonAppBar(props) {
@@ -31,11 +38,11 @@ function ButtonAppBar(props) {
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-
           <Typography variant="title" color="inherit" className={classes.flex}>
-          <CardMedia image='../images/ncdc1.png' title="ncdc_logo" className={classes.media}/>
+          
             FOOSBALL
           </Typography>
+          <img src={require('../images/ncdc1.png')} title="ncdc_logo" className={classes.image}/>
 
           </Toolbar>
       </AppBar>
