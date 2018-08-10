@@ -15,10 +15,12 @@ const Container = styled.div`
 class App extends React.Component {
     handleNormalUser() {
         this.props.history.replace('/begin')
+        this.props.actions.setGameType('normal');
     }
 
     handleRankedUsers() {
         this.props.history.replace("/mode");
+        this.props.actions.setGameType('ranked');
     }
 
     render() {
