@@ -33,6 +33,7 @@ class App extends React.Component {
                         <CustomButton variant='contained' value='normal' color='secondary' onClick={() => this.handleNormalUser()} >normal</CustomButton>
                         <br/>
                         <CustomButton value='ranked' variant='contained' color='secondary' onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
+                    <div> </div>
                     </div>
             </Container>
         );
