@@ -60,16 +60,17 @@ export default (state = initValue, action) => {
                 ...state,
                 summary: action.payload.data
             }
-        case userActions.LISTEN_SOCKET:
-            var ws = state.socket;
+        case userActions.LISTEN_SOCKET: {
+            let ws = state.socket;
             ws.listeners.push(action.payload);
             return {
                 ...state,
                 socket: ws
             }
+        }
         case userActions.STOP_LISTEN_SOCKET:
             let id = state.socket.listeners.indexOf(action.payload);
-            var ws = state.socket;
+            let ws = state.socket;
 
             if (id > -1) {
                 ws.listeners.splice(id, 1);

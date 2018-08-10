@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
-import { Grid, Paper, Select } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 const style = {
   Paper: {

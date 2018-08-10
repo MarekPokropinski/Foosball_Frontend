@@ -9,20 +9,12 @@ import Time from '../time';
 
 import '../styles/gameStyle.css'
 
-//const ip = '192.168.253.159';
 const ip = Config.ip;
 
-
-
 class GameComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
         this.props.actions.listenToSocket(this)
-
     }
 
     onMessage(e) {
@@ -74,7 +66,6 @@ class GameComponent extends React.Component {
                         <p key={index}>{val}</p>
                     );
                 })}
-
             </div>
         );
     }
@@ -100,7 +91,6 @@ class GameComponent extends React.Component {
                     <p onClick={() => { this.handleBlueIncrement() }}>{this.props.user.gameState.blueScore}</p>
                 </div>
                 <Button className='finishButton' variant="outlined" onClick={() => this.handleExitButton()}> Exit game </Button>
-
             </div>
         );
     }
@@ -117,6 +107,5 @@ const mapStateToProps = (state) => {
         user: state.user
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameComponent);
