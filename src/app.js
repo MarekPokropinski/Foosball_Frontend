@@ -24,9 +24,6 @@ class App extends React.Component {
     }
 
     render() {
-        let style = {
-            width: '300%',
-        }
         let styleContainer = {
             backroundColor: "black",
         }
