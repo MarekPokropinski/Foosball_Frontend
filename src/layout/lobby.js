@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
-import { Grid, Paper, Select } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 const style = {
   Paper: {
@@ -18,10 +18,6 @@ const style = {
     fontWeight: "bold",
     width: "30%"
   },
-  Div: {
-    textAlign: "center",
-    marginTop: "10%"
-  }
 };
 
 class Lobby extends Component {
@@ -49,7 +45,7 @@ class Lobby extends Component {
 
   render() {
     return (
-      <div style={style.Div}>
+      <div>
         <h1>Type : {this.state.gameType}</h1>
         <Grid container style={style.Container}>
           <Grid item sm>

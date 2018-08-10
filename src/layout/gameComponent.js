@@ -4,57 +4,35 @@ import { bindActionCreators } from 'redux';
 
 import * as userActions from '../actions/userActions.js';
 import Button from '@material-ui/core/Button';
+import Config from '../config';
+import Time from '../time';
 
-import './gameStyle.css'
+import '../styles/gameStyle.css'
 
-//const ip = '192.168.253.159';
-const ip = 'localhost'
-
-
+const ip = Config.ip;
 
 class GameComponent extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-    
-
     componentDidMount() {
-
-        if(!this.props.user.socket)
-            this.connect();
-        else
-            this.props.actions.startGame(ip); 
-        
-
         this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
-        //this.setState({timer: setInterval(, 1000)}) 
         this.props.actions.listenToSocket(this)
-        
     }
 
     onMessage(e) {
-        console.log('on message')
-        console.log(this.props.user.gameState.finished)
-        if(this.props.user.gameState.finished) {
+        if (this.props.user.gameState.finished) {
             this.handleGameFinish()
         }
     }
 
-
+    waitAndShowSummary() {
+        setTimeout(() => {
+            this.props.history.replace("/summary")
+        }, 500);
+    }
 
     handleGameFinish() {
         this.props.actions.stopTimer()
         this.props.actions.stopListeningToSocket(this)
-        this.props.actions.getStats(ip).then(() => this.props.history.replace('/summary')); //gets stats from server and finishes game
-    }
-    connect() {
-        this.props.actions.connect('ws://' + ip + ':8080/matchInfo', (e) => {
-            this.props.actions.startGame(ip); 
-        }, (e) => {
-            console.log(this.props.user.socket);
-            this.props.actions.socketEvent(e.data);            
-        })
+        this.props.actions.getStats(ip).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
     }
 
     handleExitButton() {
@@ -62,22 +40,8 @@ class GameComponent extends React.Component {
     }
 
     getConvertedTime() {
-        let r = '';
-        let time = Math.floor(this.props.user.gameState.gameTime / 1000);
-        let seconds = time % 60;
-        r = (seconds < 10)? '0' + seconds : seconds;
-        time = Math.floor(time / 60);
-        
-        if( time > 0 ) {
-            r = time % 60 + ':' + r; 
-            time = Math.floor(time / 60);
-        }
-
-        if( time > 0 ) {
-            r = time + ':' + r; 
-        }
-
-        return r;
+        var time = new Time(this.props.user.gameState.gameTime);
+        return time.getConverted();
     }
 
     handleRedIncrement() {
@@ -89,17 +53,26 @@ class GameComponent extends React.Component {
     }
 
     showNicks() {
-        return this.props.user.gameState.nicks.map((val, index) => {
-            return (
-                <p key={index}>{val}</p>
-            );
-        });
+        return (
+            <div>
+                {console.log(this.props.user)}
+                {this.props.user.gameState.blueTeamIds.map((val, index) => {
+                    return (
+                        <p key={index}>{val}</p>
+                    );
+                })}
+                {this.props.user.gameState.redTeamIds.map((val, index) => {
+                    return (
+                        <p key={index}>{val}</p>
+                    );
+                })}
+            </div>
+        );
     }
 
     render() {
-
         let nicks = "";
-        if(this.props.user.gameType.type !== 'normal')
+        if (this.props.user.gameType !== 'normal')
             nicks = this.showNicks();
 
         return (
@@ -111,14 +84,13 @@ class GameComponent extends React.Component {
                 <div className='nicks'>
                     {nicks}
                 </div>
-                
+
                 <div className='score'>
-                    <p onClick={() => {this.handleRedIncrement()}}>{this.props.user.gameState.redScore}</p>
+                    <p onClick={() => { this.handleRedIncrement() }}>{this.props.user.gameState.redScore}</p>
                     <p>&nbsp;:&nbsp;</p>
-                    <p onClick={() => {this.handleBlueIncrement()}}>{this.props.user.gameState.blueScore}</p>   
+                    <p onClick={() => { this.handleBlueIncrement() }}>{this.props.user.gameState.blueScore}</p>
                 </div>
                 <Button className='finishButton' variant="outlined" onClick={() => this.handleExitButton()}> Exit game </Button>
-
             </div>
         );
     }
@@ -135,6 +107,5 @@ const mapStateToProps = (state) => {
         user: state.user
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameComponent);
