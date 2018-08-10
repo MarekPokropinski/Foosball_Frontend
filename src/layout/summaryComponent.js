@@ -1,62 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import * as userActions from '../actions/userActions.js';
 import Button from '@material-ui/core/Button';
-
 import ScoreTable from './scoreTable';
+import Time from '../time';
 
 
 class SummaryComponent extends React.Component {
-
-    componentDidMount() {
-        //get info from server
-    }
-
     handleExitButton() {
         this.props.history.replace('/')
     }
 
     getConvertedTime() {
-        let r = '';
-        let time = Math.floor(this.props.user.summary.gameTime / 1000);
-        let seconds = time % 60;
-        r = (seconds < 10)? '0' + seconds : seconds;
-        time = Math.floor(time / 60);
-        
-        if( time > 0 ) {
-            r = time % 60 + ':' + r; 
-            time = Math.floor(time / 60);
-        }
-
-        if( time > 0 ) {
-            r = time + ':' + r; 
-        }
-
-        return r;
+        var time = new Time(this.props.user.summary.gameTime);
+        return time.getConverted();
     }
 
     getData() {
         return [
-            {type: 'Score', value: this.props.user.summary.redScore + ' : ' + this.props.user.summary.blueScore},
-            {type: 'Goals', value: `${this.props.user.summary.redScore + this.props.user.summary.blueScore}`},
-            {type: 'Time', value: this.getConvertedTime()},
-            {type: 'Longes series of red', value: '' + this.props.user.summary.redLongestSeries},
-            {type: 'Longes series of blue   ', value: '' + this.props.user.summary.blueLongestSeries}
+            { type: 'Score', value: 'Red ' + this.props.user.summary.redScore + ' : ' + this.props.user.summary.blueScore + ' Blue' },
+            { type: 'Goals', value: `${this.props.user.summary.redScore + this.props.user.summary.blueScore}` },
+            { type: 'Time', value: this.getConvertedTime() },
+            { type: 'Longes series of red', value: '' + this.props.user.summary.redLongestSeries },
+            { type: 'Longes series of blue   ', value: '' + this.props.user.summary.blueLongestSeries }
         ];
     }
 
     render() {
         return (
-            <div style={{textAlign: 'center'}}>
-                
-                <ScoreTable data={this.getData()}/>
-
+            <div>
+                <ScoreTable data={this.getData()} />
                 <br />
-            
-                <Button  variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit to menu </Button>
-                    
+                <Button variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit to menu </Button>
             </div>
         );
     }
