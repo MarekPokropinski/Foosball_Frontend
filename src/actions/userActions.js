@@ -60,10 +60,10 @@ export const getStats = (ip) => {
     }
 }
 
-export const incrementScore = (color, ip) => {
+export const incrementScore = (color, id, ip) => {
     return {
         type: INC_SCORE,
-        payload: axios.post(`http://${ip}:8080/normalGame/goal`, `"${color}"`,  {headers: {'Content-Type': 'application/json'}})
+        payload: axios.get(`http://${ip}:8080/normalGame/goal?team=${color}&gameId=${id}`)
     }
 }
 

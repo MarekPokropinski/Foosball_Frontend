@@ -35,6 +35,7 @@ class GameBegin extends Component {
         this.props.actions.connect('ws://' + ip + ':8080/matchInfo', (e) => {
             this.startGame();
         }, (e) => {
+            console.log(e.data);
             this.props.actions.socketEvent(e.data);
         })
     }

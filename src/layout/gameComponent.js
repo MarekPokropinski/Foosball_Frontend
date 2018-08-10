@@ -40,16 +40,17 @@ class GameComponent extends React.Component {
     }
 
     getConvertedTime() {
-        var time = new Time(this.props.user.gameState.gameTime);
+        var time = new Time(this.props.user.gameState.time);
         return time.getConverted();
     }
 
     handleRedIncrement() {
-        this.props.actions.incrementScore('RED', ip)
+        console.log( this.props.user.gameState)
+        this.props.actions.incrementScore('RED', this.props.user.gameState.id, ip)
     }
 
     handleBlueIncrement() {
-        this.props.actions.incrementScore('BLUE', ip)
+        this.props.actions.incrementScore('BLUE', this.props.user.gameState.id, ip)
     }
 
     showNicks() {

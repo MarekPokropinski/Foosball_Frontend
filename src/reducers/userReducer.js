@@ -10,9 +10,10 @@ const initValue = {
     socketListeners: [],
     timer: null,
     gameState: {
+        id: 0,
         redScore: 0,
         blueScore: 0,
-        gameTime: 0,
+        time: 0,
         finished: true,
         blueTeamIds: [],
         redTeamIds: [],
@@ -43,7 +44,7 @@ export default (state = initValue, action) => {
         case `${userActions.START_GAME}${FULFILLED}`:
             return {
                 ...state,
-                gameState: action.payload.data
+                gameState: {...state.gameState, id: action.payload.data}
             }
         case `${userActions.START_RANKED}${FULFILLED}`:
             return {
