@@ -32,7 +32,7 @@ class GameBegin extends Component {
     }
 
     connect() {
-        this.props.actions.connect(`ws://${process.env.REACT_APP_HOST}/matchInfo`, (e) => {
+        this.props.actions.connect(`${process.env.REACT_APP_HOST_SOCKET}/matchInfo`, (e) => {
             this.startGame();
         }, (e) => {
             this.props.actions.socketEvent(e.data);
