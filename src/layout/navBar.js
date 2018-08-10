@@ -40,7 +40,7 @@ function ButtonAppBar(props) {
           
             FOOSBALL
           </Typography>
-          <img src={require('../images/ncdc1.png')} title="ncdc_logo" className={classes.image}/>
+          <img alt='' src={require('../images/ncdc1.png')} title="ncdc_logo" className={classes.image}/>
 
           </Toolbar>
       </AppBar>

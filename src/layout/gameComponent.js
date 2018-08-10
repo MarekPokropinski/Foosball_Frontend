@@ -4,12 +4,9 @@ import { bindActionCreators } from 'redux';
 
 import * as userActions from '../actions/userActions.js';
 import Button from '@material-ui/core/Button';
-import Config from '../config';
 import Time from '../time';
 
 import '../styles/gameStyle.css'
-
-const ip = Config.ip;
 
 class GameComponent extends React.Component {
     componentDidMount() {
@@ -32,7 +29,7 @@ class GameComponent extends React.Component {
     handleGameFinish() {
         this.props.actions.stopTimer()
         this.props.actions.stopListeningToSocket(this)
-        this.props.actions.getStats(ip).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
+        this.props.actions.getStats(this.props.user.gameState.id).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
     }
 
     handleExitButton() {
@@ -45,18 +42,16 @@ class GameComponent extends React.Component {
     }
 
     handleRedIncrement() {
-        console.log( this.props.user.gameState)
-        this.props.actions.incrementScore('RED', this.props.user.gameState.id, ip)
+        this.props.actions.incrementScore('RED', this.props.user.gameState.id)
     }
 
     handleBlueIncrement() {
-        this.props.actions.incrementScore('BLUE', this.props.user.gameState.id, ip)
+        this.props.actions.incrementScore('BLUE', this.props.user.gameState.id)
     }
 
     showNicks() {
         return (
             <div>
-                {console.log(this.props.user)}
                 {this.props.user.gameState.blueTeamIds.map((val, index) => {
                     return (
                         <p key={index}>{val}</p>

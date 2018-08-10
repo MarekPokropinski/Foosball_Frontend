@@ -54,12 +54,12 @@ export default (state = initValue, action) => {
         case `${userActions.TIME_STAMP}`:
             return {
                 ...state,
-                gameState: { ...state.gameState, gameTime: state.gameState.gameTime + action.payload }
+                gameState: { ...state.gameState, time: state.gameState.time + action.payload }
             }
         case `${userActions.GET_STATS}${FULFILLED}`:
             return {
                 ...state,
-                summary: action.payload.data
+                //summary: action.payload.data
             }
         case userActions.LISTEN_SOCKET: {
             let ws = state.socket;

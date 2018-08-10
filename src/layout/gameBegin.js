@@ -3,19 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Config from '../config';
 
-const ip = Config.ip;
 
 class GameBegin extends Component {
     startGameAction() {
         switch (this.props.user.gameType) {
             case 'normal':
-                return this.props.actions.startGame(ip);
+                return this.props.actions.startGame();
             case 'ranked':
-                return this.props.actions.startRankedGame(ip);
+                return this.props.actions.startRankedGame([1], [2]);
             default:
-                return this.props.actions.startGame(ip);
+                return this.props.actions.startGame();
         }
     }
 
