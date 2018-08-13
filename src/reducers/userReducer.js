@@ -15,8 +15,8 @@ const initValue = {
         blueScore: 0,
         time: 0,
         finished: true,
-        blueTeamIds: [],
-        redTeamIds: [],
+        blueTeamIds: ['jarek', 'pokropow'],
+        redTeamIds: ['relik', 'qwarq'],
     },
     summary: {
         redScore: 0,
@@ -39,7 +39,7 @@ export default (state = initValue, action) => {
         case userActions.SOCKET_EVENT:
             return {
                 ...state,
-                gameState: action.payload
+                gameState: {...state.gameState, ...action.payload}
             }
         case `${userActions.START_GAME}${FULFILLED}`:
             return {
@@ -49,7 +49,7 @@ export default (state = initValue, action) => {
         case `${userActions.START_RANKED}${FULFILLED}`:
             return {
                 ...state,
-                gameState: action.payload.data
+                gameState: {...state.gameState, id: action.payload.data}
             }
         case `${userActions.TIME_STAMP}`:
             return {

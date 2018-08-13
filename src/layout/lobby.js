@@ -1,14 +1,14 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as userActions from '../actions/userActions.js';
 
-import Button from "@material-ui/core/Button";
-import { Grid } from "@material-ui/core";
+import CustomButton from '../layout/button';
+import Button from '@material-ui/core/Button';
+import '../styles/lobby.css';
+
 
 const style = {
-  Paper: {
-    padding: 20,
-    margin: "20px auto",
-    width: "40%"
-  },
   Container: {
     itemAlign: "center"
   },
@@ -17,83 +17,61 @@ const style = {
     padding: 20,
     fontWeight: "bold",
     width: "30%"
-  },
-  Div: {
   }
 };
 
 class Lobby extends Component {
-  state = {
-    gameType: "Ranked",
-    users: [
-      { name: "@User1" },
-      { name: "@User2" },
-      { name: "@User3" },
-      { name: "@User4" }
-    ]
-  };
 
   startGame() {
     this.props.history.replace("/begin");
   }
 
-  deleteUser(userId) {
-    let tempUsers = [...this.state.users];
-    tempUsers[userId] = " ";
-    this.setState({
-      users: tempUsers
-    });
+  deleteUser(userId, team) {
+    //delete user
+  }
+
+  renderUserButton(color, val, index, team) {
+    return (
+      <CustomButton
+        value={val}
+        color={color}
+        variant="contained"
+        onClick={() => this.deleteUser(index, team)}
+      />
+    );
+  }
+
+  renderUsersGrid() {
+    return (
+      <div className='flex'>
+        <div>
+          {this.props.user.gameState.blueTeamIds.map((val, index) => {
+            return (
+              <div key={index}>
+                {this.renderUserButton('secondary', val, index, 'blue')}
+              </div>
+            );
+          })}
+        </div>
+        <div>
+          {this.props.user.gameState.redTeamIds.map((val, index) => {
+            return (
+              <div key={index}>
+                {this.renderUserButton('primary', val, index, 'red')}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
       <div>
-        <h1>Type : {this.state.gameType}</h1>
-        <Grid container style={style.Container}>
-          <Grid item sm>
-            <Button
-              color="secondary"
-              variant="contained"
-              style={style.Paper}
-              onClick={() => this.deleteUser(0)}
-            >
-              {this.state.users[0].name}
-            </Button>
-          </Grid>
-          <Grid item sm>
-            <Button
-              color="primary"
-              variant="contained"
-              style={style.Paper}
-              onClick={() => this.deleteUser(1)}
-            >
-              {this.state.users[1].name}
-            </Button>
-          </Grid>
-        </Grid>
+        <h1>Type : {this.props.user.gameType}</h1>
 
-        <Grid container>
-          <Grid item sm>
-            <Button
-              color="secondary"
-              variant="contained"
-              style={style.Paper}
-              onClick={() => this.deleteUser(2)}
-            >
-              {this.state.users[2].name}
-            </Button>
-          </Grid>
-          <Grid item sm>
-            <Button
-              color="primary"
-              variant="contained"
-              style={style.Paper}
-              onClick={() => this.deleteUser(3)}
-            >
-              {this.state.users[3].name}
-            </Button>
-          </Grid>
-        </Grid>
+        {this.renderUsersGrid()}
 
         <Button
           style={style.StartButton}
@@ -108,4 +86,16 @@ class Lobby extends Component {
   }
 }
 
-export default Lobby;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(userActions, dispatch)
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lobby);

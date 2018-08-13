@@ -15,6 +15,7 @@ class GameComponent extends React.Component {
     }
 
     onMessage(e) {
+        console.log(e)
         if (this.props.user.gameState.finished) {
             this.handleGameFinish()
         }
@@ -29,6 +30,7 @@ class GameComponent extends React.Component {
     handleGameFinish() {
         this.props.actions.stopTimer()
         this.props.actions.stopListeningToSocket(this)
+        console.log(this.props.user.gameState.id)
         this.props.actions.getStats(this.props.user.gameState.id).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
     }
 
@@ -51,24 +53,28 @@ class GameComponent extends React.Component {
 
     showNicks() {
         return (
-            <div>
+            <div className='nicks'>
+                <div className='flex'>
                 {this.props.user.gameState.blueTeamIds.map((val, index) => {
                     return (
-                        <p key={index}>{val}</p>
+                        <p key={index}>{val}&nbsp;&nbsp;&nbsp;</p>
                     );
                 })}
+                </div>
+                <div className='flex'>
                 {this.props.user.gameState.redTeamIds.map((val, index) => {
                     return (
-                        <p key={index}>{val}</p>
+                        <p key={index}>{val}&nbsp;&nbsp;&nbsp;</p>
                     );
                 })}
+                </div>
             </div>
         );
     }
 
     render() {
         let nicks = "";
-        if (this.props.user.gameType !== 'normal')
+        if (this.props.user.gameType !== 'free')
             nicks = this.showNicks();
 
         return (
@@ -77,7 +83,7 @@ class GameComponent extends React.Component {
                     {this.getConvertedTime()}
                 </div>
 
-                <div className='nicks'>
+                <div >
                     {nicks}
                 </div>
 
