@@ -15,15 +15,24 @@ const styles = {
   flex: {
     flexGrow: 1,
   },
+  navBar: {
+    height: '10%',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
+    color:'white'
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
   },
   image: {
     width: '15%',
-    height:'90%',
+    height: '90%',
     float: 'right',
     borderRadius: 5,
+  },
+  imageDiv: {
+    height: '100%',
+    //backgroundColor: '#fff'
   }
 };
 
@@ -31,18 +40,20 @@ function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" color='primary'>
-        <Toolbar>
+      <AppBar position="static" color='primary' >
+        <Toolbar className={classes.navBar}>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="title" color="inherit" className={classes.flex}>
-          
             FOOSBALL
-          </Typography>
-          <img alt='' src={require('../images/ncdc1.png')} title="ncdc_logo" className={classes.image}/>
 
-          </Toolbar>
+          </Typography>
+          <div className={classes.imageDiv}>
+            <img alt="Logo" src={require('../images/ncdc3.png')} title="ncdc_logo" className={classes.image} />
+          </div>
+        </Toolbar>
+
       </AppBar>
     </div>
   );

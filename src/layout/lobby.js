@@ -18,6 +18,8 @@ const style = {
     fontWeight: "bold",
     width: "30%"
   },
+  Div: {
+  }
 };
 
 class Lobby extends Component {
