@@ -15,22 +15,19 @@ import Lobby from './layout/lobby';
 import SummaryComponent from './layout/summaryComponent';
 import theme from './styles/theme';
 import { MuiThemeProvider} from 'material-ui/styles';
-//import Image from 'material-ui-image'
 import './styles/index.css';
-import './images/ncdc2.jpg';
-
-//        <img className="backgroundImage" src={require('./images/bg2.pngs')} />
 
 const store = createStore(
     reducers,
     applyMiddleware(ReduxThunk, logger, promiseMiddleware())
 );
+
 ReactDOM.render(
     <div className="mainContainer">
-        
         <MuiThemeProvider theme={theme} >        
 
             <ButtonAppBar />
+            
             <div className="content">
                 <Provider store={store}>
                     <HashRouter basename="/foosball">
@@ -46,6 +43,5 @@ ReactDOM.render(
             </div>
             
         </MuiThemeProvider>
-
     </div>
     , document.getElementById('root'));
