@@ -13,7 +13,7 @@ class SummaryComponent extends React.Component {
     }
 
     getConvertedTime() {
-        var time = new Time(this.props.user.summary.gameTime);
+        var time = new Time(this.props.user.gameState.time);
         return time.getConverted();
     }
 
