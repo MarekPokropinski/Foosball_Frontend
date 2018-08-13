@@ -30,9 +30,10 @@ class App extends React.Component {
         return (
             <Container>
                     <div style={styleContainer}>
-                        <CustomButton variant='contained' value='normal' color='secondary' onClick={() => this.handleNormalUser()} >normal</CustomButton>
-                        <br/>
-                        <CustomButton value='ranked' variant='contained' color='secondary' onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
+                        <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick="" >free</CustomButton>
+                        <CustomButton value='normal' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleNormalUser()} >normal</CustomButton>
+                        <CustomButton value='ranked' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
+                        <CustomButton value='tournament' variant='contained' color='secondary' className="menuButton" onClick="" >tournament</CustomButton>
                     </div>
             </Container>
         );
