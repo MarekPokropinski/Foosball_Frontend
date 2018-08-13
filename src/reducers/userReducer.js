@@ -59,7 +59,7 @@ export default (state = initValue, action) => {
         case `${userActions.GET_STATS}${FULFILLED}`:
             return {
                 ...state,
-                //summary: action.payload.data
+                summary: action.payload.data
             }
         case userActions.LISTEN_SOCKET: {
             let ws = state.socket;
