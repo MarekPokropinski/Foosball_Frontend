@@ -19,8 +19,6 @@ const style = {
     width: "30%"
   },
   Div: {
-    // textAlign: "center",
-    // marginTop: "10%"
   }
 };
 
