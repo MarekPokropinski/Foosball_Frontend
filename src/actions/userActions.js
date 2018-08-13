@@ -38,10 +38,10 @@ export const startGame = () => {
     }
 }
 
-export const startRankedGame = () => {
+export const startRankedGame = (redIds, blueIds) => {
     return {
         type: START_RANKED,
-        payload: axios.post(`${process.env.REACT_APP_HOST}/rankedGame/start`, `[1, 2]`, {headers: {'Content-Type': 'application/json'}})
+        payload: axios.get(`${process.env.REACT_APP_HOST}/rankedGame/start?redTeamIds=${redIds}&blueTeamIds=${blueIds}`)
     }
 }
 
@@ -52,17 +52,17 @@ export const timeStamp = (time) => {
     }
 }
 
-export const getStats = () => {
+export const getStats = (id) => {
     return {
         type: GET_STATS,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/normalGame/finish`)
+        payload: axios.get(`${process.env.REACT_APP_HOST}/normalGame/finish?gameId=${id}`)
     }
 }
 
-export const incrementScore = (color) => {
+export const incrementScore = (color, id) => {
     return {
         type: INC_SCORE,
-        payload: axios.post(`${process.env.REACT_APP_HOST}/normalGame/goal`, `"${color}"`,  {headers: {'Content-Type': 'application/json'}})
+        payload: axios.get(`${process.env.REACT_APP_HOST}/normalGame/goal?team=${color}&gameId=${id}`)
     }
 }
 
