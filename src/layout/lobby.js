@@ -18,6 +18,10 @@ const style = {
     fontWeight: "bold",
     width: "30%"
   },
+  Div: {
+    // textAlign: "center",
+    // marginTop: "10%"
+  }
 };
 
 class Lobby extends Component {

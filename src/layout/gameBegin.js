@@ -22,6 +22,7 @@ class GameBegin extends Component {
     waitAndStart() {
         setTimeout(() => {
             this.props.history.replace("/game")
+<<<<<<< Updated upstream
         }, 1000);
     }
 
@@ -37,6 +38,9 @@ class GameBegin extends Component {
         }, (e) => {
             this.props.actions.socketEvent(e.data);
         })
+=======
+        }, 2500);
+>>>>>>> Stashed changes
     }
 
     componentDidMount() {
@@ -50,7 +54,11 @@ class GameBegin extends Component {
 
     render() {
         return (
+<<<<<<< Updated upstream
             <div style={{ marginTop: '10%' }}>
+=======
+            <div style={{marginTop:'10%'}}>
+>>>>>>> Stashed changes
                 <h1>Let The game begin!</h1>
                 <CircularProgress size={50} color="secondary" />
             </div>
