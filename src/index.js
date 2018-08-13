@@ -7,7 +7,6 @@ import logger from 'redux-logger';
 import ReduxThunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import reducers from './reducers';
-import registerServiceWorker from './registerServiceWorker';
 import App from './app';
 import GameComponent from './layout/gameComponent'
 import ButtonAppBar from './layout/navBar';
@@ -44,4 +43,3 @@ ReactDOM.render(
         </MuiThemeProvider>
     </div>
     , document.getElementById('root'));
-registerServiceWorker();
