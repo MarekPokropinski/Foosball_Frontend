@@ -1,4 +1,15 @@
-.mainContainer {
+.content {
     text-align: center;
-    padding: 10%; 
+    padding: 10%;
+   
+    color: white;
+}
+.mainContainer{
+    width: 100%;
+    margin: 0;
+}
+.backgroundImage{
+    position: sticky;
+    top: 0px;
+    left: 0px;
 }
