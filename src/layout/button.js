@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 // We can inject some CSS into the DOM.
 const styles = {
     button: {
-        background: '#007dc3 90%',
         borderRadius: 3,
         border: 0,
         color: 'white',
@@ -23,7 +22,7 @@ const styles = {
 
 function ClassNames(props) {
     return (
-        <Button value={props.value} style={styles.button} onClick={() => props.onClick()}>
+        <Button value={props.value} variant="contained" color={props.color} style={styles.button} onClick={() => props.onClick()}>
             {props.value}
         </Button>
     );
