@@ -7,7 +7,7 @@ import CustomButton from './layout/button'
 
 class App extends React.Component {
     handleNormalUser() {
-        this.props.history.replace('/begin')
+        this.props.history.replace('/mode')
         this.props.actions.setGameType('normal');
     }
 
@@ -16,13 +16,18 @@ class App extends React.Component {
         this.props.actions.setGameType('ranked');
     }
 
+    handleFreeUser() {
+        this.props.history.replace('/begin')
+        this.props.actions.setGameType('free');
+    }
+
     render() {
         let styleContainer = {
             padding: '8%'
         }
         return (
             <div style={styleContainer}>
-                <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => { }} >free</CustomButton>
+                <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleFreeUser()} >free</CustomButton>
                 <CustomButton value='normal' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleNormalUser()} >normal</CustomButton>
                 <CustomButton value='ranked' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
                 <CustomButton value='tournament' variant='contained' color='secondary' className="menuButton" onClick={() => { }} >tournament</CustomButton>
