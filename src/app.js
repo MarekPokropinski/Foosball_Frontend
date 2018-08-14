@@ -13,6 +13,12 @@ const Container = styled.div`
 
 
 class App extends React.Component {
+
+    handleFreeUser() {
+        this.props.history.replace('/begin')
+        this.props.actions.setGameType('free');
+    }
+
     handleNormalUser() {
         this.props.history.replace('/begin')
         this.props.actions.setGameType('normal');
@@ -30,7 +36,7 @@ class App extends React.Component {
         return (
             <Container>
                     <div style={styleContainer}>
-                        <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => {}} >free</CustomButton>
+                        <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleFreeUser()} >free</CustomButton>
                         <CustomButton value='normal' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleNormalUser()} >normal</CustomButton>
                         <CustomButton value='ranked' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
                         <CustomButton value='tournament' variant='contained' color='secondary' className="menuButton" onClick={() => {}} >tournament</CustomButton>
