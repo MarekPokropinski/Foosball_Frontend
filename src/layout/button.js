@@ -15,8 +15,7 @@ const styles = {
         textShadow: '3px 1px 7px rgba(138, 145, 150, 1)',
         padding: '0 30px',
         boxShadow: '0 3px 5px 2px rgba(6, 38, 91, 3)',
-        marginTop: '30px',
-        marginLeft: '30px',
+        margin: '15px',
     },
 };
 
