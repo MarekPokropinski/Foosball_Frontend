@@ -24,14 +24,14 @@ class GameComponent extends React.Component {
     waitAndShowSummary() {
         setTimeout(() => {
             this.props.history.replace("/summary")
-        }, 500);
+        }, 300);
     }
 
     handleGameFinish() {
         this.props.actions.stopTimer()
         this.props.actions.stopListeningToSocket(this)
         console.log(this.props.user.gameState.id)
-        this.props.actions.getStats(this.props.user.gameState.id).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
+        this.props.actions.getStats(this.props.user.gameState.id, this.props.user.gameType).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
     }
 
     handleExitButton() {
@@ -44,11 +44,11 @@ class GameComponent extends React.Component {
     }
 
     handleRedIncrement() {
-        this.props.actions.incrementScore('RED', this.props.user.gameState.id)
+        this.props.actions.incrementScore('RED', this.props.user.gameState.id, this.props.user.gameType)
     }
 
     handleBlueIncrement() {
-        this.props.actions.incrementScore('BLUE', this.props.user.gameState.id)
+        this.props.actions.incrementScore('BLUE', this.props.user.gameState.id, this.props.user.gameType)
     }
 
     showNicks() {

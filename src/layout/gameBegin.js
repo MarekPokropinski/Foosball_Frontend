@@ -8,12 +8,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class GameBegin extends Component {
     startGameAction() {
         switch (this.props.user.gameType) {
-            case 'normal':
-                return this.props.actions.startGame();
-            case 'ranked':
-                return this.props.actions.startRankedGame([1], [2]);
+            case 'free':
+                return this.props.actions.startGame(this.props.user.gameType);
             default:
-                return this.props.actions.startGame();
+                return this.props.actions.startGame(this.props.user.gameType, this.props.user.gameState.blueTeamIds, this.props.user.gameState.redTeamIds);
         }
     }
 
