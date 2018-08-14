@@ -2,23 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from './actions/userActions.js';
-import styled from 'styled-components';
 import CustomButton from './layout/button'
-const Container = styled.div`
- text-align: center;
- display:flex;
- justify-content: center;
- align-items: center;
-`;
 
 
 class App extends React.Component {
-
-    handleFreeUser() {
-        this.props.history.replace('/begin')
-        this.props.actions.setGameType('free');
-    }
-
     handleNormalUser() {
         this.props.history.replace('/begin')
         this.props.actions.setGameType('normal');
@@ -31,17 +18,15 @@ class App extends React.Component {
 
     render() {
         let styleContainer = {
-            backroundColor: "black",
+            padding: '8%'
         }
         return (
-            <Container>
-                    <div style={styleContainer}>
-                        <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleFreeUser()} >free</CustomButton>
-                        <CustomButton value='normal' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleNormalUser()} >normal</CustomButton>
-                        <CustomButton value='ranked' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
-                        <CustomButton value='tournament' variant='contained' color='secondary' className="menuButton" onClick={() => {}} >tournament</CustomButton>
-                    </div>
-            </Container>
+            <div style={styleContainer}>
+                <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => { }} >free</CustomButton>
+                <CustomButton value='normal' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleNormalUser()} >normal</CustomButton>
+                <CustomButton value='ranked' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleRankedUsers() }} >ranked</CustomButton>
+                <CustomButton value='tournament' variant='contained' color='secondary' className="menuButton" onClick={() => { }} >tournament</CustomButton>
+            </div>
         );
     }
 }
