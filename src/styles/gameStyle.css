@@ -11,10 +11,14 @@
     display: flex;
 }
 
+.score p {
+    padding: 30px;
+}
+
 .finishButton {
 
     position: absolute;
-    top: 350px; 
+    top: 400px; 
 }
 
 .timer {
