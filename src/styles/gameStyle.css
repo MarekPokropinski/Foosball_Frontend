@@ -11,6 +11,12 @@
     display: flex;
 }
 
+.red-score{
+    color: #e23c16;
+    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);}
+.blue-score{
+    color: #296cd8;
+    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);}
 .score p {
     padding: 30px;
 }
