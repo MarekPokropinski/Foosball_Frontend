@@ -13,6 +13,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
+    color: 'white',
     minWidth: 700,
   },
 });
@@ -35,7 +36,7 @@ function SimpleTable(props) {
   return (
       <Table className={classes.table}>
         
-        <TableBody>
+        <TableBody style={{color: 'white', backgroundColor: 'rgba(255,255,255, 0.7)'}}>
             {data.map((row, index) => {return renderRow(row.type, row.value, index)})}            
         </TableBody>
       </Table>
