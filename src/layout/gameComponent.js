@@ -12,11 +12,10 @@ class GameComponent extends React.Component {
     componentDidMount() {
         if(!this.props.user.socket) {
             this.props.history.replace(`/begin/${this.props.match.params.mode}`)
-            return;
+        } else {
+            this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
+            this.props.actions.listenToSocket(this)
         }
-        
-        this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
-        this.props.actions.listenToSocket(this)
     }
 
     onMessage(e) {
@@ -26,15 +25,14 @@ class GameComponent extends React.Component {
     }
 
     waitAndShowSummary() {
-        setTimeout(() => {
-            this.props.history.replace("/summary")
-        }, 300);
+        setTimeout(() => this.props.history.replace("/summary"), 300);
     }
 
     handleGameFinish() {
         this.props.actions.stopTimer()
         this.props.actions.stopListeningToSocket(this)
-        this.props.actions.getStats(this.props.user.gameState.id, this.props.match.params.mode).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
+        //gets statistics from server and tells server that game is finished
+        this.props.actions.getStats(this.props.user.gameState.id, this.props.match.params.mode).then(() => this.waitAndShowSummary()); 
     }
 
     handleExitButton() {
@@ -85,11 +83,9 @@ class GameComponent extends React.Component {
                 <div className='timer'>
                     {this.getConvertedTime()}
                 </div>
-
                 <div >
                     {nicks}
                 </div>
-
                 <div className='score'>
                     <p onClick={() => { this.handleRedIncrement() }}>{this.props.user.gameState.redScore}</p>
                     <p>&nbsp;:&nbsp;</p>

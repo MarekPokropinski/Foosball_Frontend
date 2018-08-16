@@ -31,7 +31,7 @@ class Lobby extends Component {
   }
 
   deleteUser(userId, team) {
-    //delete user
+    //TODO: Add delete user functionality
   }
 
   renderUserButton(color, val, index, team) {
