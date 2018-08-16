@@ -1,11 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-//import purple from '@material-ui/core/colors/purple';
 
 export default createMuiTheme({
 
   palette: {
     primary: {
-      main: '#000000',
+      main: 'rgb(49, 34, 114)',
     },
     secondary: {
       main: '#007dc3',
