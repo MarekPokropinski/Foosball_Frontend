@@ -10,6 +10,11 @@ import '../styles/gameStyle.css'
 
 class GameComponent extends React.Component {
     componentDidMount() {
+        if(!this.props.user.socket) {
+            this.props.history.replace(`/begin/${this.props.match.params.mode}`)
+            return;
+        }
+        
         this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
         this.props.actions.listenToSocket(this)
     }
@@ -29,7 +34,7 @@ class GameComponent extends React.Component {
     handleGameFinish() {
         this.props.actions.stopTimer()
         this.props.actions.stopListeningToSocket(this)
-        this.props.actions.getStats(this.props.user.gameState.id, this.props.user.gameType).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
+        this.props.actions.getStats(this.props.user.gameState.id, this.props.match.params.mode).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
     }
 
     handleExitButton() {
@@ -42,11 +47,11 @@ class GameComponent extends React.Component {
     }
 
     handleRedIncrement() {
-        this.props.actions.incrementScore('RED', this.props.user.gameState.id, this.props.user.gameType)
+        this.props.actions.incrementScore('RED', this.props.user.gameState.id, this.props.match.params.mode)
     }
 
     handleBlueIncrement() {
-        this.props.actions.incrementScore('BLUE', this.props.user.gameState.id, this.props.user.gameType)
+        this.props.actions.incrementScore('BLUE', this.props.user.gameState.id, this.props.match.params.mode)
     }
 
     showNicks() {
@@ -72,7 +77,7 @@ class GameComponent extends React.Component {
 
     render() {
         let nicks = "";
-        if (this.props.user.gameType !== 'free')
+        if (this.props.match.params.mode !== 'free')
             nicks = this.showNicks();
 
         return (

@@ -13,11 +13,12 @@ export const STOP_TIMER = 'stop_timer';
 export const GAME_TYPE = 'game_type';
 export const START_RANKED = 'start_ranked'
 
-export const connect = (endpoint, onOpen, onMessage) => {
+export const connect = (endpoint, onOpen, onMessage, onError) => {
     let socket = new WebSocket(endpoint);
     socket.onopen = onOpen;
     socket.listeners = [];
     socket.onmessage = (e) => { onMessage(e); socket.listeners.map((v) => v.onMessage(e)) };
+    socket.onerror = onError;
     return {
         type: CONNECT_WS,
         payload: socket

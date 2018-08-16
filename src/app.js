@@ -7,17 +7,17 @@ import CustomButton from './layout/button'
 
 class App extends React.Component {
     handleNormalUser() {
-        this.props.history.replace('/mode')
+        this.props.history.replace('/mode/normal')
         this.props.actions.setGameType('normal');
     }
 
     handleRankedUsers() {
-        this.props.history.replace("/mode");
+        this.props.history.replace("/mode/ranked");
         this.props.actions.setGameType('ranked');
     }
 
     handleFreeUser() {
-        this.props.history.replace('/begin')
+        this.props.history.replace('/begin/free')
         this.props.actions.setGameType('free');
     }
 
