@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button';
 
 class GameBegin extends Component {
 
+    state = {
+        timer: null
+    }
+
     startGameAction() {
         switch (this.props.match.params.mode) {
             case 'free':
@@ -17,10 +21,12 @@ class GameBegin extends Component {
         }
     }
 
+
     waitAndStart() {
+        this.setState({timer:
         setTimeout(() => {
             this.props.history.replace(`/game/${this.props.match.params.mode}`)
-        }, 1000);
+        }, 1000)})
     }
 
     startGame() {
@@ -50,6 +56,7 @@ class GameBegin extends Component {
     }
 
     handleCancelButton() {
+        this.setState({timer: clearTimeout(this.state.timer)});
         this.props.history.replace('/');
     }
 

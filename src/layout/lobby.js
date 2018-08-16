@@ -73,7 +73,7 @@ class Lobby extends Component {
   render() {
     return (
       <div>
-        <h1>Type : {this.props.user.gameType}</h1>
+        <h1>Type : {this.props.match.params.mode}</h1>
 
         {this.renderUsersGrid()}
 
