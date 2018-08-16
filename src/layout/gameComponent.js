@@ -15,7 +15,6 @@ class GameComponent extends React.Component {
     }
 
     onMessage(e) {
-        console.log(e)
         if (this.props.user.gameState.finished) {
             this.handleGameFinish()
         }
@@ -30,7 +29,6 @@ class GameComponent extends React.Component {
     handleGameFinish() {
         this.props.actions.stopTimer()
         this.props.actions.stopListeningToSocket(this)
-        console.log(this.props.user.gameState.id)
         this.props.actions.getStats(this.props.user.gameState.id, this.props.user.gameType).then(() => this.waitAndShowSummary()); //gets stats from server and finishes game
     }
 
@@ -92,7 +90,7 @@ class GameComponent extends React.Component {
                     <p>&nbsp;:&nbsp;</p>
                     <p onClick={() => { this.handleBlueIncrement() }}>{this.props.user.gameState.blueScore}</p>
                 </div>
-                <Button className='finishButton' variant="outlined" onClick={() => this.handleExitButton()}> Exit game </Button>
+                <Button className='finishButton' variant="contained" onClick={() => this.handleExitButton()}> Exit game </Button>
             </div>
         );
     }
