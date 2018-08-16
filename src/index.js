@@ -33,8 +33,11 @@ ReactDOM.render(
                     <HashRouter basename="/foosball">
                         <Switch>
                             <Route path="/summary" component={SummaryComponent}/>
+                            <Route path="/game/:mode" component={GameComponent} />
                             <Route path="/game" component={GameComponent} />
+                            <Route path="/begin/:mode" component={GameBegin} />
                             <Route path="/begin" component={GameBegin} />
+                            <Route path="/mode/:mode" component={Lobby}/>
                             <Route path="/mode" component={Lobby}/>
                             <Route path="/" component={App} />
                         </Switch>

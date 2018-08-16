@@ -23,7 +23,11 @@ const style = {
 class Lobby extends Component {
 
   startGame() {
-    this.props.history.replace("/begin");
+    this.props.history.replace(`/begin/${this.props.match.params.mode}`);
+  }
+
+  goBack() {
+    this.props.history.replace("/");
   }
 
   deleteUser(userId, team) {
@@ -80,6 +84,15 @@ class Lobby extends Component {
           onClick={() => this.startGame()}
         >
           Start game
+        </Button>
+
+        <Button
+          style={style.StartButton}
+          variant="contained"
+          color="secondary"
+          onClick={() => this.goBack()}
+        >
+          Go back
         </Button>
       </div>
     );

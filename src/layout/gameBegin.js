@@ -3,21 +3,23 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 
 
 class GameBegin extends Component {
+
     startGameAction() {
-        switch (this.props.user.gameType) {
+        switch (this.props.match.params.mode) {
             case 'free':
-                return this.props.actions.startGame(this.props.user.gameType);
+                return this.props.actions.startGame(this.props.match.params.mode);
             default:
-                return this.props.actions.startGame(this.props.user.gameType, this.props.user.gameState.blueTeamIds, this.props.user.gameState.redTeamIds);
+                return this.props.actions.startGame(this.props.match.params.mode, this.props.user.gameState.blueTeamIds, this.props.user.gameState.redTeamIds);
         }
     }
 
     waitAndStart() {
         setTimeout(() => {
-            this.props.history.replace("/game")
+            this.props.history.replace(`/game/${this.props.match.params.mode}`)
         }, 1000);
     }
 
@@ -31,8 +33,10 @@ class GameBegin extends Component {
         this.props.actions.connect(`${process.env.REACT_APP_HOST_SOCKET}/matchInfo`, (e) => {
             this.startGame();
         }, (e) => {
-            console.log(e.data);
             this.props.actions.socketEvent(e.data);
+        }, (e) => {
+            console.log("Websocket error!");
+            this.props.history.replace('/');
         })
     }
 
@@ -45,11 +49,17 @@ class GameBegin extends Component {
 
     }
 
+    handleCancelButton() {
+        this.props.history.replace('/');
+    }
+
     render() {
         return (
             <div style={{ marginTop: '10%' }}>
                 <h1>Let The game begin!</h1>
                 <CircularProgress size={50} color="secondary" />
+                <br /><br />
+                <Button variant='contained' color='secondary' onClick={() => this.handleCancelButton()}> Cancel </Button>
             </div>
         )
     }
