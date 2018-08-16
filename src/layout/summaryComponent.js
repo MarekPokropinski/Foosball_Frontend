@@ -31,8 +31,7 @@ class SummaryComponent extends React.Component {
         return (
             <div>
                 <ScoreTable data={this.getData()} />
-                <br />
-                <Button variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit to menu </Button>
+                <Button style={{margin: '40px'}} variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit to menu </Button>
             </div>
         );
     }

@@ -17,11 +17,14 @@
 .blueScore{
     color: #296cd8;
     text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);}
+.score p {
+    padding: 30px;
+}
 
 .finishButton {
 
     position: absolute;
-    top: 350px; 
+    top: 400px; 
 }
 
 .timer {

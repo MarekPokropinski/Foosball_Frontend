@@ -1,15 +1,9 @@
 .content {
     text-align: center;
     padding: 0%;
-   
     color: white;
 }
-.mainContainer{
+.main-container{
     width: 100%;
     margin: 0;
-}
-.backgroundImage{
-    position: sticky;
-    top: 0px;
-    left: 0px;
 }

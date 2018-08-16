@@ -13,6 +13,10 @@ export const STOP_TIMER = 'stop_timer';
 export const GAME_TYPE = 'game_type';
 export const START_RANKED = 'start_ranked'
 
+export const FULFILLED = '_FULFILLED';
+export const REJECTED = '_REJECTED';
+export const PENDING = '_PENDING';
+
 export const connect = (endpoint, onOpen, onMessage, onError) => {
     let socket = new WebSocket(endpoint);
     socket.onopen = onOpen;
@@ -35,8 +39,7 @@ export const socketEvent = (data) => {
 export const startGame = (gameType = 'free', redIds, blueIds) => {
     return {
         type: START_GAME,
-        payload: (gameType === 'free')? axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start`) : 
-                                        axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start?redTeamIds=${redIds}&blueTeamIds=${blueIds}`)
+        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`redTeamIds=${redIds}&blueTeamIds=${blueIds}`)) 
     }
 }
 
