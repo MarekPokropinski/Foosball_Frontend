@@ -23,11 +23,9 @@ const store = createStore(
 );
 
 ReactDOM.render(
-    <div className="mainContainer">
+    <div className="main-container">
         <MuiThemeProvider theme={theme} >        
-
             <ButtonAppBar />
-            
             <div className="content">
                 <Provider store={store}>
                     <HashRouter basename="/foosball">
@@ -44,7 +42,6 @@ ReactDOM.render(
                     </HashRouter>
                 </Provider>
             </div>
-            
         </MuiThemeProvider>
     </div>
     , document.getElementById('root'));

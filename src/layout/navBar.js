@@ -32,7 +32,6 @@ const styles = {
   },
   imageDiv: {
     height: '100%',
-    //backgroundColor: '#fff'
   }
 };
 
@@ -47,7 +46,6 @@ function ButtonAppBar(props) {
           </IconButton>
           <Typography variant="title" color="inherit" className={classes.flex}>
             FOOSBALL
-
           </Typography>
           <div className={classes.imageDiv}>
             <img alt="Logo" src={require('../images/ncdc3.png')} title="ncdc_logo" className={classes.image} />

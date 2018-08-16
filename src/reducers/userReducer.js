@@ -1,9 +1,5 @@
 import * as userActions from '../actions/userActions.js';
-const FULFILLED = '_FULFILLED';
-/*
-const REJECTED = '_REJECTED';
-const PENDING = '_PENDING';
-//*/
+
 
 const initValue = {
     socket: null,
@@ -41,12 +37,12 @@ export default (state = initValue, action) => {
                 ...state,
                 gameState: {...state.gameState, ...action.payload}
             }
-        case `${userActions.START_GAME}${FULFILLED}`:
+        case `${userActions.START_GAME}${userActions.FULFILLED}`:
             return {
                 ...state,
                 gameState: {...state.gameState, id: action.payload.data}
             }
-        case `${userActions.START_RANKED}${FULFILLED}`:
+        case `${userActions.START_RANKED}${userActions.FULFILLED}`:
             return {
                 ...state,
                 gameState: {...state.gameState, id: action.payload.data}
@@ -56,7 +52,7 @@ export default (state = initValue, action) => {
                 ...state,
                 gameState: { ...state.gameState, time: state.gameState.time + action.payload }
             }
-        case `${userActions.GET_STATS}${FULFILLED}`:
+        case `${userActions.GET_STATS}${userActions.FULFILLED}`:
             return {
                 ...state,
                 summary: action.payload.data

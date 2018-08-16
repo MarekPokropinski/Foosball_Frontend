@@ -40,8 +40,7 @@ class Lobby extends Component {
         value={val}
         color={color}
         variant="contained"
-        onClick={() => this.deleteUser(index, team)}
-      />
+        onClick={() => this.deleteUser(index, team)} />
     );
   }
 
@@ -81,8 +80,7 @@ class Lobby extends Component {
           style={style.StartButton}
           variant="contained"
           color="primary"
-          onClick={() => this.startGame()}
-        >
+          onClick={() => this.startGame()}>
           Start game
         </Button>
 
@@ -90,8 +88,7 @@ class Lobby extends Component {
           style={style.StartButton}
           variant="contained"
           color="secondary"
-          onClick={() => this.goBack()}
-        >
+          onClick={() => this.goBack()}>
           Go back
         </Button>
       </div>

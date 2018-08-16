@@ -88,7 +88,7 @@ class GameComponent extends React.Component {
                 </div>
                 <div className='score'>
                     <p onClick={() => { this.handleRedIncrement() }}>{this.props.user.gameState.redScore}</p>
-                    <p>&nbsp;:&nbsp;</p>
+                    <p>:</p>
                     <p onClick={() => { this.handleBlueIncrement() }}>{this.props.user.gameState.blueScore}</p>
                 </div>
                 <Button className='finishButton' variant="contained" onClick={() => this.handleExitButton()}> Exit game </Button>
