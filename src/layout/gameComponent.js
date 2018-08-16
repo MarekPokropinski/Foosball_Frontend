@@ -10,12 +10,15 @@ import '../styles/gameStyle.css'
 
 class GameComponent extends React.Component {
    componentDidMount() {
-        this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
-        this.props.actions.listenToSocket(this)
+        if(!this.props.user.socket) {
+            this.props.history.replace(`/begin/${this.props.match.params.mode}`)
+        } else {
+            this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
+            this.props.actions.listenToSocket(this)
+        }
     }
 
     onMessage(e) {
-        console.log(e)
         if (this.props.user.gameState.finished) {
             this.handleGameFinish()
         }
