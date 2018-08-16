@@ -11,6 +11,13 @@
     display: flex;
 }
 
+.redScore{
+    color: #e23c16;
+    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);}
+.blueScore{
+    color: #296cd8;
+    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);}
+
 .finishButton {
 
     position: absolute;
