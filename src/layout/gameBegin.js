@@ -63,7 +63,7 @@ class GameBegin extends Component {
     render() {
         return (
             <div style={{ marginTop: '10%' }}>
-                <h1>Let The game begin!</h1>
+                <h1>Let the game begin!</h1>
                 <CircularProgress size={50} color="secondary" />
                 <br /><br />
                 <Button variant='contained' color='secondary' onClick={() => this.handleCancelButton()}> Cancel </Button>
