@@ -13,10 +13,22 @@
 
 .red-score{
     color: #e23c16;
-    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);}
+    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);
+}
+    
+
 .blue-score{
     color: #296cd8;
-    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);}
+    text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);
+}
+.unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
 .score p {
     padding: 30px;
 }
