@@ -6,6 +6,8 @@ export const START_GAME = 'start_game';
 export const TIME_STAMP = 'time_stamp';
 export const GET_STATS = 'get_stats';
 export const INC_SCORE = 'inc_score';
+export const DEC_SCORE = 'dec_score';
+
 export const LISTEN_SOCKET = 'listen_socket';
 export const STOP_LISTEN_SOCKET = 'stop_listen_socket';
 export const START_TIMER = 'start_timer';
@@ -68,6 +70,12 @@ export const incrementScore = (color, id, gameType) => {
     return {
         type: INC_SCORE,
         payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/goal?team=${color}&gameId=${id}`)
+    }
+}
+export const decrementScore = (color) => {
+    return {
+        type: INC_SCORE,
+        payload: axios.post(`${process.env.REACT_APP_HOST}/revertGoal?team=${color}`)
     }
 }
 
