@@ -16,7 +16,6 @@ class GameComponent extends React.Component {
             this.props.actions.startTimer(1000, () => this.props.actions.timeStamp(1000))
             this.props.actions.listenToSocket(this)
         }
-
     }
 
     onMessage(e) {
@@ -99,8 +98,10 @@ class GameComponent extends React.Component {
                 <div className='score'>
                     <p
                         value="RED"
-                        className='red-score'
+                        className='red-score unselectable'
                         onClick={() => { this.handleScoreIncrement('RED') }}
+                        onMouseDown={() => { this.handleButtonPress('RED') }}
+                        onMouseUp={() => { this.handleButtonRelease() }}
                         onTouchStart={() => { this.handleButtonPress('RED') }}
                         onTouchEnd={() => { this.handleButtonRelease() }}>
                         {this.props.user.gameState.redScore}
@@ -109,8 +110,10 @@ class GameComponent extends React.Component {
                     <p>:</p>
 
                     <p
-                        className='blue-score'
+                        className='blue-score unselectable'
                         onClick={() => { this.handleScoreIncrement('BLUE') }}
+                        onMouseDown={() => { this.handleButtonPress('RED') }}
+                        onMouseUp={() => { this.handleButtonRelease() }}
                         onTouchStart={() => { this.handleButtonPress('BLUE') }}
                         onTouchEnd={() => { this.handleButtonRelease() }}>
                         {this.props.user.gameState.blueScore}
