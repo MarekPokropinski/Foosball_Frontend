@@ -14,6 +14,9 @@ export const START_TIMER = 'start_timer';
 export const STOP_TIMER = 'stop_timer';
 export const GAME_TYPE = 'game_type';
 export const START_RANKED = 'start_ranked'
+export const ADD_USER = 'add_user';
+export const SET_NICK = 'set_nick';
+export const GET_IDS = 'get_ids';
 
 export const FULFILLED = '_FULFILLED';
 export const REJECTED = '_REJECTED';
@@ -41,7 +44,7 @@ export const socketEvent = (data) => {
 export const startGame = (gameType = 'free', redIds, blueIds) => {
     return {
         type: START_GAME,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`redTeamIds=${redIds}&blueTeamIds=${blueIds}`)) 
+        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`?redTeamIds=${redIds}&blueTeamIds=${blueIds}`)) 
     }
 }
 
@@ -111,5 +114,43 @@ export const setGameType = (type) => {
     return {
         type: GAME_TYPE,
         payload: type
+    }
+}
+
+export const setNick = (color, index, value) => {
+    return {
+        type: SET_NICK,
+        payload: {color: color, index: index, value: value}
+    }
+}
+
+export const SET_ID = 'set_id';
+export const setId = (color, index, value) => {
+    return {
+        type: SET_ID,
+        payload: {color: color, index: index, value: value}
+    }
+}
+
+export const getUsersIds = (blues, reds) => {
+    return {
+        type: GET_IDS,
+        payload: axios.get(`${process.env.REACT_APP_HOST}/getUsetsIds?redTeamIds=${reds}&blueTeamIds=${blues}`)
+    }
+}
+
+export const addUser = (color) => {
+    return {
+        type: ADD_USER,
+        payload: color
+    }
+}
+
+export const GET_ID = 'get_id';
+export const getUser = (nick) => {
+    //let nick = (color === 'blue' ? state.gameState.blueTeamNicks : state.gameState.redTeamNicks)[index];
+    return {
+        type: GET_ID,
+        payload: axios.get(`${process.env.REACT_APP_HOST}/getByNick?nick=${nick}`)
     }
 }

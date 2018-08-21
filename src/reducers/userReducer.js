@@ -1,5 +1,5 @@
 import * as userActions from '../actions/userActions.js';
-
+import {SET_NICK} from '../actions/userActions.js';
 
 const initValue = {
     socket: null,
@@ -11,8 +11,10 @@ const initValue = {
         blueScore: 0,
         time: 0,
         finished: true,
-        blueTeamIds: ['jarek', 'pokropow'],
-        redTeamIds: ['relik', 'qwarq'],
+        blueTeamIds: [1],
+        redTeamIds: [3],
+        blueTeamNicks: ['jarek'],
+        redTeamNicks: ['relik']
     },
     summary: {
         redScore: 0,
@@ -22,6 +24,23 @@ const initValue = {
         blueLongestSeries: 0
     },
     gameType: 'normal'
+}
+
+export const getNick = (gameState, color, index) => {
+    let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
+    return arr[index];    
+}
+export const setNick = (gameState, color, index, value) => {
+    let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
+    arr[index] = value;    
+}
+export const getId = (gameState, color, index) => {
+    let arr = (color === 'blue') ? gameState.blueTeamIds : gameState.redTeamIds;
+    return arr[index];    
+}
+export const setId = (gameState, color, index, value) => {
+    let arr = (color === 'blue') ? gameState.blueTeamIds : gameState.redTeamIds;
+    arr[index] = value;    
 }
 
 export default (state = initValue, action) => {
@@ -94,6 +113,40 @@ export default (state = initValue, action) => {
                 ...state,
                 gameType: action.payload
             }
+        case SET_NICK: {
+            let reds = state.gameState.redTeamNicks.slice()
+            let blues = state.gameState.blueTeamNicks.slice()
+
+            if(action.payload.color === 'blue')
+                blues[action.payload.index] = action.payload.value
+            else
+                reds[action.payload.index] = action.payload.value
+            return {
+                ...state,
+                gameState: {...state.gameState, blueTeamNicks: blues, redTeamNicks: reds}
+            }
+        }
+        case userActions.SET_ID: {
+            let newState = {...state};
+            setId(newState.gameState, action.payload.color, action.payload.index, action.payload.value)
+            return newState
+        }
+        case `${userActions.GET_IDS}${userActions.FULFILLED}`:
+            return {
+                ...state,
+                gameState: {...state.gameState, blueTeamIds: action.payload.data.blueTeamIds, redTeamIds: action.payload.data.redTeamIds}
+            }
+        case userActions.ADD_USER: {
+            let reds = state.gameState.redTeamNicks.slice()
+            let blues = state.gameState.blueTeamNicks.slice();
+            (action.payload === 'blue')
+            ? blues.push("")
+            : reds.push("")
+            return {
+                ...state,
+                gameState: {...state.gameState, blueTeamNicks: blues, redTeamNicks: reds}
+            }
+        }
         default:
             return state
     }

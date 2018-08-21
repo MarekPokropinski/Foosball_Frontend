@@ -6,6 +6,7 @@ import * as userActions from '../actions/userActions.js';
 import CustomButton from '../layout/button';
 import Button from '@material-ui/core/Button';
 import '../styles/lobby.css';
+import UserComponent from "../containers/userComponent.js";
 
 
 const style = {
@@ -34,6 +35,10 @@ class Lobby extends Component {
     //TODO: Add delete user functionality
   }
 
+  addUser(color) {
+    this.props.actions.addUser(color)
+  }
+
   renderUserButton(color, val, index, team) {
     return (
       <CustomButton
@@ -44,26 +49,42 @@ class Lobby extends Component {
     );
   }
 
+  drawAddButton(color) {
+    return (
+      <button onClick={() => this.addUser(color)}>
+        +
+      </button>
+    );
+  }
+
   renderUsersGrid() {
     return (
       <div className='flex'>
         <div>
-          {this.props.user.gameState.blueTeamIds.map((val, index) => {
+          {this.props.user.gameState.blueTeamNicks.map((val, index) => {
             return (
               <div key={index}>
-                {this.renderUserButton('secondary', val, index, 'blue')}
+                <UserComponent color='blue' id={index} />
               </div>
             );
           })}
+          {(this.props.user.gameState.blueTeamNicks.length < 2)
+          ? this.drawAddButton('blue')
+          : ""
+          }
         </div>
         <div>
-          {this.props.user.gameState.redTeamIds.map((val, index) => {
+          {this.props.user.gameState.redTeamNicks.map((val, index) => {
             return (
               <div key={index}>
-                {this.renderUserButton('primary', val, index, 'red')}
+                <UserComponent color='red' id={index} />
               </div>
             );
           })}
+          {(this.props.user.gameState.redTeamNicks.length < 2)
+          ? this.drawAddButton('red')
+          : ""
+          }
         </div>
       </div>
     );
