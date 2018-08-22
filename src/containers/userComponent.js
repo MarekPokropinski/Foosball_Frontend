@@ -31,12 +31,9 @@ class UserComponent extends React.Component {
                         value={getNick(this.props.game, this.props.color, this.props.id)}
                         onChange={(e) => { this.props.gameActions.setNick(this.props.color, this.props.id, e.target.value) }}></input>
                 </form>
-<<<<<<< HEAD
                 <Button variant='contained' onClick={ () => this.props.gameActions.deleteUser(this.props.id, this.props.color)}>
                 <DeleteIcon /> 
                 </Button>
-=======
->>>>>>> develop
             </div>
         );
     }

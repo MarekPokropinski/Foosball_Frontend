@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, DEL_USER, RESET_GAME, FULFILLED} from '../actions/gameActions';
-=======
-import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, RESET_GAME, FULFILLED} from '../actions/gameActions';
->>>>>>> develop
 
 export const getNick = (gameState, color, index) => {
     let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
