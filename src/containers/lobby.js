@@ -49,6 +49,10 @@ class Lobby extends Component {
     );
   }
 
+  componentDidMount() {
+    this.props.gameActions.resetGame();
+  }
+
   startGame() {
     this.props.history.replace(`/begin/${this.props.match.params.mode}`);
   }

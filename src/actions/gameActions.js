@@ -76,6 +76,7 @@ export const setNick = (color, index, value) => {
 }
 
 export const SET_ID = 'set_id';
+
 export const setId = (color, index, value) => {
     return {
         type: SET_ID,
@@ -83,6 +84,7 @@ export const setId = (color, index, value) => {
     }
 }
 export const ADD_USER = 'add_user';
+
 export const addUser = (color) => {
     return {
         type: ADD_USER,
@@ -91,10 +93,19 @@ export const addUser = (color) => {
 }
 
 export const GET_ID = 'get_id';
+
 export const getUser = (nick) => {
     //let nick = (color === 'blue' ? state.gameState.blueTeamNicks : state.gameState.redTeamNicks)[index];
     return {
         type: GET_ID,
         payload: axios.get(`${process.env.REACT_APP_HOST}/getByNick?nick=${nick}`)
+    }
+}
+
+export const RESET_GAME = 'reset_game';
+
+export const resetGame = () => {
+    return {
+        type: RESET_GAME
     }
 }
