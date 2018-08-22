@@ -84,14 +84,14 @@ class GameComponent extends React.Component {
         return (
             <div className='nicks'>
                 <div className='flex'>
-                    {this.props.user.gameState.blueTeamIds.map((val, index) => {
+                    {this.props.game.blueTeamNicks.map((val, index) => {
                         return (
                             <p style={{ marginRight: '10px' }} key={index}>{val}</p>
                         );
                     })}
                 </div>
                 <div className='flex'>
-                    {this.props.user.gameState.redTeamIds.map((val, index) => {
+                    {this.props.game.redTeamNicks.map((val, index) => {
                         return (
                             <p style={{ marginRight: '10px' }} key={index}>{val}</p>
                         );

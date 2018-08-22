@@ -15,7 +15,7 @@ export const START_GAME = 'start_game'
 export const startGame = (gameType = 'free', redIds, blueIds) => {
     return {
         type: START_GAME,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`redTeamIds=${redIds}&blueTeamIds=${blueIds}`)) 
+        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`?usersID=${redIds},${blueIds}`)) 
     }
 }
 
