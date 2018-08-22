@@ -1,4 +1,4 @@
-import {SOCKET_EVENT, START_GAME, TIME_STAMP, GAME_TYPE, FULFILLED} from '../actions/userActions.js';
+import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, FULFILLED} from '../actions/gameActions';
 
 const gameInit = {
     id: 0,
@@ -28,7 +28,7 @@ export default (state = gameInit, action) => {
         case TIME_STAMP: {
             return {
                 ...state,
-                time: state.gameState.time + action.payload
+                time: state.time + action.payload
             }
         }
         case GAME_TYPE: {

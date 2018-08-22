@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import userReducer from './userReducer-refactor';
+import userReducer from './userReducer';
 import gameReducer from './gameReducer';
 import summaryReducer from './summaryReducer';
 

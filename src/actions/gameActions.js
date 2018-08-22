@@ -1,3 +1,6 @@
+import axios from 'axios';
+export const FULFILLED = '_FULFILLED';
+
 export const UPDATE_GAME = 'update_game'
 
 export const updateGame = (newPlainState) => {
@@ -40,5 +43,23 @@ export const setGameType = (type) => {
     return {
         type: GAME_TYPE,
         payload: type
+    }
+}
+
+export const INC_SCORE = 'inc_score';
+
+export const incrementScore = (color, id, gameType) => {
+    return {
+        type: INC_SCORE,
+        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/goal?team=${color}&gameId=${id}`)
+    }
+}
+
+export const DEC_SCORE = 'dec_score';
+
+export const decrementScore = (color) => {
+    return {
+        type: DEC_SCORE,
+        payload: axios.post(`${process.env.REACT_APP_HOST}/revertGoal?team=${color}`)
     }
 }
