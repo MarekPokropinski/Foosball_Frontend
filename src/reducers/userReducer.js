@@ -1,4 +1,5 @@
-import {LISTEN_SOCKET, CONNECT_WS, STOP_LISTEN_SOCKET, START_TIMER, STOP_TIMER} from '../actions/userActions.js';
+import {LISTEN_SOCKET, CONNECT_WS, STOP_LISTEN_SOCKET, START_TIMER, STOP_TIMER, GET_STATUS, REJECTED} from '../actions/userActions.js';
+import { FULFILLED } from '../../node_modules/redux-promise-middleware';
 
 const userInit = {
     socket: null,
@@ -20,6 +21,18 @@ export default (state = userInit, action) => {
             return {
                 ...state,
                 socket: ws
+            }
+        }
+        case GET_STATUS+FULFILLED: {
+            return {
+                ...state,
+                status: '0'
+            }
+        }
+        case GET_STATUS+REJECTED: {
+            return {
+                ...state,
+                status: '-1'
             }
         }
         case STOP_LISTEN_SOCKET: {
