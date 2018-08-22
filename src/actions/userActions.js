@@ -1,23 +1,16 @@
 import axios from 'axios';
+export const FULFILLED = '_FULFILLED';
+export const REJECTED = '_REJECTED';
+export const PENDING = '_PENDING';
 
 export const CONNECT_WS = 'connect_ws';
-export const SOCKET_EVENT = 'socket_event';
-export const START_GAME = 'start_game';
-export const TIME_STAMP = 'time_stamp';
 export const GET_STATS = 'get_stats';
-export const INC_SCORE = 'inc_score';
-export const DEC_SCORE = 'dec_score';
-
 export const LISTEN_SOCKET = 'listen_socket';
 export const STOP_LISTEN_SOCKET = 'stop_listen_socket';
 export const START_TIMER = 'start_timer';
 export const STOP_TIMER = 'stop_timer';
 export const GAME_TYPE = 'game_type';
 export const START_RANKED = 'start_ranked'
-
-export const FULFILLED = '_FULFILLED';
-export const REJECTED = '_REJECTED';
-export const PENDING = '_PENDING';
 
 export const connect = (endpoint, onOpen, onMessage, onError) => {
     let socket = new WebSocket(endpoint);
@@ -31,51 +24,10 @@ export const connect = (endpoint, onOpen, onMessage, onError) => {
     }
 }
 
-export const socketEvent = (data) => {
-    return {
-        type: SOCKET_EVENT,
-        payload: JSON.parse(data)
-    }
-}
-
-export const startGame = (gameType = 'free', redIds, blueIds) => {
-    return {
-        type: START_GAME,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`redTeamIds=${redIds}&blueTeamIds=${blueIds}`)) 
-    }
-}
-
-export const startRankedGame = (redIds, blueIds) => {
-    return {
-        type: START_RANKED,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/rankedGame/start?redTeamIds=${redIds}&blueTeamIds=${blueIds}`)
-    }
-}
-
-export const timeStamp = (time) => {
-    return {
-        type: TIME_STAMP,
-        payload: time
-    }
-}
-
 export const getStats = (id, gameType) => {
     return {
         type: GET_STATS,
         payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/finish?gameId=${id}`)
-    }
-}
-
-export const incrementScore = (color, id, gameType) => {
-    return {
-        type: INC_SCORE,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/goal?team=${color}&gameId=${id}`)
-    }
-}
-export const decrementScore = (color) => {
-    return {
-        type: INC_SCORE,
-        payload: axios.post(`${process.env.REACT_APP_HOST}/revertGoal?team=${color}`)
     }
 }
 
@@ -104,12 +56,5 @@ export const stopTimer = () => {
     return {
         type: STOP_TIMER,
         payload: null
-    }
-}
-
-export const setGameType = (type) => {
-    return {
-        type: GAME_TYPE,
-        payload: type
     }
 }

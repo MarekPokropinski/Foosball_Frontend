@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as userActions from '../actions/userActions.js';
-
-import CustomButton from '../layout/button';
+import CustomButton from '../components/button';
 import Button from '@material-ui/core/Button';
 import '../styles/lobby.css';
-
 
 const style = {
   Container: {
@@ -21,6 +17,31 @@ const style = {
 };
 
 class Lobby extends Component {
+  render() {
+    return (
+      <div>
+        <h1>Type : {this.props.match.params.mode}</h1>
+
+        {this.renderUsersGrid()}
+
+        <Button
+          style={style.StartButton}
+          variant="contained"
+          color="primary"
+          onClick={() => this.startGame()}>
+          Start game
+        </Button>
+
+        <Button
+          style={style.StartButton}
+          variant="contained"
+          color="secondary"
+          onClick={() => this.goBack()}>
+          Go back
+        </Button>
+      </div>
+    );
+  }
 
   startGame() {
     this.props.history.replace(`/begin/${this.props.match.params.mode}`);
@@ -48,7 +69,7 @@ class Lobby extends Component {
     return (
       <div className='flex'>
         <div>
-          {this.props.user.gameState.blueTeamIds.map((val, index) => {
+          {this.props.game.blueTeamIds.map((val, index) => {
             return (
               <div key={index}>
                 {this.renderUserButton('secondary', val, index, 'blue')}
@@ -57,7 +78,7 @@ class Lobby extends Component {
           })}
         </div>
         <div>
-          {this.props.user.gameState.redTeamIds.map((val, index) => {
+          {this.props.game.redTeamIds.map((val, index) => {
             return (
               <div key={index}>
                 {this.renderUserButton('primary', val, index, 'red')}
@@ -68,44 +89,13 @@ class Lobby extends Component {
       </div>
     );
   }
-
-  render() {
-    return (
-      <div>
-        <h1>Type : {this.props.match.params.mode}</h1>
-
-        {this.renderUsersGrid()}
-
-        <Button
-          style={style.StartButton}
-          variant="contained"
-          color="primary"
-          onClick={() => this.startGame()}>
-          Start game
-        </Button>
-
-        <Button
-          style={style.StartButton}
-          variant="contained"
-          color="secondary"
-          onClick={() => this.goBack()}>
-          Go back
-        </Button>
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(userActions, dispatch)
-  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    game: state.game
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Lobby);
+export default connect(mapStateToProps)(Lobby);
