@@ -5,6 +5,7 @@ export const PENDING = '_PENDING';
 
 export const CONNECT_WS = 'connect_ws';
 export const GET_STATS = 'get_stats';
+export const GET_STATUS = 'get_status';
 export const LISTEN_SOCKET = 'listen_socket';
 export const STOP_LISTEN_SOCKET = 'stop_listen_socket';
 export const START_TIMER = 'start_timer';
@@ -31,6 +32,13 @@ export const getStats = (id, gameType) => {
     return {
         type: GET_STATS,
         payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/finish?gameId=${id}`)
+    }
+}
+
+export const getStatus = () => {
+    return {
+        type: GET_STATUS,
+        payload: axios.post(`${process.env.REACT_APP_HOST}/status/serverStatus`)
     }
 }
 

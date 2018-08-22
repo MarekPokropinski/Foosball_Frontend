@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import Status from './status'
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -18,7 +20,7 @@ const styles = {
   navBar: {
     height: '10%',
     backgroundColor: 'rgba(0, 0, 0, 1)',
-    color:'white'
+    color: 'white'
   },
   menuButton: {
     marginLeft: -12,
@@ -32,6 +34,18 @@ const styles = {
   },
   imageDiv: {
     height: '100%',
+  },
+  error: {
+    color: 'red',
+    float: 'right',
+  },
+  warning: {
+    color: 'yellow',
+    float: 'right',
+  },
+  chceck: {
+    color: '#0adb45',
+    float: 'right',
   }
 };
 
@@ -47,8 +61,11 @@ function ButtonAppBar(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
             FOOSBALL
           </Typography>
+
           <div className={classes.imageDiv}>
+
             <img alt="Logo" src={require('../images/ncdc3.png')} title="ncdc_logo" className={classes.image} />
+              <Status />
           </div>
         </Toolbar>
 

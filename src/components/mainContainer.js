@@ -13,7 +13,7 @@ import GameBegin from '../containers/gameBegin';
 import Lobby from '../containers/lobby';
 import SummaryComponent from '../containers/summaryComponent';
 import theme from '../styles/theme';
-import { MuiThemeProvider} from 'material-ui/styles';
+import { MuiThemeProvider } from 'material-ui/styles';
 import Error from '../containers/error'
 import '../styles/index.css';
 
@@ -26,9 +26,10 @@ export default () => {
     return (
         <div className="main-container">
             <MuiThemeProvider theme={theme} >
-                <ButtonAppBar />
-                <div className="content">
-                    <Provider store={store}>
+                <Provider store={store}>
+                    <div className="content">
+                    <ButtonAppBar />
+                    
                         <HashRouter basename="/foosball">
                             <Switch>
                                 <Route path="/summary" component={SummaryComponent} />
@@ -42,8 +43,9 @@ export default () => {
                                 <Route path="/" component={App} />
                             </Switch>
                         </HashRouter>
-                    </Provider>
-                </div>
+
+                    </div>
+                </Provider>
             </MuiThemeProvider>
         </div>
     );
