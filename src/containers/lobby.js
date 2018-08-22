@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
+import * as gameActions from '../actions/gameActions'
 
 import CustomButton from '../components/button';
 import Button from '@material-ui/core/Button';
@@ -61,7 +62,7 @@ class Lobby extends Component {
   }
 
   addUser(color) {
-    this.props.actions.addUser(color)
+    this.props.gameActions.addUser(color)
   }
 
   renderUserButton(color, val, index, team) {
@@ -118,7 +119,8 @@ class Lobby extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(userActions, dispatch)
+    actions: bindActionCreators(userActions, dispatch),
+    gameActions: bindActionCreators(gameActions, dispatch)
   }
 }
 

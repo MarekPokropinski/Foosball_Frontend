@@ -1,4 +1,4 @@
-import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, FULFILLED} from '../actions/gameActions';
+import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, FULFILLED} from '../actions/gameActions';
 
 export const getNick = (gameState, color, index) => {
     let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
@@ -55,6 +55,37 @@ export default (state = gameInit, action) => {
             return {
                 ...state,
                 gameType: action.payload
+            }
+        }
+        case SET_NICK: {
+            let reds = state.redTeamNicks.slice()
+            let blues = state.blueTeamNicks.slice()
+
+            if(action.payload.color === 'blue')
+                blues[action.payload.index] = action.payload.value
+            else
+                reds[action.payload.index] = action.payload.value
+            return {
+                ...state,
+                blueTeamNicks: blues,
+                redTeamNicks: reds
+            }
+        }
+        case SET_ID: {
+            let newState = {...state};
+            setId(newState, action.payload.color, action.payload.index, action.payload.value)
+            return newState
+        }
+        case ADD_USER: {
+            let reds = state.redTeamNicks.slice()
+            let blues = state.blueTeamNicks.slice();
+            (action.payload === 'blue')
+            ? blues.push("")
+            : reds.push("")
+            return {
+                ...state,
+                blueTeamNicks: blues,
+                redTeamNicks: reds
             }
         }
         default: return state
