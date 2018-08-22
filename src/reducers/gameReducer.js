@@ -1,4 +1,4 @@
-import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, RESET_GAME, FULFILLED} from '../actions/gameActions';
+import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, DEL_USER, RESET_GAME, FULFILLED} from '../actions/gameActions';
 
 export const getNick = (gameState, color, index) => {
     let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
@@ -86,6 +86,40 @@ export default (state = gameInit, action) => {
                 ...state,
                 blueTeamNicks: blues,
                 redTeamNicks: reds
+            }
+        }
+        case DEL_USER: {
+            let newRedTeamNicks = []
+            let newBlueTeamNicks = []
+            let newRedTeamIds = []
+            let newBlueTeamIds = []
+
+            for(let i = 0; i < state.redTeamNicks.length; i++) {
+                if(action.payload.color !== 'red' || action.payload.index !== i) {
+                    newRedTeamNicks.push(state.redTeamNicks[i]);
+                    newRedTeamIds.push(state.redTeamIds[i]);
+                }
+            }
+            if(newRedTeamNicks.length === 0) {
+                newRedTeamNicks.push('')
+            }
+
+            for(let i = 0; i < state.blueTeamNicks.length; i++) {
+                if(action.payload.color !== 'blue' || action.payload.index !== i) {
+                    newBlueTeamNicks.push(state.blueTeamNicks[i]);
+                    newBlueTeamIds.push(state.blueTeamIds[i]);
+                }
+            }
+            if(newBlueTeamNicks.length === 0) {
+                newBlueTeamNicks.push('')
+            }
+
+            return {
+                ...state,
+                blueTeamNicks: newBlueTeamNicks,
+                redTeamNicks: newRedTeamNicks,
+                blueTeamIds: newBlueTeamIds,
+                redTeamIds: newRedTeamIds
             }
         }
         case RESET_GAME: {
