@@ -6,6 +6,8 @@ import * as gameActions from '../actions/gameActions.js';
 import { getNick } from "../reducers/gameReducer.js";
 
 import '../styles/form.css'
+import { Button } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 class UserComponent extends React.Component {
@@ -29,6 +31,9 @@ class UserComponent extends React.Component {
                         value={getNick(this.props.game, this.props.color, this.props.id)}
                         onChange={(e) => { this.props.gameActions.setNick(this.props.color, this.props.id, e.target.value) }}></input>
                 </form>
+                <Button variant='contained' onClick={ () => this.props.gameActions.deleteUser(this.props.id, this.props.color)}>
+                <DeleteIcon /> 
+                </Button>
             </div>
         );
     }

@@ -92,6 +92,15 @@ export const addUser = (color) => {
     }
 }
 
+export const DEL_USER = 'del_user';
+
+export const deleteUser = (index, color) => {
+    return {
+        type: DEL_USER,
+        payload: {index: index, color: color}
+    }
+}
+
 export const GET_ID = 'get_id';
 
 export const getUser = (nick) => {
