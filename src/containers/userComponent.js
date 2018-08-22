@@ -16,18 +16,18 @@ class UserComponent extends React.Component {
 
     handleUserChange = () => {
         this.props.gameActions.getUser(getNick(this.props.game, this.props.color, this.props.id))
-            .then((response) => {this.setState({valid: true}); this.props.gameActions.setId(this.props.color, this.props.id, response.value.data)})
-            .catch((error) =>  this.setState({valid: false}) )
+            .then((response) => { this.setState({ valid: true }); this.props.gameActions.setId(this.props.color, this.props.id, response.value.data) })
+            .catch((error) => this.setState({ valid: false }))
     }
 
     render() {
-        let ids = (this.props.color === 'blue')
-            ? this.props.game.blueTeamNicks
-            : this.props.game.redTeamNicks
         return (
-            <div>
+            <div style={{height: '100px', backgroundColor: (this.props.color === 'blue') ? 'rgba(0, 0, 255, 0.5)' : 'rgba(255, 0, 0, 0.5)'}}>
                 <form onSubmit={() => this.handleUserChange()} onBlur={() => this.handleUserChange()}>
-                    <input className={this.state.valid ? 'valid' : 'invalid'} value={ids[this.props.id]} onChange={(e) => { this.props.gameActions.setNick(this.props.color, this.props.id, e.target.value) }}></input>
+                    <input
+                        className={this.state.valid ? 'valid' : 'invalid'}
+                        value={getNick(this.props.game, this.props.color, this.props.id)}
+                        onChange={(e) => { this.props.gameActions.setNick(this.props.color, this.props.id, e.target.value) }}></input>
                 </form>
             </div>
         );
