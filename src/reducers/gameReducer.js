@@ -100,12 +100,18 @@ export default (state = gameInit, action) => {
                     newRedTeamIds.push(state.redTeamIds[i]);
                 }
             }
+            if(newRedTeamNicks.length === 0) {
+                newRedTeamNicks.push('')
+            }
 
             for(let i = 0; i < state.blueTeamNicks.length; i++) {
                 if(action.payload.color !== 'blue' || action.payload.index !== i) {
                     newBlueTeamNicks.push(state.blueTeamNicks[i]);
                     newBlueTeamIds.push(state.blueTeamIds[i]);
                 }
+            }
+            if(newBlueTeamNicks.length === 0) {
+                newBlueTeamNicks.push('')
             }
 
             return {
