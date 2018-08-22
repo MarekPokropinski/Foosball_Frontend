@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as userActions from '../actions/userActions.js';
+import * as gameActions from '../actions/gameActions'
+
 import CustomButton from '../components/button';
 import Button from '@material-ui/core/Button';
 import '../styles/lobby.css';
+import UserComponent from "../containers/userComponent.js";
+
 
 const style = {
   Container: {
@@ -43,6 +49,10 @@ class Lobby extends Component {
     );
   }
 
+  componentDidMount() {
+    this.props.gameActions.resetGame();
+  }
+
   startGame() {
     this.props.history.replace(`/begin/${this.props.match.params.mode}`);
   }
@@ -55,6 +65,10 @@ class Lobby extends Component {
     //TODO: Add delete user functionality
   }
 
+  addUser(color) {
+    this.props.gameActions.addUser(color)
+  }
+
   renderUserButton(color, val, index, team) {
     return (
       <CustomButton
@@ -65,29 +79,52 @@ class Lobby extends Component {
     );
   }
 
+  drawAddButton(color) {
+    return (
+      <button onClick={() => this.addUser(color)}>
+        +
+      </button>
+    );
+  }
+
   renderUsersGrid() {
     return (
       <div className='flex'>
         <div>
-          {this.props.game.blueTeamIds.map((val, index) => {
+          {this.props.game.blueTeamNicks.map((val, index) => {
             return (
               <div key={index}>
-                {this.renderUserButton('secondary', val, index, 'blue')}
+                <UserComponent color='blue' id={index} />
               </div>
             );
           })}
+          {(this.props.game.blueTeamNicks.length < 2)
+          ? this.drawAddButton('blue')
+          : ""
+          }
         </div>
         <div>
-          {this.props.game.redTeamIds.map((val, index) => {
+          {this.props.game.redTeamNicks.map((val, index) => {
             return (
               <div key={index}>
-                {this.renderUserButton('primary', val, index, 'red')}
+                <UserComponent color='red' id={index} />
               </div>
             );
           })}
+          {(this.props.game.redTeamNicks.length < 2)
+          ? this.drawAddButton('red')
+          : ""
+          }
         </div>
       </div>
     );
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(userActions, dispatch),
+    gameActions: bindActionCreators(gameActions, dispatch)
   }
 }
 
@@ -98,4 +135,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Lobby);
+export default connect(mapStateToProps, mapDispatchToProps)(Lobby);

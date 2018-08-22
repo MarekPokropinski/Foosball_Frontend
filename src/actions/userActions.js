@@ -11,6 +11,9 @@ export const START_TIMER = 'start_timer';
 export const STOP_TIMER = 'stop_timer';
 export const GAME_TYPE = 'game_type';
 export const START_RANKED = 'start_ranked'
+export const ADD_USER = 'add_user';
+export const SET_NICK = 'set_nick';
+export const GET_IDS = 'get_ids';
 
 export const connect = (endpoint, onOpen, onMessage, onError) => {
     let socket = new WebSocket(endpoint);
