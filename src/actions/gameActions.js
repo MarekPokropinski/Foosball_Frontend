@@ -15,18 +15,10 @@ export const START_GAME = 'start_game'
 export const startGame = (gameType = 'free', redIds, blueIds) => {
     return {
         type: START_GAME,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`?usersID=${redIds},${blueIds}`)) 
+        payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`?redTeamUsersID=${redIds}&blueTeamUsersID=${blueIds}`)) 
     }
 }
 
-export const START_RANKED = 'start_ranked'
-
-export const startRankedGame = (redIds, blueIds) => {
-    return {
-        type: START_RANKED,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/rankedGame/start?redTeamIds=${redIds}&blueTeamIds=${blueIds}`)
-    }
-}
 
 export const TIME_STAMP = 'time_stamp'
 

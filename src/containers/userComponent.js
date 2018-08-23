@@ -13,7 +13,8 @@ import TextField from '@material-ui/core/TextField';
 class UserComponent extends React.Component {
 
     state = {
-        valid: true
+        valid: true,
+        willUnmount: false
     }
 
     render() {
@@ -38,10 +39,15 @@ class UserComponent extends React.Component {
         );
     }
 
+    componentWillUnmount() {
+        this.setState({ willUnmount: true })
+    }
+
     handleUserChange() {
+        this.setState({ pending: true })
         this.props.gameActions.getUser(getNick(this.props.game, this.props.color, this.props.id))
-            .then((response) => { this.setState({ valid: true }); this.props.gameActions.setId(this.props.color, this.props.id, response.value.data) })
-            .catch((error) => this.setState({ valid: false }))
+            .then((response) => {if(!this.statewillUnmount){ this.setState({ valid: true }); this.props.gameActions.setId(this.props.color, this.props.id, response.value.data) }})
+            .catch((error) => {if(!this.statewillUnmount)this.setState({ valid: false })})
     }
 
     handleFocus() {
