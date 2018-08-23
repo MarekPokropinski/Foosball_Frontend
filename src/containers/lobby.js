@@ -28,6 +28,11 @@ class Lobby extends Component {
     super();
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
+
+  state = {
+    input: []
+  }
+
   render() {
     return (
       <div>
@@ -65,15 +70,40 @@ class Lobby extends Component {
   }
 
   handleKeyPress(event) {
-    console.log(event.keyCode)
+    if (!this.props.user.isFocused) {
+      if (event.keyCode === 13) {
+        if (this.state.input.length >= 10) {
+          let cardId = this.state.input.slice(this.state.input.length - 10, this.state.input.length).map((v) => String.fromCharCode(v)).join('')
+          this.setState({ input: [] })
+          this.props.userActions.addUserByCode(cardId)
+        }
+      }
+      else
+        this.setState({ input: [...this.state.input, event.keyCode] })
+    }
   }
 
   startGame() {
-    this.props.gameActions.validateLobby()
-    if (this.props.game.validated)
+    if (this.validateLobby())
       this.props.history.replace(`/begin/${this.props.match.params.mode}`);
     else
       console.error('Validation failed')
+
+
+  }
+
+  validateLobby() {
+    for (let i = 0; i < this.props.game.blueTeamNicks.length; i++) {
+      if (!this.props.game.blueTeamIds[i]) {
+        return false
+      }
+    }
+    for (let i = 0; i < this.props.game.redTeamNicks.length; i++) {
+      if (!this.props.game.redTeamIds[i]) {
+        return false
+      }
+    }
+    return true
   }
 
   goBack() {
@@ -100,7 +130,7 @@ class Lobby extends Component {
 
   drawAddButton(color) {
     return (
-      <Button style={{margin: '50px'}} variant="fab" color="secondary" aria-label="Add" onClick={() => this.addUser(color)}>
+      <Button style={{ margin: '50px' }} variant="fab" color="secondary" aria-label="Add" onClick={() => this.addUser(color)}>
         <AddIcon />
       </Button>
     );
@@ -142,7 +172,7 @@ class Lobby extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(userActions, dispatch),
+    userActions: bindActionCreators(userActions, dispatch),
     gameActions: bindActionCreators(gameActions, dispatch)
   }
 }

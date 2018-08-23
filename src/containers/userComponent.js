@@ -16,17 +16,11 @@ class UserComponent extends React.Component {
         valid: true
     }
 
-    handleUserChange = () => {
-        this.props.gameActions.getUser(getNick(this.props.game, this.props.color, this.props.id))
-            .then((response) => { this.setState({ valid: true }); this.props.gameActions.setId(this.props.color, this.props.id, response.value.data) })
-            .catch((error) => this.setState({ valid: false }))
-    }
-
     render() {
         return (
             <div className='user-container'>
                 <div className={(this.props.color === 'blue') ? 'color-bar-blue' : 'color-bar-red'}/>
-                <form onSubmit={() => this.handleUserChange()} onBlur={() => this.handleUserChange()}>
+                <form onFocus={() => this.handleFocus()} onSubmit={() => this.handleUserChange()} onBlur={() => this.handleBlur()}>
                     <TextField
                         InputProps={{style: {fontSize: '0.8em'}}}
                         error={!this.state.valid}
@@ -42,6 +36,21 @@ class UserComponent extends React.Component {
 
             </div>
         );
+    }
+
+    handleUserChange() {
+        this.props.gameActions.getUser(getNick(this.props.game, this.props.color, this.props.id))
+            .then((response) => { this.setState({ valid: true }); this.props.gameActions.setId(this.props.color, this.props.id, response.value.data) })
+            .catch((error) => this.setState({ valid: false }))
+    }
+
+    handleFocus() {
+        this.props.userActions.setFocus(true)
+    }
+
+    handleBlur() {
+        this.props.userActions.setFocus(false)
+        this.handleUserChange()
     }
 }
 

@@ -78,3 +78,20 @@ export const setId = () => {
         payload: null
     }
 }
+
+export const SET_FOCUS = 'set_focus'
+
+export const setFocus = (flag) => {
+    return {
+        type: SET_FOCUS,
+        payload: flag
+    }
+}
+
+export const addUserByCode = code => {
+    console.log(code)
+    return {
+        type: 'unhandled',
+        payload: code
+    }
+}

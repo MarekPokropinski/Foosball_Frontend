@@ -1,4 +1,4 @@
-import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, DEL_USER, RESET_GAME, VALIDATE_LOBBY, FULFILLED} from '../actions/gameActions';
+import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, DEL_USER, RESET_GAME, FULFILLED} from '../actions/gameActions';
 
 export const getNick = (gameState, color, index) => {
     let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
@@ -61,15 +61,23 @@ export default (state = gameInit, action) => {
         case SET_NICK: {
             let reds = state.redTeamNicks.slice()
             let blues = state.blueTeamNicks.slice()
+            let newBlueTeamIds = state.blueTeamIds.slice()
+            let newRedTeamIds = state.redTeamIds.slice()
 
-            if(action.payload.color === 'blue')
+            if(action.payload.color === 'blue') {
                 blues[action.payload.index] = action.payload.value
-            else
+                newBlueTeamIds[action.payload.index] = undefined
+            }
+            else {
                 reds[action.payload.index] = action.payload.value
+                newRedTeamIds[action.payload.index] = undefined
+            }
             return {
                 ...state,
                 blueTeamNicks: blues,
-                redTeamNicks: reds
+                redTeamNicks: reds,
+                blueTeamIds: newBlueTeamIds,
+                redTeamIds: newRedTeamIds
             }
         }
         case SET_ID: {
@@ -125,28 +133,6 @@ export default (state = gameInit, action) => {
         }
         case RESET_GAME: {
             return gameInit;
-        }
-        case VALIDATE_LOBBY: {
-            for(let i = 0; i < state.blueTeamNicks.length; i++) {
-                if(!state.blueTeamIds[i]) {
-                    return {
-                        ...state,
-                        validated: false
-                    }
-                }
-            }
-            for(let i = 0; i < state.redTeamNicks.length; i++) {
-                if(!state.redTeamIds[i]) {
-                    return {
-                        ...state,
-                        validated: false
-                    }
-                }
-            }
-            return {
-                ...state,
-                validated: true
-            }
         }
         default: return state
     }
