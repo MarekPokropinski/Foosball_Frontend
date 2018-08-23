@@ -1,4 +1,4 @@
-import {LISTEN_SOCKET, CONNECT_WS, STOP_LISTEN_SOCKET, START_TIMER, STOP_TIMER, GET_STATUS, REJECTED} from '../actions/userActions.js';
+import {LISTEN_SOCKET, CONNECT_WS, STOP_LISTEN_SOCKET, START_TIMER, STOP_TIMER, GET_STATUS, SET_FOCUS, REJECTED} from '../actions/userActions.js';
 import { FULFILLED } from '../../node_modules/redux-promise-middleware';
 
 const userInit = {
@@ -63,6 +63,12 @@ export default (state = userInit, action) => {
             return {
                 ...state
             }
+        case SET_FOCUS: {
+            return {
+                ...state,
+                isFocused: action.payload
+            }
+        }
         default:
             return state
     }
