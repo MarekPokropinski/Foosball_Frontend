@@ -23,6 +23,7 @@ const gameInit = {
     redScore: 0,
     blueScore: 0,
     time: 0,
+    timeLimitMilis: 0,
     finished: true,
     blueTeamNicks: [''],
     redTeamNicks: [''],
