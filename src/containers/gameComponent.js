@@ -20,17 +20,17 @@ class GameComponent extends React.Component {
                 </div>
                 <div className='score'>
                     <Score
-                        value={this.props.game.redScore}
-                        className='red-score unselectable '
-                        onClick={() => { this.handleScoreIncrement('RED') }}
-                        onHold={() => this.handleScoreDecrement('RED')}
-                        delay={1000} />
-                    <p>:</p>
-                    <Score
                         value={this.props.game.blueScore}
                         className='blue-score unselectable'
                         onClick={() => { this.handleScoreIncrement('BLUE') }}
                         onHold={() => this.handleScoreDecrement('BLUE')}
+                        delay={1000} />
+                    <p>:</p>
+                    <Score
+                        value={this.props.game.redScore}
+                        className='red-score unselectable '
+                        onClick={() => { this.handleScoreIncrement('RED') }}
+                        onHold={() => this.handleScoreDecrement('RED')}
                         delay={1000} />
                 </div>
                 <Button className='finishButton' variant="contained" onClick={() => this.handleExitButton()}> Exit game </Button>
