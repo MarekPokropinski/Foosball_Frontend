@@ -118,3 +118,11 @@ export const resetGame = () => {
         type: RESET_GAME
     }
 }
+
+export const VALIDATE_LOBBY = 'validate_lobby'
+
+export const validateLobby = () => {
+    return {
+        type: VALIDATE_LOBBY
+    }
+}

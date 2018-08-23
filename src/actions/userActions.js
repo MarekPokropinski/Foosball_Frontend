@@ -69,3 +69,12 @@ export const stopTimer = () => {
         payload: null
     }
 }
+
+export const SET_ID = 'set_id'
+
+export const setId = () => {
+    return {
+        type: STOP_TIMER,
+        payload: null
+    }
+}
