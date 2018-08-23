@@ -69,7 +69,9 @@ class GameComponent extends React.Component {
     }
 
     getConvertedTime() {
-        var time = new Time(this.props.game.time);
+        let delta = this.props.game.timeLimitMilis ? this.props.game.timeLimitMilis - this.props.game.time : this.props.game.time
+        delta = delta > 0 ? delta : 0
+        let time = new Time(delta);
         return time.getConverted();
     }
 
