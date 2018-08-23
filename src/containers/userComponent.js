@@ -5,10 +5,10 @@ import * as userActions from '../actions/userActions.js';
 import * as gameActions from '../actions/gameActions.js';
 import { getNick } from "../reducers/gameReducer.js";
 
-import '../styles/form.css'
-import { Button } from "@material-ui/core";
+import '../styles/user.css'
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import TextField from '@material-ui/core/TextField';
 
 class UserComponent extends React.Component {
 
@@ -24,16 +24,22 @@ class UserComponent extends React.Component {
 
     render() {
         return (
-            <div style={{height: '100px', backgroundColor: (this.props.color === 'blue') ? 'rgba(0, 0, 255, 0.5)' : 'rgba(255, 0, 0, 0.5)'}}>
+            <div className='user-container'>
+                <div className={(this.props.color === 'blue') ? 'color-bar-blue' : 'color-bar-red'}/>
                 <form onSubmit={() => this.handleUserChange()} onBlur={() => this.handleUserChange()}>
-                    <input
-                        className={this.state.valid ? 'valid' : 'invalid'}
+                    <TextField
+                        InputProps={{style: {fontSize: '0.8em'}}}
+                        error={!this.state.valid}
+                        id="nick"
+                        label="Nick"
                         value={getNick(this.props.game, this.props.color, this.props.id)}
-                        onChange={(e) => { this.props.gameActions.setNick(this.props.color, this.props.id, e.target.value) }}></input>
+                        onChange={(e) => { this.props.gameActions.setNick(this.props.color, this.props.id, e.target.value) }}
+                        margin="normal" />
+                    <IconButton color='secondary' style={{ margin: '10px' }} variant='contained' onClick={() => this.props.gameActions.deleteUser(this.props.id, this.props.color)}>
+                        <DeleteIcon />
+                    </IconButton>
                 </form>
-                <Button variant='contained' onClick={ () => this.props.gameActions.deleteUser(this.props.id, this.props.color)}>
-                <DeleteIcon /> 
-                </Button>
+
             </div>
         );
     }

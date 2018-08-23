@@ -6,6 +6,7 @@ import * as gameActions from '../actions/gameActions'
 
 import CustomButton from '../components/button';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import '../styles/lobby.css';
 import UserComponent from "../containers/userComponent.js";
 
@@ -23,38 +24,56 @@ const style = {
 };
 
 class Lobby extends Component {
+  constructor() {
+    super();
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
   render() {
     return (
       <div>
-        <h1>Type : {this.props.match.params.mode}</h1>
 
         {this.renderUsersGrid()}
 
-        <Button
-          style={style.StartButton}
-          variant="contained"
-          color="primary"
-          onClick={() => this.startGame()}>
-          Start game
-        </Button>
+        <div className='bottom-buttons'>
+          <Button
+            style={style.StartButton}
+            variant="contained"
+            color="secondary"
+            onClick={() => this.goBack()}>
+            Go back
+          </Button>
 
-        <Button
-          style={style.StartButton}
-          variant="contained"
-          color="secondary"
-          onClick={() => this.goBack()}>
-          Go back
-        </Button>
+          <Button
+            style={style.StartButton}
+            variant="contained"
+            color="primary"
+            onClick={() => this.startGame()}>
+            Start game
+          </Button>
+        </div>
       </div>
     );
   }
 
   componentDidMount() {
     this.props.gameActions.resetGame();
+    document.addEventListener('keypress', this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keypress', this.handleKeyPress);
+  }
+
+  handleKeyPress(event) {
+    console.log(event.keyCode)
   }
 
   startGame() {
-    this.props.history.replace(`/begin/${this.props.match.params.mode}`);
+    this.props.gameActions.validateLobby()
+    if (this.props.game.validated)
+      this.props.history.replace(`/begin/${this.props.match.params.mode}`);
+    else
+      console.error('Validation failed')
   }
 
   goBack() {
@@ -81,9 +100,9 @@ class Lobby extends Component {
 
   drawAddButton(color) {
     return (
-      <button onClick={() => this.addUser(color)}>
-        +
-      </button>
+      <Button style={{margin: '50px'}} variant="fab" color="secondary" aria-label="Add" onClick={() => this.addUser(color)}>
+        <AddIcon />
+      </Button>
     );
   }
 
@@ -99,8 +118,8 @@ class Lobby extends Component {
             );
           })}
           {(this.props.game.blueTeamNicks.length < 2)
-          ? this.drawAddButton('blue')
-          : ""
+            ? this.drawAddButton('blue')
+            : ""
           }
         </div>
         <div>
@@ -112,8 +131,8 @@ class Lobby extends Component {
             );
           })}
           {(this.props.game.redTeamNicks.length < 2)
-          ? this.drawAddButton('red')
-          : ""
+            ? this.drawAddButton('red')
+            : ""
           }
         </div>
       </div>

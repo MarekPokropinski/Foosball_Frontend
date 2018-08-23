@@ -1,4 +1,4 @@
-import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, DEL_USER, RESET_GAME, FULFILLED} from '../actions/gameActions';
+import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, DEL_USER, RESET_GAME, VALIDATE_LOBBY, FULFILLED} from '../actions/gameActions';
 
 export const getNick = (gameState, color, index) => {
     let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
@@ -24,11 +24,12 @@ const gameInit = {
     blueScore: 0,
     time: 0,
     finished: true,
-    blueTeamNicks: ['jarek'],
-    redTeamNicks: ['relik'],
-    blueTeamIds: [0],
-    redTeamIds: [0],
-    gameType: 'normal'
+    blueTeamNicks: [''],
+    redTeamNicks: [''],
+    blueTeamIds: [],
+    redTeamIds: [],
+    gameType: 'normal',
+    validated: false
 }
 
 export default (state = gameInit, action) => {
@@ -124,6 +125,28 @@ export default (state = gameInit, action) => {
         }
         case RESET_GAME: {
             return gameInit;
+        }
+        case VALIDATE_LOBBY: {
+            for(let i = 0; i < state.blueTeamNicks.length; i++) {
+                if(!state.blueTeamIds[i]) {
+                    return {
+                        ...state,
+                        validated: false
+                    }
+                }
+            }
+            for(let i = 0; i < state.redTeamNicks.length; i++) {
+                if(!state.redTeamIds[i]) {
+                    return {
+                        ...state,
+                        validated: false
+                    }
+                }
+            }
+            return {
+                ...state,
+                validated: true
+            }
         }
         default: return state
     }

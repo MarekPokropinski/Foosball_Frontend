@@ -2,3 +2,11 @@
     display: flex;
     justify-content: space-around;
 }
+
+.bottom-buttons {
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    top: 400px;
+    width: 100%;
+}

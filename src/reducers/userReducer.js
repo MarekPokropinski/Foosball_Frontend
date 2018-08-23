@@ -5,6 +5,9 @@ const userInit = {
     socket: null,
     socketListeners: [],
     timer: null, 
+    isFocused: false,
+    id: undefined,
+    validated: false
 }
 
 export default (state = userInit, action) => {
