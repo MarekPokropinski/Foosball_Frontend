@@ -95,11 +95,11 @@ export const deleteUser = (index, color) => {
 
 export const GET_ID = 'get_id';
 
-export const getUser = (nick) => {
-    //let nick = (color === 'blue' ? state.gameState.blueTeamNicks : state.gameState.redTeamNicks)[index];
+export const getUser = (value) => {
     return {
         type: GET_ID,
-        payload: axios.get(`${process.env.REACT_APP_HOST}/getByNick?nick=${nick}`)
+        // payload: axios.get(`${process.env.REACT_APP_HOST}/getByNick?nick=${nick}`)
+        payload: axios.get(`${process.env.REACT_APP_HOST}/getByNickOrId?value=${value}`)
     }
 }
 
