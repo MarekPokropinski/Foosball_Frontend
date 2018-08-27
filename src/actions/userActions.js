@@ -88,10 +88,11 @@ export const setFocus = (flag) => {
     }
 }
 
-export const addUserByCode = code => {
-    console.log(code)
+export const SET_PENDING = 'set_pending'
+
+export const setPending = (flag) => {
     return {
-        type: 'unhandled',
-        payload: code
+        type: SET_PENDING,
+        payload: flag
     }
 }

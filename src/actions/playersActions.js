@@ -25,6 +25,14 @@ export const setUser = (index, id, nick, color) => {
     }
 }
 
+export const CLEAR_USER = 'clear_user'
+
+export const clear = () => {
+    return {
+        type: CLEAR_USER
+    }
+}
+
 export const getPlayers = (players, color) => {
     let newPlayers = []
     for(let i = 0; i < players.length; i++) {

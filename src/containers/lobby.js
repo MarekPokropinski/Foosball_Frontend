@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
 import * as gameActions from '../actions/gameActions'
+import * as playersActions from '../actions/playersActions'
 
 import CustomButton from '../components/button';
 import Button from '@material-ui/core/Button';
@@ -32,7 +33,6 @@ class Lobby extends Component {
   render() {
     return (
       <div>
-
         {this.renderUsersGrid()}
 
         <div className='bottom-buttons'>
@@ -48,6 +48,7 @@ class Lobby extends Component {
             style={style.StartButton}
             variant="contained"
             color="primary"
+            disabled={this.props.user.pending}
             onClick={() => this.startGame()}>
             Start game
           </Button>
@@ -57,7 +58,7 @@ class Lobby extends Component {
   }
 
   componentDidMount() {
-    this.props.gameActions.resetGame();
+    this.props.playersActions.clear();
   }
 
   startGame() {
@@ -81,7 +82,7 @@ class Lobby extends Component {
   }
 
   addUser(color) {
-    this.props.gameActions.addUser(color)
+    this.props.playersActions.addUser(color)
   }
 
   renderUserButton(color, val, index, team) {
@@ -145,7 +146,8 @@ class Lobby extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     userActions: bindActionCreators(userActions, dispatch),
-    gameActions: bindActionCreators(gameActions, dispatch)
+    gameActions: bindActionCreators(gameActions, dispatch),
+    playersActions: bindActionCreators(playersActions, dispatch),
   }
 }
 
