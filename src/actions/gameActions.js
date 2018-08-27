@@ -19,7 +19,6 @@ export const startGame = (gameType = 'free', redIds, blueIds) => {
     }
 }
 
-
 export const TIME_STAMP = 'time_stamp'
 
 export const timeStamp = (time) => {
@@ -53,43 +52,6 @@ export const decrementScore = (color) => {
     return {
         type: DEC_SCORE,
         payload: axios.post(`${process.env.REACT_APP_HOST}/revertGoal?team=${color}`)
-    }
-}
-
-
-export const SET_NICK = 'set_nick';
-
-
-export const setNick = (color, index, value) => {
-    return {
-        type: SET_NICK,
-        payload: {color: color, index: index, value: value}
-    }
-}
-
-export const SET_ID = 'set_id';
-
-export const setId = (color, index, value) => {
-    return {
-        type: SET_ID,
-        payload: {color: color, index: index, value: value}
-    }
-}
-export const ADD_USER = 'add_user';
-
-export const addUser = (color) => {
-    return {
-        type: ADD_USER,
-        payload: color
-    }
-}
-
-export const DEL_USER = 'del_user';
-
-export const deleteUser = (index, color) => {
-    return {
-        type: DEL_USER,
-        payload: {index: index, color: color}
     }
 }
 

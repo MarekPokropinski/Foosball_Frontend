@@ -1,22 +1,4 @@
-import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, SET_NICK, SET_ID, ADD_USER, DEL_USER, RESET_GAME, FULFILLED} from '../actions/gameActions';
-
-export const getNick = (gameState, color, index) => {
-    let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
-    return arr[index];    
-}
-export const setNick = (gameState, color, index, value) => {
-    let arr = (color === 'blue') ? gameState.blueTeamNicks : gameState.redTeamNicks;
-    arr[index] = value;    
-}
-
-export const getId = (gameState, color, index) => {
-    let arr = (color === 'blue') ? gameState.blueTeamIds : gameState.redTeamIds;
-    return arr[index];    
-}
-export const setId = (gameState, color, index, value) => {
-    let arr = (color === 'blue') ? gameState.blueTeamIds : gameState.redTeamIds;
-    arr[index] = value;    
-}
+import {UPDATE_GAME, START_GAME, TIME_STAMP, GAME_TYPE, RESET_GAME, FULFILLED} from '../actions/gameActions';
 
 const gameInit = {
     id: 0,
@@ -25,10 +7,6 @@ const gameInit = {
     time: 0,
     timeLimitMilis: 0,
     finished: true,
-    blueTeamNicks: [''],
-    redTeamNicks: [''],
-    blueTeamIds: [],
-    redTeamIds: [],
     gameType: 'normal',
     validated: false
 }
@@ -57,79 +35,6 @@ export default (state = gameInit, action) => {
             return {
                 ...state,
                 gameType: action.payload
-            }
-        }
-        case SET_NICK: {
-            let reds = state.redTeamNicks.slice()
-            let blues = state.blueTeamNicks.slice()
-            let newBlueTeamIds = state.blueTeamIds.slice()
-            let newRedTeamIds = state.redTeamIds.slice()
-
-            if(action.payload.color === 'blue') {
-                blues[action.payload.index] = action.payload.value
-                newBlueTeamIds[action.payload.index] = undefined
-            }
-            else {
-                reds[action.payload.index] = action.payload.value
-                newRedTeamIds[action.payload.index] = undefined
-            }
-            return {
-                ...state,
-                blueTeamNicks: blues,
-                redTeamNicks: reds,
-                blueTeamIds: newBlueTeamIds,
-                redTeamIds: newRedTeamIds
-            }
-        }
-        case SET_ID: {
-            let newState = {...state};
-            setId(newState, action.payload.color, action.payload.index, action.payload.value)
-            return newState
-        }
-        case ADD_USER: {
-            let reds = state.redTeamNicks.slice()
-            let blues = state.blueTeamNicks.slice();
-            (action.payload === 'blue')
-            ? blues.push("")
-            : reds.push("")
-            return {
-                ...state,
-                blueTeamNicks: blues,
-                redTeamNicks: reds
-            }
-        }
-        case DEL_USER: {
-            let newRedTeamNicks = []
-            let newBlueTeamNicks = []
-            let newRedTeamIds = []
-            let newBlueTeamIds = []
-
-            for(let i = 0; i < state.redTeamNicks.length; i++) {
-                if(action.payload.color !== 'red' || action.payload.index !== i) {
-                    newRedTeamNicks.push(state.redTeamNicks[i]);
-                    newRedTeamIds.push(state.redTeamIds[i]);
-                }
-            }
-            if(newRedTeamNicks.length === 0) {
-                newRedTeamNicks.push('')
-            }
-
-            for(let i = 0; i < state.blueTeamNicks.length; i++) {
-                if(action.payload.color !== 'blue' || action.payload.index !== i) {
-                    newBlueTeamNicks.push(state.blueTeamNicks[i]);
-                    newBlueTeamIds.push(state.blueTeamIds[i]);
-                }
-            }
-            if(newBlueTeamNicks.length === 0) {
-                newBlueTeamNicks.push('')
-            }
-
-            return {
-                ...state,
-                blueTeamNicks: newBlueTeamNicks,
-                redTeamNicks: newRedTeamNicks,
-                blueTeamIds: newBlueTeamIds,
-                redTeamIds: newRedTeamIds
             }
         }
         case RESET_GAME: {
