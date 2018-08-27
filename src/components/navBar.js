@@ -5,10 +5,9 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
 import Status from './status'
+import StatisticsMenu from '../containers/statisticsMenu';
 
 const styles = {
   root: {
@@ -19,7 +18,7 @@ const styles = {
   },
   navBar: {
     height: '10%',
-    backgroundColor: 'rgba(0, 0, 0, 1)',
+    backgroundColor: '#000',
     color: 'white'
   },
   menuButton: {
@@ -53,11 +52,10 @@ function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
+      
       <AppBar position="static" color='primary' >
         <Toolbar className={classes.navBar}>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
+          <StatisticsMenu open = {false}/>
           <Typography variant="title" color="inherit" className={classes.flex}>
             FOOSBALL
           </Typography>
@@ -65,7 +63,7 @@ function ButtonAppBar(props) {
           <div className={classes.imageDiv}>
 
             <img alt="Logo" src={require('../images/ncdc3.png')} title="ncdc_logo" className={classes.image} />
-              <Status />
+            <Status />
           </div>
         </Toolbar>
 
