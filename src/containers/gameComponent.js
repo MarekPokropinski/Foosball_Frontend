@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Time from '../time.js';
 import Score from '../components/score.js';
 import '../styles/gameStyle.css'
+import { getPlayers } from '../actions/playersActions.js';
 
 class GameComponent extends React.Component {
     render() {
@@ -86,16 +87,16 @@ class GameComponent extends React.Component {
         return (
             <div className='nicks'>
                 <div className='flex'>
-                    {this.props.game.blueTeamNicks.map((val, index) => {
+                    { getPlayers(this.props.players, 'blue').map(({nick}, index) => {
                         return (
-                            <p style={{ marginRight: '10px' }} key={index}>{val}</p>
+                            <p style={{ marginRight: '10px' }} key={index}>{nick}</p>
                         );
                     })}
                 </div>
                 <div className='flex'>
-                    {this.props.game.redTeamNicks.map((val, index) => {
+                    { getPlayers(this.props.players, 'red').map(({nick}, index) => {
                         return (
-                            <p style={{ marginRight: '10px' }} key={index}>{val}</p>
+                            <p style={{ marginRight: '10px' }} key={index}>{nick}</p>
                         );
                     })}
                 </div>
@@ -114,7 +115,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         user: state.user,
-        game: state.game
+        game: state.game,
+        players: state.players
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GameComponent);

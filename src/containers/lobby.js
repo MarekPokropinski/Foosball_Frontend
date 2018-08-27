@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import '../styles/lobby.css';
 import UserComponent from "../containers/userComponent.js";
+import { getPlayers } from "../actions/playersActions.js";
 
 
 const style = {
@@ -67,17 +68,12 @@ class Lobby extends Component {
   }
 
   validateLobby() {
-    for (let i = 0; i < this.props.game.blueTeamNicks.length; i++) {
-      if (!this.props.game.blueTeamIds[i]) {
+    for(let i = 0; i < this.props.players.length; i++) {
+      if (!this.props.players[i].id) {
         return false
       }
+      return true
     }
-    for (let i = 0; i < this.props.game.redTeamNicks.length; i++) {
-      if (!this.props.game.redTeamIds[i]) {
-        return false
-      }
-    }
-    return true
   }
 
   goBack() {
@@ -110,27 +106,33 @@ class Lobby extends Component {
     return (
       <div className='flex'>
         <div>
-          {this.props.game.blueTeamNicks.map((val, index) => {
-            return (
-              <div key={index}>
-                <UserComponent color='blue' id={index} />
-              </div>
-            );
+          {this.props.players.map((val, index) => {
+            if(val.color === 'blue')
+              return (
+                <div key={index}>
+                  <UserComponent color='blue' id={index} />
+                </div>
+              );
+            else
+              return <div key={index} />
           })}
-          {(this.props.game.blueTeamNicks.length < 2)
+          {(getPlayers(this.props.players, 'blue').length < 2)
             ? this.drawAddButton('blue')
             : ""
           }
         </div>
         <div>
-          {this.props.game.redTeamNicks.map((val, index) => {
-            return (
-              <div key={index}>
-                <UserComponent color='red' id={index} />
-              </div>
-            );
+          {this.props.players.map((val, index) => {
+            if(val.color === 'red')
+              return (
+                <div key={index}>
+                  <UserComponent color='red' id={index} />
+                </div>
+              );
+            else
+              return <div key={index} />
           })}
-          {(this.props.game.redTeamNicks.length < 2)
+          {(getPlayers(this.props.players, 'red').length < 2)
             ? this.drawAddButton('red')
             : ""
           }
@@ -150,7 +152,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    game: state.game
+    game: state.game,
+    players: state.players
   }
 }
 

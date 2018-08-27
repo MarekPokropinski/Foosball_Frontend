@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
 import * as gameActions from '../actions/gameActions.js'
+import * as playersActions from '../actions/playersActions.js'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 
@@ -31,10 +32,12 @@ class GameBegin extends Component {
     }
 
     startGameAction() {
+        console.log(playersActions.getPlayers(this.props.players, 'blue'))
         if (this.props.match.params.mode === 'free') {
             return this.props.gameActions.startGame(this.props.match.params.mode);
         }
-        return this.props.gameActions.startGame(this.props.match.params.mode, this.props.game.blueTeamIds, this.props.game.redTeamIds);
+        return this.props.gameActions.startGame(this.props.match.params.mode, playersActions.getPlayers(this.props.players, 'blue').map((val) => val.id),
+            playersActions.getPlayers(this.props.players, 'red').map((val) => val.id));
     }
 
     waitAndStart() {
@@ -72,13 +75,15 @@ const mapDispatchToProps = (dispatch) => {
     return {
         userActions: bindActionCreators(userActions, dispatch),
         gameActions: bindActionCreators(gameActions, dispatch),
+        playersActions: bindActionCreators(playersActions, dispatch),
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         user: state.user,
-        game: state.game
+        game: state.game,
+        players: state.players
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GameBegin);
