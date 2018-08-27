@@ -24,11 +24,6 @@ const style = {
 };
 
 class Lobby extends Component {
-  constructor() {
-    super();
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
   state = {
     input: []
   }
@@ -62,25 +57,6 @@ class Lobby extends Component {
 
   componentDidMount() {
     this.props.gameActions.resetGame();
-    document.addEventListener('keypress', this.handleKeyPress);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keypress', this.handleKeyPress);
-  }
-
-  handleKeyPress(event) {
-    if (!this.props.user.isFocused) {
-      if (event.keyCode === 13) {
-        if (this.state.input.length >= 10) {
-          let cardId = this.state.input.slice(this.state.input.length - 10, this.state.input.length).map((v) => String.fromCharCode(v)).join('')
-          this.setState({ input: [] })
-          this.props.userActions.addUserByCode(cardId)
-        }
-      }
-      else
-        this.setState({ input: [...this.state.input, event.keyCode] })
-    }
   }
 
   startGame() {
@@ -88,8 +64,6 @@ class Lobby extends Component {
       this.props.history.replace(`/begin/${this.props.match.params.mode}`);
     else
       console.error('Validation failed')
-
-
   }
 
   validateLobby() {
@@ -108,10 +82,6 @@ class Lobby extends Component {
 
   goBack() {
     this.props.history.replace("/");
-  }
-
-  deleteUser(userId, team) {
-    //TODO: Add delete user functionality
   }
 
   addUser(color) {

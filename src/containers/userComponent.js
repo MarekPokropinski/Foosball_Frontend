@@ -46,8 +46,17 @@ class UserComponent extends React.Component {
     handleUserChange() {
         this.setState({ pending: true })
         this.props.gameActions.getUser(getNick(this.props.game, this.props.color, this.props.id))
-            .then((response) => {if(!this.statewillUnmount){ this.setState({ valid: true }); this.props.gameActions.setId(this.props.color, this.props.id, response.value.data) }})
-            .catch((error) => {if(!this.statewillUnmount)this.setState({ valid: false })})
+            .then((response) => {
+                if(!this.state.willUnmount) {
+                    this.setState({ valid: true })
+                    this.props.gameActions.setNick(this.props.color, this.props.id, response.value.data.nick)
+                    this.props.gameActions.setId(this.props.color, this.props.id, response.value.data.id)
+                }
+            })
+            .catch((error) => {
+                if(!this.state.willUnmount)
+                    this.setState({ valid: false })
+            })
     }
 
     handleFocus() {
