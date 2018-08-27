@@ -6,6 +6,22 @@ import CustomButton from '../components/button'
 
 
 class App extends React.Component {
+    render() {
+        return (
+            <div style={{padding: '8%'}}>
+                <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleFreeUser()} />
+                <CustomButton value='normal' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleNormalUser()} />
+                <CustomButton value='ranked' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleRankedUser() }} />
+                <CustomButton value='tournament' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleTournamentUser() }} />
+            </div>
+        );
+    }
+
+    handleFreeUser() {
+        this.props.history.replace('/begin/free')
+        this.props.gameActions.setGameType('free');
+    }
+
     handleNormalUser() {
         this.props.history.replace('/mode/normal')
         this.props.gameActions.setGameType('normal');
@@ -16,23 +32,9 @@ class App extends React.Component {
         this.props.gameActions.setGameType('ranked');
     }
 
-    handleFreeUser() {
-        this.props.history.replace('/begin/free')
-        this.props.gameActions.setGameType('free');
-    }
-
-    render() {
-        let styleContainer = {
-            padding: '8%'
-        }
-        return (
-            <div style={styleContainer}>
-                <CustomButton value='free' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleFreeUser()} />
-                <CustomButton value='normal' variant='contained' color='secondary' className="menuButton" onClick={() => this.handleNormalUser()} />
-                <CustomButton value='ranked' variant='contained' color='secondary' className="menuButton" onClick={() => { this.handleRankedUser() }} />
-                <CustomButton value='tournament' variant='contained' color='secondary' className="menuButton" onClick={() => { }} />
-            </div>
-        );
+    handleTournamentUser() {
+        this.props.history.replace('/mode/tournament')
+        this.props.gameActions.setGameType('tournament');
     }
 }
 
