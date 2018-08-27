@@ -31,7 +31,12 @@ class UserComponent extends React.Component {
                         value={this.state.text}
                         onChange={(e) => this.setState({ text: e.target.value })}
                         margin="normal" />
-                    <IconButton color='secondary' style={{ margin: '10px' }} variant='contained' onClick={() => this.props.playersActions.deleteUser(this.props.id)}>
+                    <IconButton 
+                        color='secondary' 
+                        style={{ margin: '10px' }} 
+                        variant='contained' 
+                        disabled={this.props.user.pending}
+                        onClick={() => this.props.playersActions.deleteUser(this.props.id)}>
                         <DeleteIcon />
                     </IconButton>
                 </form>
@@ -47,23 +52,25 @@ class UserComponent extends React.Component {
     handleUserChange() {
         for (let i = 0; i < this.props.players.length; i++) {
             if (i !== this.props.id && this.props.players[i].nick === this.state.text) {
-                this.setState({ valid: false })
+                this.setState({ valid: false, text: '' })
                 console.error('same nick')
                 return
             }
         }
-        this.setState({ pending: true })
+        this.props.userActions.setPending(true)
         this.props.gameActions.getUser(this.state.text)
             .then((response) => {
                 if (!this.state.willUnmount) {
-                    this.setState({ valid: true })
                     this.props.playersActions.setUser(this.props.id, response.value.data.id, response.value.data.nick, this.props.color)
+                    this.setState({text: response.value.data.nick, valid: true})
+                    this.props.userActions.setPending(false)
                 }
             })
             .catch((error) => {
                 if (!this.state.willUnmount) {
-                    this.setState({ valid: false })
                     console.error(error)
+                    this.setState({ valid: false, text: '' })
+                    this.props.userActions.setPending(false)
                 }
             })
     }
