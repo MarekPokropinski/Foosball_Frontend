@@ -24,15 +24,16 @@ class UserComponent extends React.Component {
     }
 
     focus() {
-        this.textInput.current.focus();
+        //this.textInput.current.focus();
     }
 
     render() {
         return (
             <div className='user-container' onClick={this.focus}>
                 <div className={(this.props.color === 'blue') ? 'color-bar-blue' : 'color-bar-red'} />
-                <form onFocus={() => this.handleFocus()} onSubmit={() => this.handleUserChange()} onBlur={() => this.handleBlur()}>
+                <form onSubmit={() => this.handleUserChange()} onBlur={() => this.handleBlur()}>
                     <TextField
+                        onFocus={() => this.handleFocus()}
                         inputRef={this.textInput}
                         InputProps={{ style: { fontSize: '0.8em' } }}
                         error={!this.state.valid}
