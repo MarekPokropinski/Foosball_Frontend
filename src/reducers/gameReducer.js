@@ -7,7 +7,7 @@ const gameInit = {
     time: 0,
     timeLimitMilis: 0,
     finished: true,
-    gameType: 'normal',
+    gameType: 'invalid',
     validated: false
 }
 
