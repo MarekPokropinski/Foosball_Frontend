@@ -11,13 +11,13 @@
 }
 
 .red-score{
-    color: #e23c16;
+    color: red;
     text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);
 }
     
 
 .blue-score{
-    color: #296cd8;
+    color: blue;
     text-shadow: 2px 1px 6px rgba(0, 0, 0, 1);
 }
 .unselectable {
