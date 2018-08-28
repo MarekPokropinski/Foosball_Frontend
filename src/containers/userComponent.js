@@ -11,19 +11,31 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
 
 class UserComponent extends React.Component {
-
+    constructor(props) {
+        super(props);
+        // create a ref to store the textInput DOM element
+        this.textInput = React.createRef();
+        this.focus = this.focus.bind(this);
+      }
     state = {
         valid: true,
         willUnmount: false,
-        text: ""
+        text: "",
+    }
+
+    focus() {
+        // Explicitly focus the text input using the raw DOM API
+        // Note: we're accessing "current" to get the DOM node
+        this.textInput.current.focus();
     }
 
     render() {
         return (
-            <div className='user-container'>
+            <div className='user-container' onClick={this.focus}>
                 <div className={(this.props.color === 'blue') ? 'color-bar-blue' : 'color-bar-red'} />
                 <form onFocus={() => this.handleFocus()} onSubmit={() => this.handleUserChange()} onBlur={() => this.handleBlur()}>
                     <TextField
+                        inputRef={this.textInput}
                         InputProps={{ style: { fontSize: '0.8em' } }}
                         error={!this.state.valid}
                         id="nick"
@@ -31,10 +43,10 @@ class UserComponent extends React.Component {
                         value={this.props.players[this.props.id].nick}
                         onChange={(e) => this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, e.target.value, this.props.color)}//this.setState({ text: e.target.value })}
                         margin="normal" />
-                    <IconButton 
-                        color='secondary' 
-                        style={{ margin: '10px' }} 
-                        variant='contained' 
+                    <IconButton
+                        color='secondary'
+                        style={{ margin: '10px' }}
+                        variant='contained'
                         disabled={this.props.user.pending}
                         onClick={() => this.props.playersActions.deleteUser(this.props.id)}>
                         <DeleteIcon />
@@ -59,23 +71,23 @@ class UserComponent extends React.Component {
     }
 
     handleUserChange() {
-        if(this.props.players[this.props.id].nick === '')
+        if (this.props.players[this.props.id].nick === '')
             return
-        if(this.checkRepeatingNick(this.props.players[this.props.id].nick)) {
-            this.setState({ valid: false})
+        if (this.checkRepeatingNick(this.props.players[this.props.id].nick)) {
+            this.setState({ valid: false })
             this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, '', this.props.color)
             console.error('same nick')
             return
         }
-            
+
         this.props.userActions.setPending(true)
         this.props.gameActions.getUser(this.props.players[this.props.id].nick)
             .then((response) => {
                 if (!this.state.willUnmount) {
-                    if(this.checkRepeatingNick(response.value.data.nick))
+                    if (this.checkRepeatingNick(response.value.data.nick))
                         return
                     this.props.playersActions.setUser(this.props.id, response.value.data.id, response.value.data.nick, this.props.color)
-                    this.setState({valid: true})
+                    this.setState({ valid: true })
                     this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, response.value.data.nick, this.props.color)
                     this.props.userActions.setPending(false)
                 }
