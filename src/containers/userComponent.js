@@ -24,8 +24,6 @@ class UserComponent extends React.Component {
     }
 
     focus() {
-        // Explicitly focus the text input using the raw DOM API
-        // Note: we're accessing "current" to get the DOM node
         this.textInput.current.focus();
     }
 
