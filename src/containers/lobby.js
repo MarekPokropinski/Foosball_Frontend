@@ -49,7 +49,7 @@ class Lobby extends Component {
             style={style.StartButton}
             variant="contained"
             color="primary"
-            disabled={this.props.user.pending || !GameRules.checkRules(this.props.players, this.props.game.gameType)}
+            disabled={this.props.user.pending || !GameRules.checkRules(this.props.players, this.props.game.gameType) || !this.validateLobby()}
             onClick={() => this.startGame()}>
             Start game
           </Button>
@@ -77,9 +77,9 @@ class Lobby extends Component {
     for(let i = 0; i < this.props.players.length; i++) {
       if (isNaN(parseInt(this.props.players[i].id, 10))) {
         return false
-      }
-      return true
+      }      
     }
+    return true
   }
 
   goBack() {
