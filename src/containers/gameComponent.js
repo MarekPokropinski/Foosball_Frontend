@@ -40,11 +40,15 @@ class GameComponent extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.props.user.socket) {
-            this.props.history.replace(`/begin/${this.props.match.params.mode}`)
+        if (this.props.game.gameType === 'invalid') {
+            this.props.history.replace('/');
         } else {
-            this.props.userActions.startTimer(1000, () => this.props.gameActions.timeStamp(1000))
-            this.props.userActions.listenToSocket(this)
+            if (!this.props.user.socket) {
+                this.props.history.replace(`/begin/${this.props.match.params.mode}`)
+            } else {
+                this.props.userActions.startTimer(1000, () => this.props.gameActions.timeStamp(1000))
+                this.props.userActions.listenToSocket(this)
+            }
         }
     }
 
@@ -87,14 +91,14 @@ class GameComponent extends React.Component {
         return (
             <div className='nicks'>
                 <div className='flex'>
-                    { getPlayers(this.props.players, 'blue').map(({nick}, index) => {
+                    {getPlayers(this.props.players, 'blue').map(({ nick }, index) => {
                         return (
                             <p style={{ marginRight: '10px' }} key={index}>{nick}</p>
                         );
                     })}
                 </div>
                 <div className='flex'>
-                    { getPlayers(this.props.players, 'red').map(({nick}, index) => {
+                    {getPlayers(this.props.players, 'red').map(({ nick }, index) => {
                         return (
                             <p style={{ marginRight: '10px' }} key={index}>{nick}</p>
                         );

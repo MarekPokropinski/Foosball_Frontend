@@ -14,6 +14,12 @@ class SummaryComponent extends React.Component {
         );
     }
 
+    componentDidMount() {
+        if (this.props.game.gameType === 'invalid') {
+            this.props.history.replace('/');
+        }
+    }
+
     handleExitButton() {
         this.props.history.replace('/')
     }
