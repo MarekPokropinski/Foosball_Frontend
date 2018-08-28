@@ -15,14 +15,15 @@ const styles = theme => ({
   table: {
     color: 'white',
     minWidth: 700,
+    fontSize: '70px',
   },
 });
 
 const renderRow = (type, value, index) => {
     return (
         <TableRow key={index}>
-            <TableCell >{type}</TableCell>
-            <TableCell >{value}</TableCell>
+            <TableCell ><span style={{fontSize: '20px', fontWeight: 'bold'}}>{type}</span></TableCell>
+            <TableCell ><span style={{fontSize: '20px', fontWeight: 'bold'}}>{value}</span></TableCell>
         </TableRow>
     );
 }
