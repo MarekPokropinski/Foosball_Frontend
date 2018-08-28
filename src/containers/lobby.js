@@ -11,7 +11,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import '../styles/lobby.css';
 import UserComponent from "../containers/userComponent.js";
 import { getPlayers } from "../actions/playersActions.js";
-
+import GameRules from "../gameRules.js";
 
 const style = {
   Container: {
@@ -45,12 +45,11 @@ class Lobby extends Component {
             onClick={() => this.goBack()}>
             Go back
           </Button>
-
           <Button
             style={style.StartButton}
             variant="contained"
             color="primary"
-            disabled={this.props.user.pending}
+            disabled={this.props.user.pending || !GameRules.checkRules(this.props.players, this.props.game.gameType)}
             onClick={() => this.startGame()}>
             Start game
           </Button>

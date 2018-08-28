@@ -50,9 +50,11 @@ class GameBegin extends Component {
     }
 
     startGame() {
-        this.startGameAction().then(() =>
-            this.waitAndStart()
-        );
+        this.startGameAction()
+        .then(() =>
+            this.waitAndStart())
+        .catch(() => 
+            this.props.history.replace(`/mode/${this.props.match.params.mode}`) );
     }
 
     connect() {
