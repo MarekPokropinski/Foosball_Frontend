@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import ScoreTable from '../components/scoreTable';
 import Time from '../time';
 import * as playersActions from '../actions/playersActions'
-import { bindActionCreators } from '../../../../Users/Jarek/AppData/Local/Microsoft/TypeScript/3.0/node_modules/redux';
+import { bindActionCreators } from 'redux';
 
 class SummaryComponent extends React.Component {
     render() {
