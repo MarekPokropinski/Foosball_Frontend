@@ -5,13 +5,13 @@ import * as userActions from '../actions/userActions.js';
 import * as gameActions from '../actions/gameActions'
 import * as playersActions from '../actions/playersActions'
 
-import CustomButton from '../components/button';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import '../styles/lobby.css';
 import UserComponent from "../containers/userComponent.js";
 import { getPlayers } from "../actions/playersActions.js";
-
+import GameRules from "../gameRules.js";
 
 const style = {
   Container: {
@@ -31,8 +31,10 @@ class Lobby extends Component {
   }
 
   render() {
+    let loading = (this.props.user.pending) ? <LinearProgress color="secondary" style={{position: 'absolute', width: '100%'}}/> : ''
     return (
       <div>
+        {loading}
         {this.renderUsersGrid()}
 
         <div className='bottom-buttons'>
@@ -43,12 +45,11 @@ class Lobby extends Component {
             onClick={() => this.goBack()}>
             Go back
           </Button>
-
           <Button
             style={style.StartButton}
             variant="contained"
             color="primary"
-            disabled={this.props.user.pending}
+            disabled={this.props.user.pending || !GameRules.checkRules(this.props.players, this.props.game.gameType)}
             onClick={() => this.startGame()}>
             Start game
           </Button>
@@ -74,7 +75,7 @@ class Lobby extends Component {
 
   validateLobby() {
     for(let i = 0; i < this.props.players.length; i++) {
-      if (!this.props.players[i].id) {
+      if (isNaN(parseInt(this.props.players[i].id, 10))) {
         return false
       }
       return true
@@ -87,16 +88,6 @@ class Lobby extends Component {
 
   addUser(color) {
     this.props.playersActions.addUser(color)
-  }
-
-  renderUserButton(color, val, index, team) {
-    return (
-      <CustomButton
-        value={val}
-        color={color}
-        variant="contained"
-        onClick={() => this.deleteUser(index, team)} />
-    );
   }
 
   drawAddButton(color) {
