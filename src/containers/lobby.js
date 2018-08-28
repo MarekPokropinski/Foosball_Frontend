@@ -5,9 +5,9 @@ import * as userActions from '../actions/userActions.js';
 import * as gameActions from '../actions/gameActions'
 import * as playersActions from '../actions/playersActions'
 
-import CustomButton from '../components/button';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import '../styles/lobby.css';
 import UserComponent from "../containers/userComponent.js";
 import { getPlayers } from "../actions/playersActions.js";
@@ -31,8 +31,10 @@ class Lobby extends Component {
   }
 
   render() {
+    let loading = (this.props.user.pending) ? <LinearProgress color="secondary" style={{position: 'absolute', width: '100%'}}/> : ''
     return (
       <div>
+        {loading}
         {this.renderUsersGrid()}
 
         <div className='bottom-buttons'>
@@ -83,16 +85,6 @@ class Lobby extends Component {
 
   addUser(color) {
     this.props.playersActions.addUser(color)
-  }
-
-  renderUserButton(color, val, index, team) {
-    return (
-      <CustomButton
-        value={val}
-        color={color}
-        variant="contained"
-        onClick={() => this.deleteUser(index, team)} />
-    );
   }
 
   drawAddButton(color) {

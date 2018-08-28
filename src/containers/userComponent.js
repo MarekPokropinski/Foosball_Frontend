@@ -28,8 +28,8 @@ class UserComponent extends React.Component {
                         error={!this.state.valid}
                         id="nick"
                         label="Nick"
-                        value={this.state.text}
-                        onChange={(e) => this.setState({ text: e.target.value })}
+                        value={this.props.players[this.props.id].nick}
+                        onChange={(e) => this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, e.target.value, this.props.color)}//this.setState({ text: e.target.value })}
                         margin="normal" />
                     <IconButton 
                         color='secondary' 
@@ -49,27 +49,42 @@ class UserComponent extends React.Component {
         this.setState({ willUnmount: true })
     }
 
-    handleUserChange() {
+    checkRepeatingNick(text) {
         for (let i = 0; i < this.props.players.length; i++) {
-            if (i !== this.props.id && this.props.players[i].nick === this.state.text) {
-                this.setState({ valid: false, text: '' })
-                console.error('same nick')
-                return
+            if (i !== this.props.id && this.props.players[i].nick === text) {
+                return true
             }
         }
+        return false
+    }
+
+    handleUserChange() {
+        if(this.props.players[this.props.id].nick === '')
+            return
+        if(this.checkRepeatingNick(this.props.players[this.props.id].nick)) {
+            this.setState({ valid: false})
+            this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, '', this.props.color)
+            console.error('same nick')
+            return
+        }
+            
         this.props.userActions.setPending(true)
-        this.props.gameActions.getUser(this.state.text)
+        this.props.gameActions.getUser(this.props.players[this.props.id].nick)
             .then((response) => {
                 if (!this.state.willUnmount) {
+                    if(this.checkRepeatingNick(response.value.data.nick))
+                        return
                     this.props.playersActions.setUser(this.props.id, response.value.data.id, response.value.data.nick, this.props.color)
-                    this.setState({text: response.value.data.nick, valid: true})
+                    this.setState({valid: true})
+                    this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, response.value.data.nick, this.props.color)
                     this.props.userActions.setPending(false)
                 }
             })
             .catch((error) => {
                 if (!this.state.willUnmount) {
                     console.error(error)
-                    this.setState({ valid: false, text: '' })
+                    this.setState({ valid: false })
+                    this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, '', this.props.color)
                     this.props.userActions.setPending(false)
                 }
             })
