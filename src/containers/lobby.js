@@ -72,7 +72,7 @@ class Lobby extends Component {
 
   validateLobby() {
     for(let i = 0; i < this.props.players.length; i++) {
-      if (!this.props.players[i].id) {
+      if (!Number.isInteger(this.props.players[i].id)) {
         return false
       }
       return true
