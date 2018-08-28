@@ -33,6 +33,15 @@ export const clear = () => {
     }
 }
 
+export const SET_ALL_USERS = 'set_all_users'
+
+export const setAllUsers = (players) => {
+    return {
+        type: SET_ALL_USERS,
+        payload: players
+    }
+}
+
 export const getPlayers = (players, color) => {
     let newPlayers = []
     for(let i = 0; i < players.length; i++) {
