@@ -1,4 +1,4 @@
-import {ADD_USER, DEL_USER, SET_USER, CLEAR_USER} from '../actions/playersActions'
+import {ADD_USER, DEL_USER, SET_USER, CLEAR_USER, SET_ALL_USERS} from '../actions/playersActions'
 
 const playersInit = [
     {id: undefined, nick: "", color: 'blue'},
@@ -12,6 +12,7 @@ export default (state = playersInit, action) => {
         case ADD_USER: return addUser(state, action.payload)
         case DEL_USER: return delUser(state, action.payload)
         case SET_USER: return setUser(state, action.payload)
+        case SET_ALL_USERS: return(action.payload)
         case CLEAR_USER: return playersInit;
         default: return state
     }

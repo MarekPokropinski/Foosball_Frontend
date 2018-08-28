@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import ScoreTable from '../components/scoreTable';
 import Time from '../time';
+import * as playersActions from '../actions/playersActions'
+import { bindActionCreators } from '../../../../Users/Jarek/AppData/Local/Microsoft/TypeScript/3.0/node_modules/redux';
 
 class SummaryComponent extends React.Component {
     render() {
@@ -10,6 +12,7 @@ class SummaryComponent extends React.Component {
             <div>
                 <ScoreTable data={this.getData()} />
                 <Button style={{ margin: '40px' }} variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit to menu </Button>
+                <Button style={{ margin: '40px' }} variant='contained' color='secondary' onClick={() => this.handleRematchButton()}> Rematch </Button>
             </div>
         );
     }
@@ -24,6 +27,16 @@ class SummaryComponent extends React.Component {
         this.props.history.replace('/')
     }
 
+    handleRematchButton() {
+        let newPlayeres = []
+        for (let i = 0; i < this.props.players.length; i++) {
+            let player = this.props.players[i];
+            newPlayeres.push({ id: player.id, nick: player.nick, color: (player.color === 'blue') ? 'red' : 'blue' })
+        }
+        this.props.playersActions.setAllUsers(newPlayeres)
+        this.props.history.replace(`/begin/${this.props.game.gameType}`)
+    }
+
     getData() {
         return [
             { type: 'Score', value: `Red ${this.props.summary.redScore} : ${this.props.summary.blueScore} Blue` },
@@ -34,11 +47,17 @@ class SummaryComponent extends React.Component {
         ];
     }
 }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        playersActions: bindActionCreators(playersActions, dispatch),
+    }
+}
 
 const mapStateToProps = (state) => {
     return {
         game: state.game,
-        summary: state.summary
+        summary: state.summary,
+        players: state.players
     }
 }
-export default connect(mapStateToProps)(SummaryComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SummaryComponent);
