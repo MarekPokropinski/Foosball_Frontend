@@ -12,7 +12,7 @@ export const updateGame = (newPlainState) => {
 
 export const START_GAME = 'start_game'
 
-export const startGame = (gameType = 'free', redIds, blueIds) => {
+export const startGame = (gameType = 'free', blueIds, redIds) => {
     return {
         type: START_GAME,
         payload: axios.get(`${process.env.REACT_APP_HOST}/${gameType}Game/start` + ((gameType === 'free')?"":`?redTeamUsersID=${redIds}&blueTeamUsersID=${blueIds}`)) 
