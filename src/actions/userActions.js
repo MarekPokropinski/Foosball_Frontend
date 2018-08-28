@@ -15,7 +15,7 @@ export const START_RANKED = 'start_ranked'
 export const ADD_USER = 'add_user';
 export const SET_NICK = 'set_nick';
 export const GET_IDS = 'get_ids';
-
+export const GET_LEADERBOARD = 'get_leaderboard';
 export const connect = (endpoint, onOpen, onMessage, onError) => {
     let socket = new WebSocket(endpoint);
     socket.onopen = onOpen;
@@ -39,6 +39,13 @@ export const getStatus = () => {
     return {
         type: GET_STATUS,
         payload: axios.post(`${process.env.REACT_APP_HOST}/status/serverStatus`)
+    }
+}
+
+export const getLeaderboard = () => {
+    return {
+        type: GET_LEADERBOARD,
+        payload: axios.get(`${process.env.REACT_APP_HOST}/history/leaderboards`)
     }
 }
 

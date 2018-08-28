@@ -24,10 +24,14 @@ class GameBegin extends Component {
     }
 
     componentDidMount() {
-        if (!this.props.user.socket)
-            this.connect();
-        else {
-            this.startGame();
+        if (this.props.game.gameType === 'invalid') {
+            this.props.history.replace('/');
+        } else {
+            if (!this.props.user.socket)
+                this.connect();
+            else {
+                this.startGame();
+            }
         }
     }
 

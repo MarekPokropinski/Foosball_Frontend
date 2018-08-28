@@ -59,7 +59,11 @@ class Lobby extends Component {
   }
 
   componentDidMount() {
-    this.props.playersActions.clear();
+    if(this.props.game.gameType === 'invalid') {
+      this.props.history.replace('/');
+    } else {
+      this.props.playersActions.clear();
+    }
   }
 
   startGame() {
