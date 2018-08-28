@@ -13,14 +13,14 @@ import TextField from '@material-ui/core/TextField';
 class UserComponent extends React.Component {
     constructor(props) {
         super(props);
-        // create a ref to store the textInput DOM element
         this.textInput = React.createRef();
         this.focus = this.focus.bind(this);
-      }
+    }
     state = {
         valid: true,
         willUnmount: false,
         text: "",
+        focus: false
     }
 
     focus() {
@@ -29,27 +29,29 @@ class UserComponent extends React.Component {
 
     render() {
         return (
-            <div className='user-container' onClick={this.focus}>
+            <div className='user-container'>
                 <div className={(this.props.color === 'blue') ? 'color-bar-blue' : 'color-bar-red'} />
-                <form onFocus={() => this.handleFocus()} onSubmit={() => this.handleUserChange()} onBlur={() => this.handleBlur()}>
+                    <span style={{height: '150px'}} onClick={this.focus}>
                     <TextField
+                        onBlur={() => this.handleBlur()}
+                        onFocus={() => this.handleFocus()}
                         inputRef={this.textInput}
                         InputProps={{ style: { fontSize: '0.8em' } }}
                         error={!this.state.valid}
                         id="nick"
                         label="Nick"
                         value={this.props.players[this.props.id].nick}
-                        onChange={(e) => this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, e.target.value, this.props.color)}//this.setState({ text: e.target.value })}
+                        onChange={(e) => this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, e.target.value, this.props.color)}
                         margin="normal" />
-                    <IconButton
-                        color='secondary'
-                        style={{ margin: '10px' }}
-                        variant='contained'
-                        disabled={this.props.user.pending}
-                        onClick={() => this.props.playersActions.deleteUser(this.props.id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </form>
+                    </span>
+                <IconButton
+                    color='secondary'
+                    style={{ margin: '10px' }}
+                    variant='contained'
+                    disabled={this.props.user.pending || this.state.focus}
+                    onClick={() => this.props.playersActions.deleteUser(this.props.id)}>
+                    <DeleteIcon />
+                </IconButton>
 
             </div>
         );
@@ -106,6 +108,7 @@ class UserComponent extends React.Component {
 
     handleBlur() {
         this.props.userActions.setFocus(false)
+        this.setState({ focus: false })
         this.handleUserChange()
     }
 }
