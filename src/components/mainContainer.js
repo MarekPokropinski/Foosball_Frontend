@@ -16,6 +16,7 @@ import theme from '../styles/theme';
 import { MuiThemeProvider } from 'material-ui/styles';
 import Error from '../containers/error'
 import '../styles/index.css';
+import ReplaysList from '../containers/replaysList';
 
 const store = createStore(
     reducers,
@@ -33,6 +34,7 @@ export default () => {
                         <HashRouter basename="/foosball">
                             <Switch>
                                 <Route path="/summary" component={SummaryComponent} />
+                                <Route path="/replays" component={ReplaysList} />
                                 <Route path="/game/:mode" component={GameComponent} />
                                 <Route path="/game" component={GameComponent} />
                                 <Route path="/begin/:mode" component={GameBegin} />
