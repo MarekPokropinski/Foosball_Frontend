@@ -9,6 +9,22 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
+
+const style = {
+    TypeButton: {
+        color: "#007dc3",
+        fontSize: 40,
+        fontWeight: 'bold',
+        backgroundColor: '#000c21',
+        boxShadow: '7px 6px 19px -2px rgba(0,0,0,0.8)',
+        height: 110,
+    },
+    ButtonMenu: {
+        marginLeft: '30%',
+        width: 800,
+    }
+}
 class StatisticsMenu extends Component {
     state = {
         open: false,
@@ -21,7 +37,18 @@ class StatisticsMenu extends Component {
     handleChangeContent(type) {
         this.setState({ anchorEl: null, typeOfContent: type });
     }
-
+    printTitle() {
+        switch (this.state.typeOfContent) {
+            case 'normal':
+                return 'Normal Statistics'
+            case 'rankedSolo':
+                return 'Ranked Solo Statistics'
+            case 'rankedDuo':
+                return 'Ranked Duo Statistics'
+            default:
+                return 'All Statistics'
+        }
+    }
     render() {
         return (
             <div>
@@ -29,23 +56,26 @@ class StatisticsMenu extends Component {
                     open={this.state.open}
                     onClose={() => this.openCloseMe(false)}
                     onOpen={() => this.openCloseMe(true)}>
-                    
+
                     <Button
+                        style={style.TypeButton}
                         aria-owns={this.state.anchorEl ? 'simple-menu' : null}
                         aria-haspopup="true"
-                        onClick={this.handleClick}
-                    >
-                        CHOOSE TYPE OF GAME
+                        onClick={this.handleClick}>
+
+                        {this.printTitle()}
                     </Button>
+
                     <Menu
+                        style={style.ButtonMenu}
                         id="simple-menu"
                         anchorEl={this.state.anchorEl}
                         open={Boolean(this.state.anchorEl)}
                         onClose={this.handleClose}>
-                        
-                        <MenuItem onClick={()=>{this.handleChangeContent('normal')}}>Normal</MenuItem>
-                        <MenuItem onClick={()=>{this.handleChangeContent('rankedSolo')}}>Ranked 1v1</MenuItem>
-                        <MenuItem onClick={()=>{this.handleChangeContent('rankedDuo')}}>Ranked 2v2</MenuItem>
+
+                        <MenuItem onClick={() => { this.handleChangeContent('normal') }}>Normal</MenuItem>
+                        <MenuItem onClick={() => { this.handleChangeContent('rankedSolo') }}>Ranked 1v1</MenuItem>
+                        <MenuItem onClick={() => { this.handleChangeContent('rankedDuo') }}>Ranked 2v2</MenuItem>
                     </Menu>
                     <EnhancedTable users={this.props.user.leaderboard} typeOfContent={this.state.typeOfContent} />
                 </SwipeableDrawer>
@@ -54,13 +84,14 @@ class StatisticsMenu extends Component {
                     color="inherit"
                     aria-label="Menu"
                     onClick={() => this.openCloseMe(!this.state.open)}>
-                    
+
                     <MenuIcon />
                 </IconButton>
             </div >
         )
     }
     openCloseMe(action) {
+        this.props.userActions.getLeaderboard();
         this.setState({ open: action });
     }
 
