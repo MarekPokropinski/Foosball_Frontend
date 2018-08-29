@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -9,24 +8,38 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 let counter = 0;
 
 let playerNone = {
-    nick: "NO_PLAYERS",
-    normalGames: 0,
-    normalWinRatio: 0,
-    rankedSoloGames: 0,
-    rankedSoloWinRatio: 0,
-    rankedDuoGames: 0,
+    nick: "RElik",
+    normalGames: 23,
+    normalWinRatio: 69,
+    rankedSoloGames: 12,
+    rankedSoloWinRatio: 21,
+    rankedDuoGames: 78,
     rankedDuoWinRatio: 20,
-    soloRankingPos: 0,
-    duoRankingPos: 0,
+    soloRankingPos: 1,
+    duoRankingPos: 1,
+}
+const style = {
+    cell: {
+        fontSize: 30,
+        fontWeight: 'light',
+        color: 'black',
+    },
+    nick: {
+        fontSize: 30,
+        fontWeight: 'light',
+        color: '#000d23',    
+    },
+    head: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
+    },
 }
 
 function createPlayerData(player) {
@@ -58,46 +71,24 @@ function desc(a, b, orderBy) {
 function getSorting(order, orderBy) {
     return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
-
-let rows = [
+let rankedRows = [
     { id: 'nick', numeric: false, disablePadding: true, label: 'Nick' },
-    { id: 'normalGames', numeric: true, disablePadding: false, label: 'Normal played' },
-    { id: 'normalWinRatio', numeric: true, disablePadding: false, label: 'Normal Win Ratio' },
-    { id: 'rankedSoloGames', numeric: true, disablePadding: false, label: '1v1 R played' },
-    { id: 'rankedSoloWinratio', numeric: true, disablePadding: false, label: '1v1 Win Ratio' },
-    { id: 'rankedDuoGames', numeric: true, disablePadding: false, label: '2v2 R played' },
-    { id: 'rankedDuoWinratio', numeric: true, disablePadding: false, label: '2v2 Win Ratio' },
-    { id: 'soloRankingPos', numeric: true, disablePadding: false, label: '1v1 Ranked Position' },
-    { id: 'duoRankingPos', numeric: true, disablePadding: false, label: '2v2 Ranked Position' },
-];
-let rankedDuoRows = [
-    { id: 'nick', numeric: false, disablePadding: true, label: 'Nick' },
-    { id: 'duoRankingPos', numeric: true, disablePadding: false, label: '2v2 Ranked Position' },
-    { id: 'rankedDuoGames', numeric: true, disablePadding: false, label: '2v2 R played' },
-    { id: 'rankedDuoWinratio', numeric: true, disablePadding: false, label: '2v2 Win Ratio' },
-];
-let rankedSoloRows = [
-    { id: 'nick', numeric: false, disablePadding: true, label: 'Nick' },
-    { id: 'soloRankingPos', numeric: true, disablePadding: false, label: '1v1 Ranked Position' },
-    { id: 'rankedSoloGames', numeric: true, disablePadding: false, label: '1v1 R played' },
-    { id: 'rankedSoloWinratio', numeric: true, disablePadding: false, label: '1v1 Win Ratio' },
+    { id: 'duoRankingPos', numeric: true, disablePadding: false, label: 'Position' },
+    { id: 'rankedDuoGames', numeric: true, disablePadding: false, label: 'Games Played' },
+    { id: 'rankedDuoWinratio', numeric: true, disablePadding: false, label: 'Win Ratio (%)' },
 ];
 
 let rowsNormal = [
     { id: 'nick', numeric: false, disablePadding: true, label: 'Nick' },
-    { id: 'normalGames', numeric: true, disablePadding: false, label: 'Normal played' },
-    { id: 'normalWinRatio', numeric: true, disablePadding: false, label: 'Normal Win Ratio' },
+    { id: 'normalGames', numeric: true, disablePadding: false, label: 'Games Played' },
+    { id: 'normalWinRatio', numeric: true, disablePadding: false, label: 'Win Ratio (%)' },
 ];
 function printTableRows(type) {
     switch (type) {
         case 'normal':
             return rowsNormal
-        case 'rankedSolo':
-            return rankedSoloRows
-        case 'rankedDuo':
-            return rankedDuoRows
         default:
-            return rows
+            return rankedRows
     }
 }
 
@@ -117,6 +108,7 @@ class EnhancedTableHead extends React.Component {
                     {printTableRows(this.props.typeOfContent).map(row => {
                         return (
                             <TableCell
+                                style={style.head}
                                 key={row.id}
                                 numeric={row.numeric}
                                 padding={row.disablePadding ? 'none' : 'default'}
@@ -152,62 +144,6 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-const toolbarStyles = theme => ({
-    root: {
-        paddingRight: theme.spacing.unit,
-    },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-            }
-            : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
-            },
-    spacer: {
-        flex: '1 1 100%',
-    },
-    actions: {
-        color: theme.palette.text.secondary,
-    },
-    title: {
-        flex: '0 0 auto',
-    },
-});
-
-let EnhancedTableToolbar = props => {
-    const { numSelected, classes } = props;
-
-    return (
-        <Toolbar
-            className={classNames(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            <div className={classes.title}>
-                {numSelected > 0 ? (
-                    <Typography color="inherit" variant="subheading">
-                        {numSelected} selected
-                    </Typography>
-                ) : (
-                        <Typography variant="title" id="tableTitle">
-                            User Leaderboard
-                        </Typography>
-                    )}
-            </div>
-        </Toolbar>
-    );
-};
-
-EnhancedTableToolbar.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
-
 const styles = theme => ({
     root: {
         width: '100%',
@@ -228,7 +164,7 @@ class EnhancedTable extends React.Component {
         if (this.props.users == null || !this.props.users.length) {
             return [createPlayerData(playerNone)];
         }
-
+        
         return this.props.users.map((user) => {
             return (
                 createPlayerData(user)
@@ -288,31 +224,24 @@ class EnhancedTable extends React.Component {
         switch (type) {
             case 'normal':
                 return [
-                    <TableCell numeric key="normalGames">{object.normalGames}</TableCell>,
-                    <TableCell numeric key="normalWinRatio">{object.normalWinRatio}</TableCell>
+                    <TableCell style={style.cell} numeric key="normalGames">{object.normalGames}</TableCell>,
+                    <TableCell style={style.cell} numeric key="normalWinRatio">{object.normalWinRatio}</TableCell>
                 ]
             case 'rankedSolo':
                 return [
-                    <TableCell numeric key="soloRankingPos">{object.soloRankingPos}</TableCell>,
-                    <TableCell numeric key="rankedSoloGames">{object.rankedSoloGames}</TableCell>,
-                    <TableCell numeric key="rankedSoloWinRatio">{object.rankedSoloWinRatio}</TableCell>
+                    <TableCell style={style.cell} numeric key="soloRankingPos">{object.soloRankingPos}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedSoloGames">{object.rankedSoloGames}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedSoloWinRatio">{object.rankedSoloWinRatio}</TableCell>
                 ]
             case 'rankedDuo':
                 return [
-                    <TableCell numeric key="duoRankingPos">{object.duoRankingPos}</TableCell>,
-                    <TableCell numeric key="rankedDuoGames">{object.rankedDuoGames}</TableCell>,
-                    <TableCell numeric key="rankedDuoWinRatio">{object.rankedDuoWinRatio}</TableCell>
+                    <TableCell style={style.cell} numeric key="duoRankingPos">{object.duoRankingPos}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedDuoGames">{object.rankedDuoGames}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedDuoWinRatio">{object.rankedDuoWinRatio}</TableCell>
                 ]
             default:
                 return [
-                    <TableCell numeric>{object.normalGames}</TableCell>,
-                    <TableCell numeric>{object.normalWinRatio}</TableCell>,
-                    <TableCell numeric>{object.rankedSoloGames}</TableCell>,
-                    <TableCell numeric>{object.rankedSoloWinRatio}</TableCell>,
-                    <TableCell numeric>{object.rankedDuoGames}</TableCell>,
-                    <TableCell numeric>{object.rankedDuoWinRatio}</TableCell>,
-                    <TableCell numeric>{object.soloRankingPos}</TableCell>,
-                    <TableCell numeric>{object.duoRankingPos}</TableCell>
+                    <TableCell numeric>0</TableCell>,
                 ]
         }
 
@@ -324,8 +253,7 @@ class EnhancedTable extends React.Component {
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
         return (
-            <Paper className={classes.root}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+            <Paper className={classes.root} >
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <EnhancedTableHead
@@ -348,7 +276,7 @@ class EnhancedTable extends React.Component {
                                             key={n.id}
                                         >
                                             <TableCell padding="checkbox" />
-                                            <TableCell component="th" scope="row" padding="none">
+                                            <TableCell component="th" scope="row" padding="none" style={style.nick}>
                                                 {n.nick}
                                             </TableCell>
                                             {this.printTableCell(n, this.props.typeOfContent)}
