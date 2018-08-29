@@ -37,6 +37,7 @@ export default () => {
                                 <Route path="/game" component={GameComponent} />
                                 <Route path="/begin/:mode" component={GameBegin} />
                                 <Route path="/begin" component={GameBegin} />
+                                <Route path="/mode/:mode/:reset" component={Lobby} />
                                 <Route path="/mode/:mode" component={Lobby} />
                                 <Route path="/mode" component={Lobby} />
                                 <Route path="/error" component={Error} />

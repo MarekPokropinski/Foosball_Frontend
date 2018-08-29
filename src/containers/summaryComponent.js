@@ -34,7 +34,7 @@ class SummaryComponent extends React.Component {
             newPlayeres.push({ id: player.id, nick: player.nick, color: (player.color === 'blue') ? 'red' : 'blue' })
         }
         this.props.playersActions.setAllUsers(newPlayeres)
-        this.props.history.replace(`/begin/${this.props.game.gameType}`)
+        this.props.history.replace(`/mode/${this.props.game.gameType}/false`)
     }
 
     getData() {
