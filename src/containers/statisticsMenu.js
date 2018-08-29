@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 
 const style = {
@@ -45,8 +46,10 @@ class StatisticsMenu extends Component {
                 return 'Ranked Solo Statistics'
             case 'rankedDuo':
                 return 'Ranked Duo Statistics'
+            case 'gameHistory':
+                return 'Game History'
             default:
-                return 'All Statistics'
+                return ''
         }
     }
     render() {
@@ -65,19 +68,22 @@ class StatisticsMenu extends Component {
 
                         {this.printTitle()}
                     </Button>
+                    <ClickAwayListener onClickAway={() => this.openCloseMe(true)}>
+                        <Menu
+                            style={style.ButtonMenu}
+                            id="simple-menu"
+                            anchorEl={this.state.anchorEl}
+                            open={Boolean(this.state.anchorEl)}
+                            onClose={() => this.openCloseMe(true)}>
 
-                    <Menu
-                        style={style.ButtonMenu}
-                        id="simple-menu"
-                        anchorEl={this.state.anchorEl}
-                        open={Boolean(this.state.anchorEl)}
-                        onClose={this.handleClose}>
+                            <MenuItem onClick={() => { this.handleChangeContent('normal') }}>Normal</MenuItem>
+                            <MenuItem onClick={() => { this.handleChangeContent('rankedSolo') }}>Ranked 1v1</MenuItem>
+                            <MenuItem onClick={() => { this.handleChangeContent('rankedDuo') }}>Ranked 2v2</MenuItem>
+                            <MenuItem onClick={() => { this.handleChangeContent('gameHistory') }}>Game History</MenuItem>
 
-                        <MenuItem onClick={() => { this.handleChangeContent('normal') }}>Normal</MenuItem>
-                        <MenuItem onClick={() => { this.handleChangeContent('rankedSolo') }}>Ranked 1v1</MenuItem>
-                        <MenuItem onClick={() => { this.handleChangeContent('rankedDuo') }}>Ranked 2v2</MenuItem>
-                    </Menu>
-                    <EnhancedTable users={this.props.user.leaderboard} typeOfContent={this.state.typeOfContent} />
+                        </Menu>
+                    </ClickAwayListener>
+                    <EnhancedTable users={this.props.user.leaderboard} history={this.props.user.history} typeOfContent={this.state.typeOfContent} />
                 </SwipeableDrawer>
 
                 <IconButton
@@ -92,12 +98,12 @@ class StatisticsMenu extends Component {
     }
     openCloseMe(action) {
         this.props.userActions.getLeaderboard();
+        this.props.userActions.getHistory();
         this.setState({ open: action });
     }
 
     componentDidMount() {
         this.openCloseMe(this.props.open);
-        this.props.userActions.getLeaderboard();
     }
 
 }
