@@ -30,8 +30,8 @@ let historyNone = {
     gameDuration: 124,
     blueLongestSeries: 4,
     redLongestSeries: 1,
-    blueNicks: ['NONA', 'ANON'],
-    redNicks: ['GAL', 'EMPTY'],
+    blueTeamNicks: ['NONA', 'ANON'],
+    redTeamNicks: ['GAL', 'EMPTY'],
     dateStart: "2014-01-01 13:01",
     typeOfGame: 'NO_GAMES',
 }
@@ -107,9 +107,9 @@ let rankedRows = [
 let historyRows = [
     { id: 'typeOfGame', numeric: false, disablePadding: true, label: 'Type' },
     { id: 'dateStart', numeric: false, disablePadding: false, label: 'Date' },
-    { id: 'blueNicks', numeric: false, disablePadding: false, label: 'Blue Team' },
+    { id: 'blueTeamNicks', numeric: false, disablePadding: false, label: 'Blue Team' },
     { id: 'score', numeric: false, disablePadding: false, label: 'Score' },
-    { id: 'redNicks', numeric: false, disablePadding: false, label: 'Read Team' },
+    { id: 'redTeamNicks', numeric: false, disablePadding: false, label: 'Read Team' },
     { id: 'gameDuration', numeric: false, disablePadding: false, label: 'Duration (sec)' },
 ];
 
@@ -297,9 +297,9 @@ printTableCell(object, type) {
         case 'gameHistory':
             return [
                 <TableCell style={style.cell}  key="dateStart">{object.history.dateStart}</TableCell>,
-                <TableCell style={style.cell}  key="blueNicks">{printNicks(object.history.blueNicks, "BLUE")}</TableCell>,
+                <TableCell style={style.cell}  key="blueTeamNicks">{printNicks(object.history.blueTeamNicks, "BLUE")}</TableCell>,
                 <TableCell style={style.cell}  key="score">{object.history.blueScore} : {object.history.redScore}</TableCell>,
-                <TableCell style={style.cell}  key="redNicks">{printNicks(object.history.redNicks, "RED")}</TableCell>,
+                <TableCell style={style.cell}  key="redTeamNicks">{printNicks(object.history.redTeamNicks, "RED")}</TableCell>,
                 <TableCell style={style.cell}  key="gameDuration">{object.history.gameDuration}</TableCell>
             ]
         default:
