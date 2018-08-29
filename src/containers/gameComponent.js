@@ -43,12 +43,8 @@ class GameComponent extends React.Component {
         if (this.props.game.gameType === 'invalid') {
             this.props.history.replace('/');
         } else {
-            if (!this.props.user.socket) {
-                this.props.history.replace(`/begin/${this.props.match.params.mode}`)
-            } else {
-                this.props.userActions.startTimer(1000, () => this.props.gameActions.timeStamp(1000))
-                this.props.userActions.listenToSocket(this)
-            }
+            this.props.userActions.startTimer(1000, () => this.props.gameActions.timeStamp(1000))
+            this.props.userActions.listenToSocket(this)
         }
     }
 

@@ -62,7 +62,13 @@ class Lobby extends Component {
     if(this.props.game.gameType === 'invalid') {
       this.props.history.replace('/');
     } else {
-      this.props.playersActions.clear();
+      //If someone tries to enter free lobby game will automaticaly begin
+      if(this.props.game.gameType === 'free') {
+        this.props.history.replace(`/begin/free`)
+        return
+      }
+      if(!this.props.match.params.reset || this.props.match.params.reset === true)
+        this.props.playersActions.clear();
     }
   }
 
