@@ -11,11 +11,12 @@ export const STOP_LISTEN_SOCKET = 'stop_listen_socket';
 export const START_TIMER = 'start_timer';
 export const STOP_TIMER = 'stop_timer';
 export const GAME_TYPE = 'game_type';
-export const START_RANKED = 'start_ranked'
+export const START_RANKED = 'start_ranked';
 export const ADD_USER = 'add_user';
 export const SET_NICK = 'set_nick';
 export const GET_IDS = 'get_ids';
 export const GET_LEADERBOARD = 'get_leaderboard';
+export const GET_HISTORY = 'get_history';
 export const connect = (endpoint, onOpen, onMessage, onError) => {
     let socket = new WebSocket(endpoint);
     socket.onopen = onOpen;
@@ -48,6 +49,13 @@ export const getLeaderboard = () => {
         payload: axios.get(`${process.env.REACT_APP_HOST}/history/leaderboards`)
     }
 }
+export const getHistory = () => {
+    return {
+        type: GET_HISTORY,
+        payload: axios.get(`${process.env.REACT_APP_HOST}/history/history`)
+    }
+}
+
 
 export const listenToSocket = (listener) => {
     return {
