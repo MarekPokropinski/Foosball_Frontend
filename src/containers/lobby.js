@@ -104,6 +104,35 @@ class Lobby extends Component {
     );
   }
 
+  drawSwapButton(color) {
+    return (
+      <Button 
+      variant="contained"
+      style={{ margin: '5px' }} 
+      color="secondary" 
+      onClick={() => this.changePositions(color)} >
+        Change positions
+      </Button>
+    );
+  }
+
+  changePositions(color) {
+    let newPlayers = []
+    let toSwap = []
+    for(let i = 0; i <this.props.players.length; i++) {
+      let player = this.props.players[i]
+      if(player.color !== color) {
+        newPlayers.push(player)
+      } else {
+        toSwap.push(player)
+      }
+    }
+    for(let i = toSwap.length - 1; i >= 0; i--) {
+      newPlayers.push(toSwap[i])
+    }
+    this.props.playersActions.setAllUsers(newPlayers)
+  }
+
   renderUsersGrid() {
     return (
       <div className='flex'>
@@ -120,7 +149,7 @@ class Lobby extends Component {
           })}
           {(getPlayers(this.props.players, 'blue').length < 2)
             ? this.drawAddButton('blue')
-            : ""
+            : this.drawSwapButton('blue')
           }
         </div>
         <div>
@@ -136,7 +165,7 @@ class Lobby extends Component {
           })}
           {(getPlayers(this.props.players, 'red').length < 2)
             ? this.drawAddButton('red')
-            : ""
+            : this.drawSwapButton('red')
           }
         </div>
       </div>
