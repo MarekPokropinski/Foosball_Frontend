@@ -13,6 +13,7 @@ class SummaryComponent extends React.Component {
                 <ScoreTable data={this.getData()} />
                 <Button style={{ margin: '40px' }} variant='contained' color='secondary' onClick={() => this.handleExitButton()}> Exit to menu </Button>
                 <Button style={{ margin: '40px' }} variant='contained' color='secondary' onClick={() => this.handleRematchButton()}> Rematch </Button>
+                <Button style={{ margin: '40px' }} variant='contained' color='secondary' onClick={() => this.handleReplaysButton()}> Replays </Button>
             </div>
         );
     }
@@ -35,6 +36,10 @@ class SummaryComponent extends React.Component {
         }
         this.props.playersActions.setAllUsers(newPlayeres)
         this.props.history.replace(`/begin/${this.props.game.gameType}`)
+    }
+
+    handleReplaysButton() {
+        this.props.history.replace('/replays');
     }
 
     getData() {

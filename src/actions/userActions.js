@@ -103,3 +103,12 @@ export const setPending = (flag) => {
         payload: flag
     }
 }
+
+export const GET_REPLAYS = 'get_replays'
+
+export const getReplays = (gameId) => {
+    return {
+        type: GET_REPLAYS,
+        payload: axios.get(`${process.env.REACT_APP_HOST}/getReplays?gameId=${gameId}`)
+    }
+}
