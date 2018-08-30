@@ -3,6 +3,7 @@ export const FULFILLED = '_FULFILLED';
 export const REJECTED = '_REJECTED';
 export const PENDING = '_PENDING';
 
+export const PUT_RULES_TO_STORE = 'put_rules_to_store';
 export const CONNECT_WS = 'connect_ws';
 export const GET_STATS = 'get_stats';
 export const GET_STATUS = 'get_status';
@@ -26,6 +27,12 @@ export const connect = (endpoint, onOpen, onMessage, onError) => {
     return {
         type: CONNECT_WS,
         payload: socket
+    }
+}
+export const putRulesToStore = (data) => {
+    return {
+        type: PUT_RULES_TO_STORE,
+        payload: data
     }
 }
 

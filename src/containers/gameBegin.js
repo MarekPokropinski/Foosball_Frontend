@@ -40,8 +40,13 @@ class GameBegin extends Component {
         if (this.props.match.params.mode === 'free') {
             return this.props.gameActions.startGame(this.props.match.params.mode);
         }
-        return this.props.gameActions.startGame(this.props.match.params.mode, playersActions.getPlayers(this.props.players, 'blue').map((val) => val.id),
-            playersActions.getPlayers(this.props.players, 'red').map((val) => val.id));
+        return this.props.gameActions.startGame(
+            this.props.match.params.mode, 
+            playersActions.getPlayers(this.props.players, 'blue').map((val) => val.id),
+            playersActions.getPlayers(this.props.players, 'red').map((val) => val.id),
+            this.props.match.params.mode === 'normal' ? (this.props.user.rules.goalLimit) :  null,
+            this.props.match.params.mode === 'normal' ? (this.props.user.rules.timeLimit) :  null    
+        );
     }
 
     waitAndStart() {
