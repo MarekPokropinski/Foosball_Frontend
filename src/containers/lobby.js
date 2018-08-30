@@ -6,11 +6,8 @@ import * as gameActions from '../actions/gameActions'
 import * as playersActions from '../actions/playersActions'
 
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import '../styles/lobby.css';
-import UserComponent from "../containers/userComponent.js";
-import { getPlayers } from "../actions/playersActions.js";
 import GameRules from "../gameRules.js";
 import UsersGrid from "../components/usersGrid.js";
 
