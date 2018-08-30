@@ -1,4 +1,8 @@
-import {LISTEN_SOCKET, CONNECT_WS, STOP_LISTEN_SOCKET, START_TIMER, STOP_TIMER, GET_STATUS, SET_FOCUS, SET_PENDING, REJECTED, GET_LEADERBOARD, GET_HISTORY} from '../actions/userActions.js';
+import {
+    LISTEN_SOCKET, CONNECT_WS, STOP_LISTEN_SOCKET, START_TIMER,
+    STOP_TIMER, GET_STATUS, SET_FOCUS, SET_PENDING, REJECTED,
+    GET_LEADERBOARD, GET_HISTORY, PUT_RULES_TO_STORE} 
+from '../actions/userActions.js';
 import { FULFILLED } from '../../node_modules/redux-promise-middleware';
 
 const userInit = {
@@ -9,7 +13,11 @@ const userInit = {
     id: undefined,
     validated: false,
     leaderboard: null,
-    pending: false
+    pending: false,
+    rules:{    
+        goalLimit: 10,
+        timeLimit: 10, 
+    },
 }
 
 export default (state = userInit, action) => {
@@ -26,6 +34,12 @@ export default (state = userInit, action) => {
             return {
                 ...state,
                 socket: ws
+            }
+        }
+        case PUT_RULES_TO_STORE: {
+            return {
+                ...state,
+                rules: action.payload
             }
         }
         case GET_LEADERBOARD + '_FULFILLED': {
