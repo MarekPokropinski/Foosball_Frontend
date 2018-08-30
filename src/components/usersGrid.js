@@ -14,38 +14,6 @@ export default (props) => {
             <div>
                 {drawTeam('red', props)}
             </div>
-            {/* <div>
-            {props.players.map((val, index) => {
-                if(val.color === 'blue')
-                    return (
-                        <div key={index}>
-                        <UserComponent color='blue' id={index} />
-                        </div>
-                    );
-                else
-                    return <div key={index} />
-            })}
-            {(getPlayers(props.players, 'blue').length < 2)
-                ? drawAddButton('blue', props.addUser)
-                : drawSwapButton('blue', props.changePositions)
-            }
-            </div>
-            <div>
-            {props.players.map((val, index) => {
-                if(val.color === 'red')
-                return (
-                    <div key={index}>
-                    <UserComponent color='red' id={index} />
-                    </div>
-                );
-                else
-                return <div key={index} />
-            })}
-            {(getPlayers(props.players, 'red').length < 2)
-                ? drawAddButton('red', props.addUser)
-                : drawSwapButton('red', props.changePositions)
-            }
-            </div> */}
         </div>
     );
 }
@@ -61,11 +29,9 @@ const drawTeam = (color, props) => {
                     <UserComponent color={color} id={index} />
                 </span>
             );
-
             if(getPlayers(props.players, color).length > i + 1) {
                 toDraw.push(drawSwapButton(color, props.changePositions))
             }
-
             i++
         }
         index++
