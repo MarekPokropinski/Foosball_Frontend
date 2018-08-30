@@ -15,7 +15,6 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 const style = {
     TypeButton: {
         color: "#007dc3",
-        fontSize: 40,
         fontWeight: 'bold',
         backgroundColor: '#000c21',
         boxShadow: '7px 6px 19px -2px rgba(0,0,0,0.8)',
@@ -24,6 +23,14 @@ const style = {
     ButtonMenu: {
         marginLeft: '30%',
         width: 800,
+    },
+    bigText: {
+        fontSize: 40,
+        paddingBottom: '20px',
+    },
+    leftDiv: {
+        height: '100%',
+        width: '100%',
     }
 }
 class StatisticsMenu extends Component {
@@ -65,8 +72,10 @@ class StatisticsMenu extends Component {
                         aria-owns={this.state.anchorEl ? 'simple-menu' : null}
                         aria-haspopup="true"
                         onClick={this.handleClick}>
-
-                        {this.printTitle()}
+                        <div style={style.leftDiv}>
+                            <div style={style.bigText}>{this.printTitle()}</div>
+                            <div><h4>click here to change</h4></div>
+                        </div>
                     </Button>
                     <ClickAwayListener onClickAway={() => this.openCloseMe(true)}>
                         <Menu
