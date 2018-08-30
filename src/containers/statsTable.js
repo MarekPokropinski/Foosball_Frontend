@@ -12,7 +12,6 @@ import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 
 let counter = 0;
-
 let playerNone = {
     nick: "NO_PLAYERS",
     normalGames: 23,
@@ -55,7 +54,7 @@ const style = {
     },
 }
 function printNicks(nicks, team) {
-    if (!nicks.length) {
+    if (nicks==null || !nicks.length) {
         return team;
     }
     let nicksToReturn = "";
@@ -85,9 +84,9 @@ function createHistoryData(history) {
     counter += 1;
     var minutes = Math.floor(history.gameDuration / 60);
     var seconds = history.gameDuration - minutes * 60;
-    let gameDuration = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);;
+    let gameDuration = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
     return {
-        id: history.blueScore,
+        id: counter,
         gameDuration,
         history
     };
