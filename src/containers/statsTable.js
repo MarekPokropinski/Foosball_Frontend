@@ -24,6 +24,7 @@ let playerNone = {
     soloRankingPos: 1,
     duoRankingPos: 1,
 }
+
 let historyNone = {
     redScore: 2,
     blueScore: 10,
@@ -32,9 +33,10 @@ let historyNone = {
     redLongestSeries: 1,
     blueTeamNicks: ['NONA', 'ANON'],
     redTeamNicks: ['GAL', 'EMPTY'],
-    dateStart: "2014-01-01 13:01",
+    dateStart: "2018-08-29T14:39:45.000+0000",
     typeOfGame: 'NO_GAMES',
 }
+
 const style = {
     cell: {
         fontSize: 30,
@@ -52,8 +54,8 @@ const style = {
         color: 'black',
     },
 }
-function printNicks(nicks, team){
-    if(!nicks.length) {
+function printNicks(nicks, team) {
+    if (!nicks.length) {
         return team;
     }
     let nicksToReturn = "";
@@ -76,10 +78,17 @@ function createPlayerData(player) {
         duoRankingPos: player.duoRankingPos,
     };
 }
+function str_pad_left(string, pad, length) {
+    return (new Array(length + 1).join(pad) + string).slice(-length);
+}
 function createHistoryData(history) {
     counter += 1;
+    var minutes = Math.floor(history.gameDuration / 60);
+    var seconds = history.gameDuration - minutes * 60;
+    let gameDuration = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);;
     return {
-        id: counter,
+        id: history.blueScore,
+        gameDuration,
         history
     };
 }
@@ -101,16 +110,15 @@ let rankedRows = [
     { id: 'nick', numeric: false, disablePadding: true, label: 'Nick' },
     { id: 'duoRankingPos', numeric: true, disablePadding: false, label: 'Position' },
     { id: 'rankedDuoGames', numeric: true, disablePadding: false, label: 'Games Played' },
-    { id: 'rankedDuoWinratio', numeric: true, disablePadding: false, label: 'Win Ratio (%)' },
+    { id: 'rankedDuoWinRatio', numeric: true, disablePadding: false, label: 'Win Ratio (%)' },
 ];
 
 let historyRows = [
     { id: 'typeOfGame', numeric: false, disablePadding: true, label: 'Type' },
-    { id: 'dateStart', numeric: false, disablePadding: false, label: 'Date' },
     { id: 'blueTeamNicks', numeric: false, disablePadding: false, label: 'Blue Team' },
     { id: 'score', numeric: false, disablePadding: false, label: 'Score' },
     { id: 'redTeamNicks', numeric: false, disablePadding: false, label: 'Read Team' },
-    { id: 'gameDuration', numeric: false, disablePadding: false, label: 'Duration (sec)' },
+    { id: 'gameDuration', numeric: true, disablePadding: false, label: 'Duration (min)' },
 ];
 
 let rowsNormal = [
@@ -192,7 +200,7 @@ const styles = theme => ({
     },
     table: {
         minWidth: 400,
-        maxWidth: '10%',
+        maxWidth: 800,
     },
     tableWrapper: {
         overflowX: 'auto',
@@ -205,7 +213,7 @@ class EnhancedTable extends React.Component {
         if (this.props.users == null || !this.props.users.length) {
             return [createPlayerData(playerNone)];
         }
-        
+
         return this.props.users.map((user) => {
             return (
                 createPlayerData(user)
@@ -223,7 +231,7 @@ class EnhancedTable extends React.Component {
         })
     }
     componentWillReceiveProps(nextProps) {
-        this.setState( {data: nextProps.typeOfContent === "gameHistory" ? this.printHistory() : this.printUsers()})
+        this.setState({ data: nextProps.typeOfContent === "gameHistory" ? this.printHistory() : this.printUsers() })
     }
     state = {
         order: 'asc',
@@ -274,109 +282,102 @@ class EnhancedTable extends React.Component {
         this.setState({ rowsPerPage: event.target.value });
     };
 
-printTableCell(object, type) {
-    switch (type) {
-        case 'normal':
-            return [
-                <TableCell style={style.cell} numeric key="normalGames">{object.normalGames}</TableCell>,
-                <TableCell style={style.cell} numeric key="normalWinRatio">{object.normalWinRatio}</TableCell>
-            ]
-        case 'rankedSolo':
-            return [
-                <TableCell style={style.cell} numeric key="soloRankingPos">{object.soloRankingPos}</TableCell>,
-                <TableCell style={style.cell} numeric key="rankedSoloGames">{object.rankedSoloGames}</TableCell>,
-                <TableCell style={style.cell} numeric key="rankedSoloWinRatio">{object.rankedSoloWinRatio}</TableCell>
-            ]
-        case 'rankedDuo':
-            return [
-                <TableCell style={style.cell} numeric key="duoRankingPos">{object.duoRankingPos}</TableCell>,
-                <TableCell style={style.cell} numeric key="rankedDuoGames">{object.rankedDuoGames}</TableCell>,
-                <TableCell style={style.cell} numeric key="rankedDuoWinRatio">{object.rankedDuoWinRatio}</TableCell>
-            ]
+    printTableCell(object, type) {
+        switch (type) {
+            case 'normal':
+                return [
+                    <TableCell style={style.cell} numeric key="normalGames">{object.normalGames}</TableCell>,
+                    <TableCell style={style.cell} numeric key="normalWinRatio">{object.normalWinRatio}</TableCell>
+                ]
+            case 'rankedSolo':
+                return [
+                    <TableCell style={style.cell} numeric key="soloRankingPos">{object.soloRankingPos}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedSoloGames">{object.rankedSoloGames}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedSoloWinRatio">{object.rankedSoloWinRatio}</TableCell>
+                ]
+            case 'rankedDuo':
+                return [
+                    <TableCell style={style.cell} numeric key="duoRankingPos">{object.duoRankingPos}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedDuoGames">{object.rankedDuoGames}</TableCell>,
+                    <TableCell style={style.cell} numeric key="rankedDuoWinRatio">{object.rankedDuoWinRatio}</TableCell>
+                ]
 
-        case 'gameHistory':
-            return [
-                <TableCell style={style.cell}  key="dateStart">{object.history.dateStart}</TableCell>,
-                <TableCell style={style.cell}  key="blueTeamNicks">{printNicks(object.history.blueTeamNicks, "BLUE")}</TableCell>,
-                <TableCell style={style.cell}  key="score">{object.history.blueScore} : {object.history.redScore}</TableCell>,
-                <TableCell style={style.cell}  key="redTeamNicks">{printNicks(object.history.redTeamNicks, "RED")}</TableCell>,
-                <TableCell style={style.cell}  key="gameDuration">{object.history.gameDuration}</TableCell>
-            ]
-        default:
-            return [
-                <TableCell numeric>0</TableCell>,
-            ]
+            case 'gameHistory':
+                return [
+                    <TableCell style={style.cell} numeric key="blueTeamNicks">{printNicks(object.history.blueTeamNicks, "BLUE")}</TableCell>,
+                    <TableCell style={style.cell} numeric key="score">{object.history.blueScore} : {object.history.redScore}</TableCell>,
+                    <TableCell style={style.cell} numeric key="redTeamNicks">{printNicks(object.history.redTeamNicks, "RED")}</TableCell>,
+                    <TableCell style={style.cell} numeric key="gameDuration">{object.gameDuration}</TableCell>
+                ]
+            default:
+                return [
+                    <TableCell numeric>0</TableCell>,
+                ]
+        }
+
     }
 
-}
+    render() {
+        const { classes } = this.props;
+        const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
 
-render() {
-    const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+        return (
+            <Paper className={classes.root} >
+                <div className={classes.tableWrapper}>
+                    <Table className={classes.table} aria-labelledby="tableTitle">
+                        <EnhancedTableHead
+                            typeOfContent={this.props.typeOfContent}
+                            numSelected={selected.length}
+                            order={order}
+                            orderBy={orderBy}
+                            onRequestSort={this.handleRequestSort}
+                            rowCount={data.length}
+                        />
+                        <TableBody>
+                            {data
+                                .sort(getSorting(order, orderBy))
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map(n => {
+                                    return (
+                                        <TableRow
+                                            hover
+                                            tabIndex={-1}
+                                            key={n.id}>
 
-    return (
-        <Paper className={classes.root} >
-            <div className={classes.tableWrapper}>
-                <Table className={classes.table} aria-labelledby="tableTitle">
-                    <EnhancedTableHead
-                        typeOfContent={this.props.typeOfContent}
-                        numSelected={selected.length}
-                        order={order}
-                        orderBy={orderBy}
-                        onRequestSort={this.handleRequestSort}
-                        rowCount={data.length}
-                    />
-                    <TableBody>
-                        {data
-                            .sort(getSorting(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map(n => {
-                                return (
-                                    <TableRow
-                                        hover
-                                        tabIndex={-1}
-                                        key={n.id}
-                                    >
-                                        <TableCell padding="checkbox" />
-                                        <TableCell component="th" scope="row" padding="none" style={style.nick}>
-                                            {
-                                                this.props.typeOfContent === "gameHistory" ? 
-                                                n.history.typeOfGame
-                                                : 
-                                                n.nick
-                                            }
-                                        </TableCell>
-                                        {this.printTableCell(n, this.props.typeOfContent)}
+                                            <TableCell padding="checkbox" />
+                                            <TableCell component="th" scope="row" padding="none" style={style.nick}>
+                                                {
+                                                    this.props.typeOfContent === "gameHistory" ?
+                                                        n.history.typeOfGame
+                                                        :
+                                                        n.nick
+                                                }
+                                            </TableCell>
+                                            {this.printTableCell(n, this.props.typeOfContent)}
+                                        </TableRow>
+                                    );
+                                })}
 
-                                    </TableRow>
-                                );
-                            })}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 49 * emptyRows }}>
-                                <TableCell colSpan={6} />
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
-            <TablePagination
-                component="div"
-                count={data.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                backIconButtonProps={{
-                    'aria-label': 'Previous Page',
-                }}
-                nextIconButtonProps={{
-                    'aria-label': 'Next Page',
-                }}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            />
-        </Paper>
-    );
-}
+                        </TableBody>
+                    </Table>
+                </div>
+                <TablePagination
+                    component="div"
+                    count={data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    backIconButtonProps={{
+                        'aria-label': 'Previous Page',
+                    }}
+                    nextIconButtonProps={{
+                        'aria-label': 'Next Page',
+                    }}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                />
+            </Paper>
+        );
+    }
 }
 
 EnhancedTable.propTypes = {
