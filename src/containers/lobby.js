@@ -31,7 +31,7 @@ class Lobby extends Component {
   render() {
     let loading = (this.props.user.pending) ? <LinearProgress color="secondary" style={{position: 'absolute', width: '100%'}}/> : ''
     return (
-      <div>
+      <div style={{mar}}>
         {loading}
         {this.renderUsersGrid()}
 
@@ -94,26 +94,6 @@ class Lobby extends Component {
     this.props.playersActions.addUser(color)
   }
 
-  // drawAddButton(color) {
-  //   return (
-  //     <Button style={{ margin: '50px' }} variant="fab" color="secondary" aria-label="Add" onClick={() => this.addUser(color)}>
-  //       <AddIcon />
-  //     </Button>
-  //   );
-  // }
-
-  // drawSwapButton(color) {
-  //   return (
-  //     <Button 
-  //     variant="contained"
-  //     style={{ margin: '5px' }} 
-  //     color="secondary" 
-  //     onClick={() => this.changePositions(color)} >
-  //       Change positions
-  //     </Button>
-  //   );
-  // }
-
   changePositions(color) {
     let newPlayers = []
     let toSwap = []
@@ -134,40 +114,6 @@ class Lobby extends Component {
   renderUsersGrid() {
     return (
       <UsersGrid players={this.props.players} addUser={(c) => this.addUser(c)} changePositions={(c) => this.changePositions(c)} />
-      // <div className='flex'>
-      //   <div>
-      //     {this.props.players.map((val, index) => {
-      //       if(val.color === 'blue')
-      //         return (
-      //           <div key={index}>
-      //             <UserComponent color='blue' id={index} />
-      //           </div>
-      //         );
-      //       else
-      //         return <div key={index} />
-      //     })}
-      //     {(getPlayers(this.props.players, 'blue').length < 2)
-      //       ? this.drawAddButton('blue')
-      //       : this.drawSwapButton('blue')
-      //     }
-      //   </div>
-      //   <div>
-      //     {this.props.players.map((val, index) => {
-      //       if(val.color === 'red')
-      //         return (
-      //           <div key={index}>
-      //             <UserComponent color='red' id={index} />
-      //           </div>
-      //         );
-      //       else
-      //         return <div key={index} />
-      //     })}
-      //     {(getPlayers(this.props.players, 'red').length < 2)
-      //       ? this.drawAddButton('red')
-      //       : this.drawSwapButton('red')
-      //     }
-      //   </div>
-      // </div>
     );
   }
 }
