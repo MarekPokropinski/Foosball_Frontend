@@ -31,7 +31,7 @@ class Lobby extends Component {
   render() {
     let loading = (this.props.user.pending) ? <LinearProgress color="secondary" style={{position: 'absolute', width: '100%'}}/> : ''
     return (
-      <div style={{mar}}>
+      <div>
         {loading}
         {this.renderUsersGrid()}
 
