@@ -30,8 +30,8 @@ class UserComponent extends React.Component {
     render() {
         return (
             <div className='user-container'>
+                <span style={{position: 'absolute', display: 'block', height: '140px', width: '300px'}} onClick={this.focus} />
                 <div className={(this.props.color === 'blue') ? 'color-bar-blue' : 'color-bar-red'} />
-                    <span style={{height: '150px'}} onClick={this.focus}>
                     <TextField
                         onBlur={() => this.handleBlur()}
                         onFocus={() => this.handleFocus()}
@@ -42,8 +42,9 @@ class UserComponent extends React.Component {
                         label="Nick"
                         value={this.props.players[this.props.id].nick}
                         onChange={(e) => this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, e.target.value, this.props.color)}
-                        margin="normal" />
-                    </span>
+                        margin="normal" >
+                        
+                    </TextField>
                 <IconButton
                     color='secondary'
                     style={{ margin: '10px' }}
