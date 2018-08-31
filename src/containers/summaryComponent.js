@@ -44,7 +44,7 @@ class SummaryComponent extends React.Component {
 
     getData() {
         return [
-            { type: 'Score', value: `Red ${this.props.summary.redScore} : ${this.props.summary.blueScore} Blue` },
+            { type: 'Score', value: `Blue ${this.props.summary.blueScore} : ${this.props.summary.redScore} Red` },
             { type: 'Goals', value: `${this.props.summary.redScore + this.props.summary.blueScore}` },
             { type: 'Time', value: new Time(this.props.game.time).getConverted() },
             { type: 'Longes series of red', value: `${this.props.summary.redLongestSeries}` },

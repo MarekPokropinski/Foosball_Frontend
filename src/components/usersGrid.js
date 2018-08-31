@@ -21,24 +21,35 @@ export default (props) => {
 const drawTeam = (color, props) => {
     let toDraw = []
     let i = 0
+    let key = 0
     let index = 0
     for (let player of props.players) {
         if (player.color === color) {
             toDraw.push(
-                <span key={i}>
+                <span key={key}>
                     <UserComponent color={color} id={index} />
                 </span>
             );
+            key++;
             if(getPlayers(props.players, color).length > i + 1) {
-                toDraw.push(drawSwapButton(color, props.changePositions))
-            }
+                toDraw.push(
+                <span key={key}>
+                    {drawSwapButton(color, props.changePositions)}
+                </span>
+                );
+                key++;
+            }     
             i++
         }
         index++
     }
 
     if(getPlayers(props.players, color).length < 2) {
-        toDraw.push(drawAddButton(color, props.addUser))
+        toDraw.push(
+            <span key={key}>
+                {drawAddButton(color, props.addUser)}
+            </span>
+        );
     }
     return toDraw
 }
