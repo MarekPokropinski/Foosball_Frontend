@@ -46,12 +46,11 @@ class Lobby extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
-    this.props.userActions.putRulesToStore(this.state);
   };
   renderSettings() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen}  color="secondary" size="normal" variant="fab">
+        <Button onClick={this.handleClickOpen}  color="secondary" size="medium" variant="fab">
           <SettingsIcon  />
         </Button>
         <Dialog
@@ -129,6 +128,7 @@ class Lobby extends Component {
 
   startGame() {
     if (this.validateLobby()){
+        this.props.userActions.putRulesToStore(this.state);
         this.props.history.replace(`/begin/${this.props.match.params.mode}`);
     }
     else
