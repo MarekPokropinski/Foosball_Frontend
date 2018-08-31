@@ -127,3 +127,11 @@ export const getReplays = (gameId) => {
         payload: axios.get(`${process.env.REACT_APP_HOST}/getReplays?gameId=${gameId}`)
     }
 }
+export const GET_USER_STATS = 'get_user_stats'
+
+export const getUserStatistics = (nick) => {
+    return {
+        type: GET_USER_STATS,
+        payload: axios.get(`${process.env.REACT_APP_HOST}/history/byUser?userNick=${nick}`)
+    }
+}

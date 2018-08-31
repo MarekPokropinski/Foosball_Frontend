@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../actions/userActions.js';
+import * as gameActions from '../actions/gameActions.js';
 import EnhancedTable from './statsTable';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,6 +11,14 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Input } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search'
+import { InputAdornment } from 'material-ui';
+import UserStatistics from './userStatistics.js';
 
 
 const style = {
@@ -38,6 +47,9 @@ class StatisticsMenu extends Component {
         open: false,
         typeOfContent: 'normal',
         anchorEl: null,
+        dialogOpen: false,
+        value: '',
+        nick: ''
     }
     handleClick = event => {
         this.setState({ anchorEl: event.currentTarget });
@@ -55,6 +67,8 @@ class StatisticsMenu extends Component {
                 return 'Ranked Duo Statistics'
             case 'gameHistory':
                 return 'Game History'
+            case 'personal':
+                return `${this.state.nick} Statistics`
             default:
                 return ''
         }
@@ -77,22 +91,27 @@ class StatisticsMenu extends Component {
                             <div><h4>click here to change</h4></div>
                         </div>
                     </Button>
-                    <ClickAwayListener onClickAway={() => this.openCloseMe(true)}>
+                    <ClickAwayListener onClickAway={() => { this.openCloseMe(true); this.handleCloseDialog(); console.error('click away') }}>
                         <Menu
                             style={style.ButtonMenu}
                             id="simple-menu"
                             anchorEl={this.state.anchorEl}
                             open={Boolean(this.state.anchorEl)}
-                            onClose={() => this.openCloseMe(true)}>
+                            onClose={() => this.openCloseMe(false)}>
 
                             <MenuItem onClick={() => { this.handleChangeContent('normal') }}>Normal</MenuItem>
                             <MenuItem onClick={() => { this.handleChangeContent('rankedSolo') }}>Ranked 1v1</MenuItem>
                             <MenuItem onClick={() => { this.handleChangeContent('rankedDuo') }}>Ranked 2v2</MenuItem>
                             <MenuItem onClick={() => { this.handleChangeContent('gameHistory') }}>Game History</MenuItem>
+                            <MenuItem onClick={() => { this.handlePersonal() }}>Personal</MenuItem>
 
                         </Menu>
                     </ClickAwayListener>
-                    <EnhancedTable users={this.props.user.leaderboard} history={this.props.user.history} typeOfContent={this.state.typeOfContent} />
+                    {
+                        (this.state.typeOfContent === 'personal')
+                            ? <UserStatistics nick={this.state.nick}/>
+                            : <EnhancedTable users={this.props.user.leaderboard} history={this.props.user.history} typeOfContent={this.state.typeOfContent} />
+                    }   
                 </SwipeableDrawer>
 
                 <IconButton
@@ -102,13 +121,76 @@ class StatisticsMenu extends Component {
 
                     <MenuIcon />
                 </IconButton>
+                {this.renderDialog()}
             </div >
         )
     }
+
+    handlePersonal() {
+        this.setState({ dialogOpen: true })
+    }
+
+    handleCloseDialog() {
+        this.setState({ anchorEl: null, dialogOpen: false });
+    }
+
+    handleSubmit() {
+        this.props.gameActions.getUser(this.state.value)
+            .then((response) => {
+                //this.props.history.replace(`/stats/${response.value.data.nick}`)
+                //show user stats
+                console.log('submit')
+                this.setState({ anchorEl: null, dialogOpen: false, typeOfContent: 'personal', nick: response.value.data.nick, value: '' });
+            })
+            .catch((e) => {
+                console.error(e)
+                this.setState({ anchorEl: null, dialogOpen: false, value: '' });
+            })
+    }
+
+    renderDialog() {
+        return (
+            <Dialog
+                open={this.state.dialogOpen}
+                onClose={() => this.handleCloseDialog()}
+                aria-labelledby="form-dialog-title">
+
+                <DialogTitle id="form-dialog-title">
+                    Swipe badge or type your nick
+                </DialogTitle>
+
+                <DialogContent>
+                    <Input
+                        onKeyDown={(e)=>{
+                            if (e.keyCode === 13) {
+                                this.handleSubmit()
+                            }
+                        }}
+                        autoComplete='off'
+                        autoFocus
+                        id="nick"
+                        value={this.state.value}
+                        onChange={(e) => this.setState({ value: e.target.value })}
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        } />
+                </DialogContent>
+
+                <DialogActions>
+                    <Button onClick={() => this.handleSubmit()} color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
     openCloseMe(action) {
         this.props.userActions.getLeaderboard();
         this.props.userActions.getHistory();
-        this.setState({ open: action });
+        this.setState({ open: action, anchorEl: null });
     }
 
     componentDidMount() {
@@ -119,6 +201,7 @@ class StatisticsMenu extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         userActions: bindActionCreators(userActions, dispatch),
+        gameActions: bindActionCreators(gameActions, dispatch),
     }
 }
 
