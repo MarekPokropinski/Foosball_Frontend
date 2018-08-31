@@ -23,7 +23,17 @@ class Statistics extends React.Component {
     }
 
     componentDidMount() {
-        this.props.userActions.getUserStatistics(this.props.nick)
+        this.getDataFromServer(this.props.nick)
+    }
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.nick !== this.props.nick) {
+            this.getDataFromServer(nextProps.nick)
+        }
+    }
+
+    getDataFromServer(nick) {
+        this.props.userActions.getUserStatistics(nick)
             .then((response) => {
                 this.setState({ user: response.value.data, error: false })
             })
@@ -31,19 +41,6 @@ class Statistics extends React.Component {
                 console.error('Cant get user statistics');
                 this.setState({ error: true })
             })
-    }
-
-    componentWillUpdate(nextProps) {
-        if (nextProps.nick !== this.props.nick) {
-            this.props.userActions.getUserStatistics(nextProps.nick)
-                .then((response) => {
-                    this.setState({ user: response.value.data, error: false })
-                })
-                .catch(() => {
-                    console.error('Cant get user statistics');
-                    this.setState({ error: true })
-                })
-        }
     }
 
     render() {
