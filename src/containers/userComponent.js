@@ -85,8 +85,10 @@ class UserComponent extends React.Component {
         this.props.gameActions.getUser(this.props.players[this.props.id].nick)
             .then((response) => {
                 if (!this.state.willUnmount) {
-                    if (this.checkRepeatingNick(response.value.data.nick))
-                        return
+                    if (this.checkRepeatingNick(response.value.data.nick)) {
+                        throw 'repeatin nick'
+                    }
+                        
                     this.props.playersActions.setUser(this.props.id, response.value.data.id, response.value.data.nick, this.props.color)
                     this.setState({ valid: true })
                     this.props.playersActions.setUser(this.props.id, this.props.players[this.props.id].id, response.value.data.nick, this.props.color)
